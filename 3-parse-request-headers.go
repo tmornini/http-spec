@@ -13,11 +13,11 @@ func parseRequestHeaders(context *context) {
 		headerLines = append(headerLines, potentialHeaderLine)
 	}
 
-	context.Request.HeaderLines = &headerLines
-
 	if err := context.Scanner.Err(); err != nil {
 		panic(err)
 	}
+
+	context.Request.HeaderLines = &headerLines
 
 	parseRequestBody(context)
 }

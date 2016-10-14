@@ -4,7 +4,7 @@ Accept: */*
 ⇓
 HTTP/1.1 200 OK
 Server: nginx
-Date: ΔdateΔThu, 13 Oct 2016 23:12:14 GMTΔ
+Date: ΔdateΔ[A-Z][a-z]{2}, \d{2} [A-Z][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [A-Z]{3}Δ
 Transfer-Encoding: chunked
 Connection: keep-alive
 Content-Security-Policy: default-src https: data: 'unsafe-inline' 'unsafe-eval'
