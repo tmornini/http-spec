@@ -1,8 +1,6 @@
 package main
 
-import "fmt"
-
-func parseResponseHeaders(context *context) {
+func parseExpectedResponseHeaders(context *context) {
 	headerLines := []*headerLine{}
 
 	for context.Scanner.Scan() {
@@ -25,5 +23,5 @@ func parseResponseHeaders(context *context) {
 
 	context.ExpectedResponse.HeaderLines = &headerLines
 
-	fmt.Println(context.ExpectedResponse)
+	parseExpectedResponseHeaderRegexps(context)
 }

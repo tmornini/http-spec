@@ -26,5 +26,5 @@ func parseRequestBody(context *context) {
 
 	fmt.Println(context.Request)
 
-	parseStatusLine(context)
+	parseExpectedResponseStatusLine(context)
 }

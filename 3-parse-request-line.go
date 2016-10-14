@@ -7,12 +7,12 @@ func parseRequestLine(context *context) {
 
 	requestLine := context.Scanner.Text()
 
-	words := strings.Split(requestLine, " ")
+	parts := strings.Split(requestLine, " ")
 
 	context.Request = &request{
-		Verb:    words[0],
-		Path:    words[1],
-		Version: words[2],
+		Verb:    parts[0],
+		Path:    parts[1],
+		Version: parts[2],
 	}
 
 	parseRequestHeaders(context)
