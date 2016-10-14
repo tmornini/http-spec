@@ -1,0 +1,19 @@
+GET /v3/system/status HTTP/1.1
+Host: api.subledger.com
+User-Agent: curl/7.43.0
+Accept: */*
+
+⇓
+HTTP/1.1 200 OK
+Server: nginx
+Date: ΔdateΔThu, 13 Oct 2016 23:12:14 GMTΔ
+Transfer-Encoding: chunked
+Connection: keep-alive
+Content-Security-Policy: default-src https: data: 'unsafe-inline' 'unsafe-eval'
+Public-Key-Pins: pin-sha256="hEJVeNxwqLnjseFv/doE3XU6Nr/hXJnoKdhn12iwavY="; pin-sha256="cTduB9g7EP4xd2glLUNhEq40f/jtyJF24dTzgVuKsZk="; max-age=300
+Strict-Transport-Security: max-age=10886400; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+
+{"dynamodb":true,"sqs":true,"redis":true}
