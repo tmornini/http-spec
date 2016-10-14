@@ -5,16 +5,14 @@ import (
 	"os"
 )
 
-func parseFile(context *context) {
+func processFile(context *context) {
 	osFile, err := os.Open(context.Pathname)
 
 	if err != nil {
 		panic(err)
 	}
 
-	scanner := bufio.NewScanner(osFile)
-
-	context.Scanner = scanner
+	context.Scanner = bufio.NewScanner(osFile)
 
 	parseRequestLine(context)
 
