@@ -5,9 +5,11 @@ import "strings"
 func parseRequestLine(context *context) {
 	context.Scanner.Scan()
 
-	requestLine := context.Scanner.Text()
+	inputLine := context.Scanner.Text()
 
-	parts := strings.Split(requestLine, " ")
+	requestLine := parse(inputLine)
+
+	parts := strings.Split(requestLine.Text, " ")
 
 	context.Request = &request{
 		Verb:    parts[0],
@@ -15,5 +17,5 @@ func parseRequestLine(context *context) {
 		Version: parts[2],
 	}
 
-	parseRequestHeaders(context)
+	parseRequestLines(context)
 }

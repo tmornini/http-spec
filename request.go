@@ -3,22 +3,22 @@ package main
 import "strings"
 
 type request struct {
-	Prefix      string
-	Verb        string
-	Path        string
-	Version     string
-	HeaderLines *[]string
-	BodyLines   *[]string
+	Verb    string
+	Path    string
+	Version string
+	Lines   []*line
 }
 
 func (request *request) String() string {
 	assembly := request.Verb + " " + request.Path + " " + request.Version + "\n"
 
-	assembly += strings.Join(*request.HeaderLines, "\n")
+	var lineStrings []string
 
-	assembly += "\n"
+	for _, line := range request.Lines {
+		lineStrings = append(lineStrings, line.String())
+	}
 
-	assembly += strings.Join(*request.BodyLines, "\n")
+	assembly += strings.Join(lineStrings, "\n")
 
 	return assembly
 }

@@ -2,12 +2,14 @@ package main
 
 import "strings"
 
-func parseExpectedResponseStatusLine(context *context) {
+func parseExpectedStatusLine(context *context) {
 	context.Scanner.Scan()
 
-	statusLine := context.Scanner.Text()
+	inputLine := context.Scanner.Text()
 
-	parts := strings.Split(statusLine, " ")
+	statusLine := parse(inputLine)
+
+	parts := strings.Split(statusLine.Text, " ")
 
 	context.ExpectedResponse = &response{
 		Version:      parts[0],

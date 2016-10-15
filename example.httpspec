@@ -1,17 +1,17 @@
-GET /v3/system/status HTTP/1.1
-Accept: */*
+> GET /v3/system/status HTTP/1.1
+> Accept: */*
+>
 
-⇓
-HTTP/1.1 200 OK
-Server: nginx
-Date: ΔdateΔ[A-Z][a-z]{2}, \d{2} [A-Z][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [A-Z]{3}Δ
-Transfer-Encoding: chunked
-Connection: keep-alive
-Content-Security-Policy: default-src https: data: 'unsafe-inline' 'unsafe-eval'
-Public-Key-Pins: pin-sha256="hEJVeNxwqLnjseFv/doE3XU6Nr/hXJnoKdhn12iwavY="; pin-sha256="cTduB9g7EP4xd2glLUNhEq40f/jtyJF24dTzgVuKsZk="; max-age=300
-Strict-Transport-Security: max-age=10886400; includeSubDomains; preload
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-
-{"dynamodb":true,"sqs":true,"redis":true}
+< HTTP/1.1 200 OK
+< Server: nginx
+< Date: ⬚date⬚[A-Z][a-z]{2}, \d{2} [A-Z][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [A-Z]⬚
+< Transfer-Encoding: chunked
+< Connection: keep-alive
+< Content-Security-Policy: default-src https: data: 'unsafe-inline' 'unsafe-eval'
+< Public-Key-Pins: pin-sha256="hEJVeNxwqLnjseFv/doE3XU6Nr/hXJnoKdhn12iwavY="; pin-sha256="cTduB9g7EP4xd2glLUNhEq40f/jtyJF24dTzgVuKsZk="; max-age=300
+< Strict-Transport-Security: max-age=10886400; includeSubDomains; preload
+< X-Content-Type-Options: nosniff
+< X-Frame-Options: SAMEORIGIN
+< X-Xss-Protection: 1; mode=block
+<
+< {"dynamodb":true,"sqs":true,"redis":true}

@@ -6,8 +6,7 @@ type response struct {
 	Version      string
 	StatusCode   string
 	ReasonPhrase string
-	HeaderLines  *[]*headerLine
-	BodyLines    *[]string
+	Lines        []*line
 }
 
 func (response *response) String() string {
@@ -15,17 +14,13 @@ func (response *response) String() string {
 
 	assembly += " " + response.ReasonPhrase + "\n"
 
-	var headerLineInputs []string
+	var inputLines []string
 
-	for _, headerLine := range *response.HeaderLines {
-		headerLineInputs = append(headerLineInputs, headerLine.Input)
+	for _, line := range response.Lines {
+		inputLines = append(inputLines, line.Text)
 	}
 
-	assembly += strings.Join(headerLineInputs, "\n")
-
-	assembly += "\n"
-
-	// assembly += strings.Join(*response.BodyLines, "\n")
+	assembly += strings.Join(inputLines, "\n")
 
 	return assembly
 }
