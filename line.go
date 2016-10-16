@@ -1,10 +1,15 @@
 package main
 
-import "strings"
+import (
+	"regexp"
+	"strings"
+)
 
 type line struct {
-	Prefix string
-	Text   string
+	Prefix     string
+	Text       string
+	RegexpName string
+	Regexp     *regexp.Regexp
 }
 
 func parse(inputLine string) *line {
@@ -33,7 +38,7 @@ func separate(inputLine string) (string, string) {
 	case 2:
 		return string(inputLine[0:1]), ""
 	default:
-		return string(inputLine[0:1]), string(inputLine[2 : length-1])
+		return string(inputLine[0:1]), string(inputLine[2:length])
 	}
 }
 
