@@ -12,6 +12,8 @@ func processFile(context *context) {
 		panic(err)
 	}
 
+	context.Captures = &map[string]string{}
+
 	context.Scanner = bufio.NewScanner(osFile)
 
 	parseRequestLine(context)

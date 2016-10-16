@@ -1,18 +1,18 @@
 package main
 
 func processFiles(https bool, hostname string, pathnames []string) {
-	var prefix string
+	var uriScheme string
 
 	if https {
-		prefix = "https://" + hostname
+		uriScheme = "https://" + hostname
 	} else {
-		prefix = "http://" + hostname
+		uriScheme = "http://" + hostname
 	}
 
 	for _, pathname := range pathnames {
 		context := &context{
-			Pathname: pathname,
-			Prefix:   prefix,
+			Pathname:  pathname,
+			UriScheme: uriScheme,
 		}
 
 		processFile(context)

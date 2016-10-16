@@ -6,23 +6,21 @@ import (
 )
 
 type line struct {
-	Prefix     string
+	IOPrefix   string
 	Text       string
 	RegexpName string
 	Regexp     *regexp.Regexp
 }
 
 func parse(inputLine string) *line {
-	prefix, text := separate(inputLine)
+	ioPrefix, text := separate(inputLine)
 
 	line := &line{
-		Prefix: prefix,
-		Text:   text,
+		IOPrefix: ioPrefix,
+		Text:     text,
 	}
 
-	if !line.valid() {
-		panic("lines must begin with <, > or #")
-	}
+	line.validate()
 
 	return line
 }
@@ -42,20 +40,24 @@ func separate(inputLine string) (string, string) {
 	}
 }
 
-func (line *line) valid() bool {
-	return line.isRequest() || line.isResponse() || line.isComment()
+func (line *line) validate() {
+	if line.isRequest() || line.isResponse() || line.isComment() {
+		return
+	}
+
+	panic("lines must begin with <, > or #")
 }
 
 func (line *line) isRequest() bool {
-	return strings.HasPrefix(string(line.Prefix[0]), ">")
+	return strings.HasPrefix(string(line.IOPrefix[0]), ">")
 }
 
 func (line *line) isResponse() bool {
-	return strings.HasPrefix(string(line.Prefix[0]), "<")
+	return strings.HasPrefix(string(line.IOPrefix[0]), "<")
 }
 
 func (line *line) isComment() bool {
-	return strings.HasPrefix(string(line.Prefix[0]), "#")
+	return strings.HasPrefix(string(line.IOPrefix[0]), "#")
 }
 
 func (line *line) String() string {
