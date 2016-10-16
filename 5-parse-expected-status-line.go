@@ -2,8 +2,14 @@ package main
 
 import "strings"
 
-func parseExpectedStatusLine(context *context) {
+func parseExpectedStatusLine(context *context) bool {
+	context.log("5 parseExpectedStatusLine")
+
 	context.Scanner.Scan()
+
+	if err := context.Scanner.Err(); err != nil {
+		panic(err)
+	}
 
 	inputLine := context.Scanner.Text()
 
@@ -17,5 +23,5 @@ func parseExpectedStatusLine(context *context) {
 		ReasonPhrase: parts[2],
 	}
 
-	parseExpectedResponseHeaders(context)
+	return parseExpectedResponseHeaders(context)
 }

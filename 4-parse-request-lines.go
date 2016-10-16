@@ -1,12 +1,18 @@
 package main
 
-func parseRequestLines(context *context) {
+func parseRequestLines(context *context) bool {
+	context.log("4 parseRequestLines")
+
 	var lines []*line
 
 	for context.Scanner.Scan() {
+		if context.Scanner.Err() != nil {
+			panic(context.Scanner.Err())
+		}
+
 		potentialLine := context.Scanner.Text()
 
-		if potentialLine == "" {
+		if len(potentialLine) == 0 {
 			break
 		}
 
@@ -15,11 +21,7 @@ func parseRequestLines(context *context) {
 		lines = append(lines, line)
 	}
 
-	if err := context.Scanner.Err(); err != nil {
-		panic(err)
-	}
-
 	context.Request.Lines = lines
 
-	parseExpectedStatusLine(context)
+	return parseExpectedStatusLine(context)
 }

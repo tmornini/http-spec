@@ -1,8 +1,15 @@
 package main
 
-import "flag"
+import (
+	"flag"
+	"fmt"
+)
 
 func processCLIArguments() {
+	if logFunctions {
+		fmt.Println("0 processCLIArguments")
+	}
+
 	var https bool
 	var hostname string
 

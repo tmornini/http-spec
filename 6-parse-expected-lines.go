@@ -1,12 +1,18 @@
 package main
 
-func parseExpectedResponseHeaders(context *context) {
+func parseExpectedResponseHeaders(context *context) bool {
+	context.log("6 parseExpectedResponseHeaders")
+
 	lines := []*line{}
 
 	for context.Scanner.Scan() {
+		if err := context.Scanner.Err(); err != nil {
+			panic(err)
+		}
+
 		potentialInputLine := context.Scanner.Text()
 
-		if potentialInputLine == "" {
+		if len(potentialInputLine) == 0 {
 			break
 		}
 
@@ -15,13 +21,7 @@ func parseExpectedResponseHeaders(context *context) {
 		lines = append(lines, line)
 	}
 
-	err := context.Scanner.Err()
-
-	if err != nil {
-		panic(err)
-	}
-
 	context.ExpectedResponse.Lines = lines
 
-	parseExpectedLineMatches(context)
+	return parseMatches(context)
 }

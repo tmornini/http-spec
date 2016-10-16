@@ -2,10 +2,16 @@ package main
 
 import "strings"
 
-func parseRequestLine(context *context) {
+func parseRequestLine(context *context) bool {
+	context.log("3 parseRequestLine")
+
 	context.Scanner.Scan()
 
 	inputLine := context.Scanner.Text()
+
+	if context.Scanner.Err() != nil || len(inputLine) == 0 {
+		return true
+	}
 
 	requestLine := parse(inputLine)
 
@@ -17,5 +23,5 @@ func parseRequestLine(context *context) {
 		Version: parts[2],
 	}
 
-	parseRequestLines(context)
+	return parseRequestLines(context)
 }
