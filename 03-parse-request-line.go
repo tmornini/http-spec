@@ -9,7 +9,9 @@ func parseRequestLine(context *context) bool {
 
 	inputLine := context.Scanner.Text()
 
-	if context.Scanner.Err() != nil || len(inputLine) == 0 {
+	panicOn(context.Scanner.Err())
+
+	if len(inputLine) == 0 {
 		return true
 	}
 

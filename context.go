@@ -3,14 +3,21 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"net"
+	"net/http"
 )
 
 type context struct {
-	URIScheme        string
 	Pathname         string
+	HTTPS            bool
+	HostName         string
+	URIScheme        string
 	Scanner          *bufio.Scanner
 	Request          *request
 	ExpectedResponse *response
+	HTTPClient       *http.Client
+	HTTPResponse     *http.Response
+	NetConnection    net.Conn
 	ActualResponse   *response
 	Substitutions    map[string]string
 }

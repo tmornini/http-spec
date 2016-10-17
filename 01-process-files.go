@@ -14,14 +14,16 @@ func processFiles(https bool, hostname string, pathnames []string) {
 	var uriScheme string
 
 	if https {
-		uriScheme = "https://" + hostname
+		uriScheme = "https://"
 	} else {
-		uriScheme = "http://" + hostname
+		uriScheme = "http://"
 	}
 
 	for _, pathname := range pathnames {
 		context := &context{
 			Pathname:  pathname,
+			HTTPS:     https,
+			HostName:  hostname,
 			URIScheme: uriScheme,
 		}
 

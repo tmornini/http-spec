@@ -10,9 +10,7 @@ func processFile(context *context) {
 
 	osFile, err := os.Open(context.Pathname)
 
-	if err != nil {
-		panic(err)
-	}
+	panicOn(err)
 
 	defer osFile.Close()
 
