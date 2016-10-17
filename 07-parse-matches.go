@@ -21,7 +21,9 @@ func parseMatches(context *context) bool {
 			quotedPrefix := regexp.QuoteMeta(parts[0])
 			quotedSuffix := regexp.QuoteMeta(parts[3])
 
-			line.Regexp = regexp.MustCompile(quotedPrefix + parts[2] + quotedSuffix)
+			reString := quotedPrefix + "(" + parts[2] + ")" + quotedSuffix
+
+			line.Regexp = regexp.MustCompile(reString)
 		default:
 			panic(
 				fmt.Sprintf(

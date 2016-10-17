@@ -7,7 +7,7 @@ import (
 )
 
 func parseActualResponse(context *context) bool {
-	context.log("10 parseRequest")
+	context.log("10 parseActualResponse")
 
 	version := context.HTTPResponse.Proto
 
@@ -34,12 +34,16 @@ func parseActualResponse(context *context) bool {
 		lines = append(lines, line)
 	}
 
+	line := parse("< ")
+
+	lines = append(lines, line)
+
 	scanner := bufio.NewScanner(context.HTTPResponse.Body)
 
 	for scanner.Scan() {
 		panicOn(scanner.Err())
 
-		line := parse("< " + context.Scanner.Text())
+		line := parse("< " + scanner.Text())
 
 		lines = append(lines, line)
 	}
@@ -53,5 +57,5 @@ func parseActualResponse(context *context) bool {
 		Lines:        lines,
 	}
 
-	return false
+	return compareActualToExpected(context)
 }

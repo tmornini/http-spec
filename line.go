@@ -26,19 +26,19 @@ func (line *line) isComment() bool {
 }
 
 func parse(inputLine string) *line {
-	ioPrefix, text := separate(inputLine)
+	ioPrefix, text := split(inputLine)
 
 	line := &line{
 		IOPrefix: ioPrefix,
 		Text:     text,
 	}
 
-	line.validate()
+	validate(line)
 
 	return line
 }
 
-func separate(inputLine string) (string, string) {
+func split(inputLine string) (string, string) {
 	length := len(inputLine)
 
 	switch length {
@@ -53,6 +53,14 @@ func separate(inputLine string) (string, string) {
 	}
 }
 
+func validate(line *line) {
+	if line.isRequest() || line.isResponse() || line.isComment() {
+		return
+	}
+
+	panic("lines must begin with <, > or #")
+}
+
 func (line *line) substitute(context *context) {
 	parts := strings.Split(line.Text, substitionIdentifier)
 
@@ -62,10 +70,9 @@ func (line *line) substitute(context *context) {
 	case 3:
 		substitution := context.Substitutions[parts[1]]
 
-		// TODO uncomment when appropriate
-		// if substitution == "" {
-		// 	panic("unknown tag: " + parts[1])
-		// }
+		if substitution == "" {
+			panic("unknown tag: " + parts[1])
+		}
 
 		line.Text = parts[0] + substitution + parts[2]
 	default:
@@ -79,12 +86,22 @@ func (line *line) substitute(context *context) {
 	}
 }
 
-func (line *line) validate() {
-	if line.isRequest() || line.isResponse() || line.isComment() {
-		return
-	}
+func (line *line) compare(context *context) {
+	if line.Regexp == nil {
+		if line.Text != context.ActualLine {
+			panic(fmt.Sprintf("%s != %s", line.Text, context.ActualLine))
+		}
+	} else {
+		matches := line.Regexp.FindStringSubmatch(context.ActualLine)
 
-	panic("lines must begin with <, > or #")
+		if len(matches) == 0 {
+			panic(fmt.Sprintf("%s !~ %s", line.Regexp, context.ActualLine))
+		} else {
+			if line.RegexpName != "" {
+				context.Substitutions[line.RegexpName] = matches[1]
+			}
+		}
+	}
 }
 
 func (line *line) String() string {
