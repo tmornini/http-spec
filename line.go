@@ -60,8 +60,14 @@ func (line *line) substitute(context *context) {
 	case 1:
 		return
 	case 3:
-		line.Text = parts[0] + context.Substitutions[parts[1]] + parts[2]
-		fmt.Printf("substituted -> %#v\n", line.Text)
+		substitution := context.Substitutions[parts[1]]
+
+		// TODO uncomment when appropriate
+		// if substitution == "" {
+		// 	panic("unknown tag: " + parts[1])
+		// }
+
+		line.Text = parts[0] + substitution + parts[2]
 	default:
 		panic(
 			fmt.Sprintf(

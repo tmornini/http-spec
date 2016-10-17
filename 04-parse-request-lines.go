@@ -1,7 +1,7 @@
 package main
 
 func parseRequestLines(context *context) bool {
-	context.log("4 parseRequestLines")
+	context.log("04 parseRequestLines")
 
 	var lines []*line
 

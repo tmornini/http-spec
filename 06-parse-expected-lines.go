@@ -1,7 +1,7 @@
 package main
 
 func parseExpectedResponseHeaders(context *context) bool {
-	context.log("6 parseExpectedResponseHeaders")
+	context.log("06 parseExpectedResponseHeaders")
 
 	lines := []*line{}
 

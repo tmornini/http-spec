@@ -6,7 +6,7 @@ import (
 )
 
 func processFile(context *context) {
-	context.log("2 processFile")
+	context.log("02 processFile")
 
 	osFile, err := os.Open(context.Pathname)
 

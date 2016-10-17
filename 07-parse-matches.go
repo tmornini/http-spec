@@ -7,7 +7,7 @@ import (
 )
 
 func parseMatches(context *context) bool {
-	context.log("7 parseMatches")
+	context.log("07 parseMatches")
 
 	for _, line := range context.ExpectedResponse.Lines {
 		parts := strings.Split(line.Text, regexpIdentifier)

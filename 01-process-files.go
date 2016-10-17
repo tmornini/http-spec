@@ -4,7 +4,7 @@ import "fmt"
 
 func processFiles(https bool, hostname string, pathnames []string) {
 	if logFunctions {
-		fmt.Println("1 processFiles")
+		fmt.Println("01 processFiles")
 	}
 
 	if logContext {
