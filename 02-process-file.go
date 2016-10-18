@@ -5,8 +5,10 @@ import (
 	"os"
 )
 
-func processFile(context *context) {
+func processFile(context context) {
 	context.log("02 processFile")
+
+	defer context.WaitGroup.Done()
 
 	osFile, err := os.Open(context.Pathname)
 
@@ -19,7 +21,7 @@ func processFile(context *context) {
 	context.Scanner = bufio.NewScanner(osFile)
 
 	for {
-		eof := parseRequestLine(context)
+		eof := parseRequestLine(&context)
 
 		if eof {
 			break

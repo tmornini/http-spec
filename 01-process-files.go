@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 func processFiles(https bool, hostname string, pathnames []string) {
 	if logFunctions {
@@ -19,14 +22,20 @@ func processFiles(https bool, hostname string, pathnames []string) {
 		uriScheme = "http://"
 	}
 
+	waitGroup := &sync.WaitGroup{}
+	defer waitGroup.Wait()
+
 	for _, pathname := range pathnames {
-		context := &context{
+		waitGroup.Add(1)
+
+		context := context{
 			Pathname:  pathname,
 			HTTPS:     https,
 			HostName:  hostname,
 			URIScheme: uriScheme,
+			WaitGroup: waitGroup,
 		}
 
-		processFile(context)
+		go processFile(context)
 	}
 }

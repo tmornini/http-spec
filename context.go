@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"sync"
 )
 
 type context struct {
@@ -12,6 +13,7 @@ type context struct {
 	HTTPS            bool
 	HostName         string
 	URIScheme        string
+	WaitGroup        *sync.WaitGroup
 	Scanner          *bufio.Scanner
 	Request          *request
 	ExpectedResponse *response
