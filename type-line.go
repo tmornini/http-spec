@@ -7,33 +7,25 @@ import (
 )
 
 type line struct {
+	Position   string
+	InputLine  string
 	IOPrefix   string
 	Text       string
 	RegexpName string
 	Regexp     *regexp.Regexp
 }
 
-func (line *line) isRequest() bool {
-	return strings.HasPrefix(string(line.IOPrefix[0]), ">")
-}
-
-func (line *line) isResponse() bool {
-	return strings.HasPrefix(string(line.IOPrefix[0]), "<")
-}
-
-func (line *line) isComment() bool {
-	return strings.HasPrefix(string(line.IOPrefix[0]), "#")
-}
-
-func parse(inputLine string) *line {
+func parse(position string, inputLine string) *line {
 	ioPrefix, text := split(inputLine)
 
 	line := &line{
-		IOPrefix: ioPrefix,
-		Text:     text,
+		Position:  position,
+		InputLine: inputLine,
+		IOPrefix:  ioPrefix,
+		Text:      text,
 	}
 
-	validate(line)
+	line.validate()
 
 	return line
 }
@@ -53,12 +45,29 @@ func split(inputLine string) (string, string) {
 	}
 }
 
-func validate(line *line) {
-	if line.isRequest() || line.isResponse() || line.isComment() {
+func (line *line) validate() {
+	if line.isBlank() || line.isRequest() ||
+		line.isResponse() || line.isComment() {
 		return
 	}
 
 	exitWithStatusOne("lines must begin with <, > or #")
+}
+
+func (line *line) isRequest() bool {
+	return strings.HasPrefix(string(line.IOPrefix[0]), ">")
+}
+
+func (line *line) isResponse() bool {
+	return strings.HasPrefix(string(line.IOPrefix[0]), "<")
+}
+
+func (line *line) isComment() bool {
+	return strings.HasPrefix(string(line.IOPrefix[0]), "#")
+}
+
+func (line *line) isBlank() bool {
+	return len(line.InputLine) == 0
 }
 
 func (line *line) substitute(context *context) {
@@ -89,17 +98,21 @@ func (line *line) substitute(context *context) {
 func (line *line) compare(context *context, otherLine *line) {
 	if line.Regexp == nil {
 		if line.Text != otherLine.Text {
-			exitWithStatusOne(fmt.Sprintf("%s != %s", line.Text, otherLine.Text))
+			exitWithStatusOne(fmt.Sprintf("%v != %v", otherLine, line))
 		}
 	} else {
 		matches := line.Regexp.FindStringSubmatch(otherLine.Text)
 
 		if len(matches) == 0 {
-			exitWithStatusOne(fmt.Sprintf("%s !~ %s", line.Regexp, otherLine))
+			exitWithStatusOne(fmt.Sprintf("%v !~ %v", otherLine, line))
 		} else {
 			if line.RegexpName != "" {
 				context.Substitutions[line.RegexpName] = matches[1]
 			}
 		}
 	}
+}
+
+func (line *line) String() string {
+	return fmt.Sprintf("[%s] %s", line.Position, line.Text)
 }

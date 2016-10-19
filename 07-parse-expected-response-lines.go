@@ -3,18 +3,15 @@ package main
 func parseExpectedResponseLines(context *context) bool {
 	context.log("07 parseExpectedResponseLines")
 
-	for context.Scanner.Scan() {
-		exitWithStatusOneIf(context.Scanner.Err())
+	for {
+		responseLine := context.File.readLine()
 
-		potentialInputLine := context.Scanner.Text()
-
-		if len(potentialInputLine) == 0 {
+		if len(responseLine.InputLine) == 0 {
 			break
 		}
 
-		line := parse(potentialInputLine)
-
-		context.ExpectedResponse.Lines = append(context.ExpectedResponse.Lines, line)
+		context.ExpectedResponse.Lines =
+			append(context.ExpectedResponse.Lines, responseLine)
 	}
 
 	return parseMatches(context)

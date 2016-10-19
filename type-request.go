@@ -3,7 +3,7 @@ package main
 import "strings"
 
 type request struct {
-	Verb    string
+	Method    string
 	Path    string
 	Version string
 	Lines   []*line

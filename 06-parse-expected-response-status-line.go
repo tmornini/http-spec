@@ -5,13 +5,7 @@ import "strings"
 func parseExpectedStatusLine(context *context) bool {
 	context.log("06 parseExpectedStatusLine")
 
-	context.Scanner.Scan()
-
-	exitWithStatusOneIf(context.Scanner.Err())
-
-	inputLine := context.Scanner.Text()
-
-	statusLine := parse(inputLine)
+	statusLine := context.File.readLine()
 
 	parts := strings.Split(statusLine.Text, " ")
 

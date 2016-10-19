@@ -1,9 +1,16 @@
 package main
 
-func parseActualBlankLine(context *context) bool {
-	context.log("13 parseBlankLine")
+import "fmt"
 
-	blankLine := parse("< ")
+func parseActualBlankLine(context *context) bool {
+	context.log("14 parseBlankLine")
+
+	context.ActualResponseLineNumber++
+
+	position :=
+		fmt.Sprintf("actual-response:%v", context.ActualResponseLineNumber)
+
+	blankLine := parse(position, "< ")
 
 	context.ActualResponse.Lines =
 		append(context.ActualResponse.Lines, blankLine)

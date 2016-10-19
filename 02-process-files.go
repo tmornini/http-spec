@@ -32,7 +32,7 @@ func processFiles(https bool, hostname string, pathnames []string) {
 			HTTPS:     https,
 			HostName:  hostname,
 			URIScheme: uriScheme,
-			Pathname:  pathname,
+			File:      newFile(pathname),
 			WaitGroup: waitGroup,
 		}
 

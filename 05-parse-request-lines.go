@@ -3,18 +3,14 @@ package main
 func parseRequestLines(context *context) bool {
 	context.log("05 parseRequestLines")
 
-	for context.Scanner.Scan() {
-		exitWithStatusOneIf(context.Scanner.Err())
+	for {
+		anotherRequestLine := context.File.readLine()
 
-		potentialLine := context.Scanner.Text()
-
-		if len(potentialLine) == 0 {
+		if len(anotherRequestLine.InputLine) == 0 {
 			break
 		}
 
-		line := parse(potentialLine)
-
-		context.Request.Lines = append(context.Request.Lines, line)
+		context.Request.Lines = append(context.Request.Lines, anotherRequestLine)
 	}
 
 	return parseExpectedStatusLine(context)

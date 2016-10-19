@@ -10,7 +10,7 @@ func makeActualRequest(context *context) bool {
 	}
 
 	request, err := http.NewRequest(
-		context.Request.Verb,
+		context.Request.Method,
 		context.URIScheme+context.HostName+context.Request.Path,
 		nil,
 	)

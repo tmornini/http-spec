@@ -1,9 +1,12 @@
 package main
 
-import "sort"
+import (
+	"fmt"
+	"sort"
+)
 
 func parseActualHeaders(context *context) bool {
-	context.log("12 parseActualHeaders")
+	context.log("13 parseActualHeaders")
 
 	var headerNames []string
 
@@ -14,9 +17,17 @@ func parseActualHeaders(context *context) bool {
 	sort.Strings(headerNames)
 
 	for _, name := range headerNames {
-		line := parse("< " + name + ": " + context.HTTPResponse.Header.Get(name))
+		context.ActualResponseLineNumber++
 
-		context.ActualResponse.Lines = append(context.ActualResponse.Lines, line)
+		position :=
+			fmt.Sprintf("actual-response:%v", context.ActualResponseLineNumber)
+
+		headerText := "< " + name + ": " + context.HTTPResponse.Header.Get(name)
+
+		headerLine := parse(position, headerText)
+
+		context.ActualResponse.Lines =
+			append(context.ActualResponse.Lines, headerLine)
 	}
 
 	return parseActualBlankLine(context)
