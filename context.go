@@ -21,7 +21,6 @@ type context struct {
 	HTTPResponse     *http.Response
 	NetConnection    net.Conn
 	ActualResponse   *response
-	ActualLine       string
 	Substitutions    map[string]string
 }
 

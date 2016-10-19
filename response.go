@@ -9,18 +9,18 @@ type response struct {
 	Lines        []*line
 }
 
+func (response *response) compare(context *context, otherResponse *response) {
+	for i, line := range response.Lines {
+		line.compare(context, otherResponse.Lines[i])
+	}
+}
+
 func (response *response) String() string {
-	assembly := response.Version + " " + response.StatusCode
-
-	assembly += " " + response.ReasonPhrase + "\n"
-
-	var inputLines []string
+	var lineStrings []string
 
 	for _, line := range response.Lines {
-		inputLines = append(inputLines, line.Text)
+		lineStrings = append(lineStrings, line.Text)
 	}
 
-	assembly += strings.Join(inputLines, "\n")
-
-	return assembly
+	return strings.Join(lineStrings, "\n")
 }

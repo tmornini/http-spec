@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"sort"
 	"strings"
 )
@@ -16,19 +17,21 @@ func parseActualResponse(context *context) bool {
 	statusCode := parts[0]
 	reasonPhrase := parts[1]
 
-	var lines []*line
+	statusLine := fmt.Sprintf("< %s %s %s", version, statusCode, reasonPhrase)
 
-	var names []string
+	lines := []*line{parse(statusLine)}
+
+	var headerNames []string
 
 	actualResponse := context.HTTPResponse
 
-	for name := range actualResponse.Header {
-		names = append(names, name)
+	for headerName := range actualResponse.Header {
+		headerNames = append(headerNames, headerName)
 	}
 
-	sort.Strings(names)
+	sort.Strings(headerNames)
 
-	for _, name := range names {
+	for _, name := range headerNames {
 		line := parse("< " + name + ": " + actualResponse.Header.Get(name))
 
 		lines = append(lines, line)

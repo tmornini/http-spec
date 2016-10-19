@@ -23,6 +23,7 @@ func parseRequestLine(context *context) bool {
 		Verb:    parts[0],
 		Path:    parts[1],
 		Version: parts[2],
+		Lines:   []*line{requestLine},
 	}
 
 	return parseRequestLines(context)

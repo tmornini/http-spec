@@ -19,6 +19,7 @@ func parseExpectedStatusLine(context *context) bool {
 		Version:      parts[0],
 		StatusCode:   parts[1],
 		ReasonPhrase: parts[2],
+		Lines:        []*line{statusLine},
 	}
 
 	return parseExpectedResponseHeaders(context)

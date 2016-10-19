@@ -10,15 +10,11 @@ type request struct {
 }
 
 func (request *request) String() string {
-	assembly := request.Verb + " " + request.Path + " " + request.Version + "\n"
-
 	var lineStrings []string
 
 	for _, line := range request.Lines {
-		lineStrings = append(lineStrings, line.String())
+		lineStrings = append(lineStrings, line.Text)
 	}
 
-	assembly += strings.Join(lineStrings, "\n")
-
-	return assembly
+	return strings.Join(lineStrings, "\n")
 }

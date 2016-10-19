@@ -86,24 +86,20 @@ func (line *line) substitute(context *context) {
 	}
 }
 
-func (line *line) compare(context *context) {
+func (line *line) compare(context *context, otherLine *line) {
 	if line.Regexp == nil {
-		if line.Text != context.ActualLine {
-			exitWithStatusOne(fmt.Sprintf("%s != %s", line.Text, context.ActualLine))
+		if line.Text != otherLine.Text {
+			exitWithStatusOne(fmt.Sprintf("%s != %s", line.Text, otherLine.Text))
 		}
 	} else {
-		matches := line.Regexp.FindStringSubmatch(context.ActualLine)
+		matches := line.Regexp.FindStringSubmatch(otherLine.Text)
 
 		if len(matches) == 0 {
-			exitWithStatusOne(fmt.Sprintf("%s !~ %s", line.Regexp, context.ActualLine))
+			exitWithStatusOne(fmt.Sprintf("%s !~ %s", line.Regexp, otherLine))
 		} else {
 			if line.RegexpName != "" {
 				context.Substitutions[line.RegexpName] = matches[1]
 			}
 		}
 	}
-}
-
-func (line *line) String() string {
-	return line.Text
 }
