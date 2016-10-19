@@ -1,7 +1,7 @@
 package main
 
 func performSubstitutions(context *context) bool {
-	context.log("08 performSubstitutions")
+	context.log("09 performSubstitutions")
 
 	for _, line := range context.Request.Lines {
 		line.substitute(context)

@@ -6,7 +6,7 @@ import (
 )
 
 func processFile(context context) {
-	context.log("02 processFile")
+	context.log("03 processFile")
 
 	defer context.WaitGroup.Done()
 

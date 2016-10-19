@@ -8,7 +8,7 @@ import (
 
 func processFiles(https bool, hostname string, pathnames []string) {
 	if logFunctions {
-		fmt.Println("01 processFiles")
+		fmt.Println("02 processFiles")
 	}
 
 	if logContext {

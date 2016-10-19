@@ -1,7 +1,7 @@
 package main
 
 func parseRequestLines(context *context) bool {
-	context.log("04 parseRequestLines")
+	context.log("05 parseRequestLines")
 
 	for context.Scanner.Scan() {
 		exitWithStatusOneIf(context.Scanner.Err())

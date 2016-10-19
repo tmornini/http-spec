@@ -7,7 +7,7 @@ import (
 
 func processCLIArguments() {
 	if logFunctions {
-		fmt.Println("00 processCLIArguments")
+		fmt.Println("01 processCLIArguments")
 	}
 
 	var https bool

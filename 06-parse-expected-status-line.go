@@ -3,7 +3,7 @@ package main
 import "strings"
 
 func parseExpectedStatusLine(context *context) bool {
-	context.log("05 parseExpectedStatusLine")
+	context.log("06 parseExpectedStatusLine")
 
 	context.Scanner.Scan()
 
@@ -22,5 +22,5 @@ func parseExpectedStatusLine(context *context) bool {
 		Lines:        []*line{statusLine},
 	}
 
-	return parseExpectedResponseHeaders(context)
+	return parseExpectedResponseLines(context)
 }

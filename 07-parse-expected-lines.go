@@ -1,7 +1,7 @@
 package main
 
-func parseExpectedResponseHeaders(context *context) bool {
-	context.log("06 parseExpectedResponseHeaders")
+func parseExpectedResponseLines(context *context) bool {
+	context.log("07 parseExpectedResponseLines")
 
 	for context.Scanner.Scan() {
 		exitWithStatusOneIf(context.Scanner.Err())

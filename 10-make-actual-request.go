@@ -3,7 +3,7 @@ package main
 import "net/http"
 
 func makeActualRequest(context *context) bool {
-	context.log("09 makeActualRequest")
+	context.log("10 makeActualRequest")
 
 	if context.HTTPClient == nil {
 		context.HTTPClient = &http.Client{}

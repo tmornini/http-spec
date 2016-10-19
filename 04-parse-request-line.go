@@ -3,7 +3,7 @@ package main
 import "strings"
 
 func parseRequestLine(context *context) bool {
-	context.log("03 parseRequestLine")
+	context.log("04 parseRequestLine")
 
 	context.Scanner.Scan()
 
