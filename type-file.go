@@ -4,43 +4,30 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 type file struct {
-	Pathname   string
+	*bufio.Reader
+	PathName   string
 	OSFile     *os.File
-	Scanner    *bufio.Scanner
 	LineNumber int
 }
 
-func newFile(pathname string) *file {
-	osFile, err := os.Open(pathname)
+func (f *file) readLine() (string, error) {
+	inputText, err := f.ReadString(byte('\n'))
 
-	exitWithStatusOneIf(err)
-
-	return &file{
-		Pathname: pathname,
-		OSFile:   osFile,
-		Scanner:  bufio.NewScanner(osFile),
+	if err != nil {
+		return "", err
 	}
+
+	f.LineNumber++
+
+	inputText = strings.TrimSpace(inputText)
+
+	return inputText, nil
 }
 
-func (file *file) readLine() *line {
-	file.Scanner.Scan()
-
-	exitWithStatusOneIf(file.Scanner.Err())
-
-	file.LineNumber++
-
-	inputText := file.Scanner.Text()
-
-	return parse(file.String(), inputText)
-}
-
-func (file *file) close() {
-	file.OSFile.Close()
-}
-
-func (file *file) String() string {
-	return fmt.Sprintf("%s:%v", file.Pathname, file.LineNumber)
+func (f *file) String() string {
+	return fmt.Sprintf("[%s:%3d]", f.PathName, f.LineNumber)
 }

@@ -98,7 +98,7 @@ That character is SQUARED SQUARE (U+29C8)
 
 ## TODO
 
-* allow ⧆optional-name⧆:built-in⧆ syntax to access built-in set of matches,
+* allow ⧆optional-name⧆:built-in⧆ syntax to access built-in set of matchers,
 mostly obviously for Dates and other common items
 
 * write tests :-(

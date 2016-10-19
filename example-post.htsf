@@ -1,0 +1,28 @@
+> POST /v2/identities HTTP/1.1
+> Host: api.subledger.com
+> Content-Type: application/json
+>
+> {
+>   "email":       "tmornini@me.com",
+>   "description": "http-spec API testing utility",
+>   "reference":   "https://github.com/tmornini/http-spec"
+> }
+
+< HTTP/1.1 201 Created
+< Cache-Control: no-cache
+< Connection: keep-alive
+< Content-Length: 302
+< Content-Security-Policy: default-src https: data: 'unsafe-inline' 'unsafe-eval'
+< Content-Type: application/json
+< Date: ⧆⧆[A-Z][a-z]{2}, \d{2} [A-Z][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [A-Z]⧆
+< Public-Key-Pins: pin-sha256="hEJVeNxwqLnjseFv/doE3XU6Nr/hXJnoKdhn12iwavY="; pin-sha256="cTduB9g7EP4xd2glLUNhEq40f/jtyJF24dTzgVuKsZk="; max-age=300
+< Server: nginx
+< Strict-Transport-Security: max-age=10886400; includeSubDomains; preload
+< Vary: Origin
+< X-Content-Type-Options: nosniff
+< X-Frame-Options: SAMEORIGIN
+< X-Subledger-Request-Duration: ⧆x-s-request-duration⧆[0-9]{1,4}⧆ ms
+< X-Subledger-Request-Id: ⧆identity-id⧆[0-9A-Za-z]{22}⧆
+< X-Xss-Protection: 1; mode=block
+<
+< {"active_identity":{"id":"⧆identity-id⧆[0-9A-Za-z]{22}⧆","email":"tmornini@me.com","description":"http-spec API testing utility","reference":"https://github.com/tmornini/http-spec","version":1},"active_key":{"id":"⧆active-key-id⧆[0-9A-Za-z]{22}⧆","identity":"⧆identity⧆[0-9A-Za-z]{22}⧆","secret":"secret⧆[0-9A-Za-z]{22}⧆"}}

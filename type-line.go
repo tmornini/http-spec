@@ -7,112 +7,151 @@ import (
 )
 
 type line struct {
-	Position   string
-	InputLine  string
+	LineNumber int
+	PathName   string
+	InputText  string
 	IOPrefix   string
 	Text       string
 	RegexpName string
 	Regexp     *regexp.Regexp
 }
 
-func parse(position string, inputLine string) *line {
-	ioPrefix, text := split(inputLine)
+func lineFromFile(context *context) (*line, error) {
+	inputText, err := context.File.readLine()
 
-	line := &line{
-		Position:  position,
-		InputLine: inputLine,
-		IOPrefix:  ioPrefix,
-		Text:      text,
+	if err != nil {
+		return nil, err
 	}
 
-	line.validate()
+	line, err :=
+		lineFromText(context.File.PathName, context.File.LineNumber, inputText)
 
-	return line
+	if err != nil {
+		return nil, err
+	}
+
+	return line, nil
 }
 
-func split(inputLine string) (string, string) {
-	length := len(inputLine)
+func lineFromText(
+	pathName string,
+	lineNumber int,
+	inputText string) (*line, error) {
+	ioPrefix, text := split(inputText)
+
+	line := &line{
+		PathName:   pathName,
+		LineNumber: lineNumber,
+		InputText:  inputText,
+		IOPrefix:   ioPrefix,
+		Text:       text,
+	}
+
+	err := line.validate()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return line, nil
+
+}
+
+func split(inputText string) (string, string) {
+	length := len(inputText)
 
 	switch length {
 	case 0:
 		return "", ""
 	case 1:
-		return string(inputLine[0]), ""
+		return string(inputText[0]), ""
 	case 2:
-		return string(inputLine[0:1]), ""
+		return string(inputText[0:1]), ""
 	default:
-		return string(inputLine[0:1]), string(inputLine[2:length])
+		return string(inputText[0:1]), string(inputText[2:length])
 	}
 }
 
-func (line *line) validate() {
-	if line.isBlank() || line.isRequest() ||
-		line.isResponse() || line.isComment() {
-		return
+func (line *line) validate() error {
+	if line.isBlank() ||
+		line.isEmpty() ||
+		line.isRequest() ||
+		line.isResponse() ||
+		line.isComment() {
+		return nil
 	}
 
-	exitWithStatusOne("lines must begin with <, > or #")
-}
-
-func (line *line) isRequest() bool {
-	return strings.HasPrefix(string(line.IOPrefix[0]), ">")
-}
-
-func (line *line) isResponse() bool {
-	return strings.HasPrefix(string(line.IOPrefix[0]), "<")
-}
-
-func (line *line) isComment() bool {
-	return strings.HasPrefix(string(line.IOPrefix[0]), "#")
+	return fmt.Errorf("malformed line: %s", line.String())
 }
 
 func (line *line) isBlank() bool {
-	return len(line.InputLine) == 0
+	return line.InputText == ""
 }
 
-func (line *line) substitute(context *context) {
+func (line *line) isEmpty() bool {
+	return line.InputText != "" && line.Text == ""
+}
+
+func (line *line) isRequest() bool {
+	return line.IOPrefix != "" &&
+		strings.HasPrefix(string(line.IOPrefix[0]), ">")
+}
+
+func (line *line) isResponse() bool {
+	return line.IOPrefix != "" &&
+		strings.HasPrefix(string(line.IOPrefix[0]), "<")
+}
+
+func (line *line) isComment() bool {
+	return line.IOPrefix != "" &&
+		strings.HasPrefix(string(line.IOPrefix[0]), "#")
+}
+
+func (line *line) substitute(context *context) error {
 	parts := strings.Split(line.Text, substitionIdentifier)
 
 	switch len(parts) {
 	case 1:
-		return
+		return nil
 	case 3:
 		substitution := context.Substitutions[parts[1]]
 
 		if substitution == "" {
-			exitWithStatusOne("unknown tag: " + parts[1])
+			return fmt.Errorf("unknown tag: %v", parts[1])
 		}
 
 		line.Text = parts[0] + substitution + parts[2]
 	default:
-		exitWithStatusOne(
-			fmt.Sprintf(
-				"substition must be formed %scapture-name%s",
-				substitionIdentifier,
-				substitionIdentifier,
-			),
-		)
+		return fmt.Errorf("malformed substition: %s", line)
 	}
+
+	return nil
 }
 
-func (line *line) compare(context *context, otherLine *line) {
-	if line.Regexp == nil {
-		if line.Text != otherLine.Text {
-			exitWithStatusOne(fmt.Sprintf("%v != %v", otherLine, line))
-		}
-	} else {
+func (line *line) compare(context *context, otherLine *line) error {
+	if line.Regexp == nil && line.Text == otherLine.Text {
+		return nil
+	}
+
+	if line.Regexp == nil && line.Text != otherLine.Text {
+		return fmt.Errorf("%v != %v", otherLine, line)
+	}
+
+	if line.Regexp != nil {
 		matches := line.Regexp.FindStringSubmatch(otherLine.Text)
 
 		if len(matches) == 0 {
-			exitWithStatusOne(fmt.Sprintf("%v !~ %v", otherLine, line))
-		} else {
-			if line.RegexpName != "" {
-				context.Substitutions[line.RegexpName] = matches[1]
-			}
+			return fmt.Errorf("%v !~ %v", otherLine, line)
+		}
+
+		if line.RegexpName != "" {
+			context.Substitutions[line.RegexpName] = matches[1]
 		}
 	}
+
+	return nil
 }
 
 func (line *line) String() string {
-	return fmt.Sprintf("[%s] %s", line.Position, line.Text)
+	return fmt.Sprintf("[%s:%3d] %s %s", line.PathName, line.LineNumber, line.IOPrefix, line.Text)
 }
