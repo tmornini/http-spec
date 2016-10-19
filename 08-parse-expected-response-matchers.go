@@ -36,5 +36,5 @@ func parseMatches(context *context) bool {
 		}
 	}
 
-	return performSubstitutions(context)
+	return performRequestSubstitutions(context)
 }
