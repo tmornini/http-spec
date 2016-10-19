@@ -29,10 +29,10 @@ func processFiles(https bool, hostname string, pathnames []string) {
 		waitGroup.Add(1)
 
 		context := context{
-			Pathname:  pathname,
 			HTTPS:     https,
 			HostName:  hostname,
 			URIScheme: uriScheme,
+			Pathname:  pathname,
 			WaitGroup: waitGroup,
 		}
 
