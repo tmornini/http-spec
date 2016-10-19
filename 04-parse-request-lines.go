@@ -6,7 +6,7 @@ func parseRequestLines(context *context) bool {
 	var lines []*line
 
 	for context.Scanner.Scan() {
-		panicOn(context.Scanner.Err())
+		exitWithStatusOneIf(context.Scanner.Err())
 
 		potentialLine := context.Scanner.Text()
 

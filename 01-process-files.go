@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"sync"
 )
 
@@ -23,7 +24,6 @@ func processFiles(https bool, hostname string, pathnames []string) {
 	}
 
 	waitGroup := &sync.WaitGroup{}
-	defer waitGroup.Wait()
 
 	for _, pathname := range pathnames {
 		waitGroup.Add(1)
@@ -38,4 +38,8 @@ func processFiles(https bool, hostname string, pathnames []string) {
 
 		go processFile(context)
 	}
+
+	waitGroup.Wait()
+
+	os.Exit(0)
 }

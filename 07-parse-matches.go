@@ -25,7 +25,7 @@ func parseMatches(context *context) bool {
 
 			line.Regexp = regexp.MustCompile(reString)
 		default:
-			panic(
+			exitWithStatusOne(
 				fmt.Sprintf(
 					"regexp must be formed %soptional-capture-name%sregexp%s",
 					regexpIdentifier,

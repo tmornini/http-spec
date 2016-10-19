@@ -28,11 +28,11 @@ func makeActualRequest(context *context) bool {
 		nil,
 	)
 
-	panicOn(err)
+	exitWithStatusOneIf(err)
 
 	response, err := context.HTTPClient.Do(request)
 
-	panicOn(err)
+	exitWithStatusOneIf(err)
 
 	context.HTTPResponse = response
 

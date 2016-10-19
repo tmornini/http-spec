@@ -41,7 +41,7 @@ func parseActualResponse(context *context) bool {
 	scanner := bufio.NewScanner(context.HTTPResponse.Body)
 
 	for scanner.Scan() {
-		panicOn(scanner.Err())
+		exitWithStatusOneIf(scanner.Err())
 
 		line := parse("< " + scanner.Text())
 

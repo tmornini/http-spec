@@ -6,7 +6,7 @@ func parseExpectedResponseHeaders(context *context) bool {
 	lines := []*line{}
 
 	for context.Scanner.Scan() {
-		panicOn(context.Scanner.Err())
+		exitWithStatusOneIf(context.Scanner.Err())
 
 		potentialInputLine := context.Scanner.Text()
 

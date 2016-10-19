@@ -7,7 +7,7 @@ func parseExpectedStatusLine(context *context) bool {
 
 	context.Scanner.Scan()
 
-	panicOn(context.Scanner.Err())
+	exitWithStatusOneIf(context.Scanner.Err())
 
 	inputLine := context.Scanner.Text()
 

@@ -12,7 +12,7 @@ func processFile(context context) {
 
 	osFile, err := os.Open(context.Pathname)
 
-	panicOn(err)
+	exitWithStatusOneIf(err)
 
 	defer osFile.Close()
 

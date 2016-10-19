@@ -58,7 +58,7 @@ func validate(line *line) {
 		return
 	}
 
-	panic("lines must begin with <, > or #")
+	exitWithStatusOne("lines must begin with <, > or #")
 }
 
 func (line *line) substitute(context *context) {
@@ -71,12 +71,12 @@ func (line *line) substitute(context *context) {
 		substitution := context.Substitutions[parts[1]]
 
 		if substitution == "" {
-			panic("unknown tag: " + parts[1])
+			exitWithStatusOne("unknown tag: " + parts[1])
 		}
 
 		line.Text = parts[0] + substitution + parts[2]
 	default:
-		panic(
+		exitWithStatusOne(
 			fmt.Sprintf(
 				"substition must be formed %scapture-name%s",
 				substitionIdentifier,
@@ -89,13 +89,13 @@ func (line *line) substitute(context *context) {
 func (line *line) compare(context *context) {
 	if line.Regexp == nil {
 		if line.Text != context.ActualLine {
-			panic(fmt.Sprintf("%s != %s", line.Text, context.ActualLine))
+			exitWithStatusOne(fmt.Sprintf("%s != %s", line.Text, context.ActualLine))
 		}
 	} else {
 		matches := line.Regexp.FindStringSubmatch(context.ActualLine)
 
 		if len(matches) == 0 {
-			panic(fmt.Sprintf("%s !~ %s", line.Regexp, context.ActualLine))
+			exitWithStatusOne(fmt.Sprintf("%s !~ %s", line.Regexp, context.ActualLine))
 		} else {
 			if line.RegexpName != "" {
 				context.Substitutions[line.RegexpName] = matches[1]
