@@ -2,22 +2,13 @@ package main
 
 import (
 	"flag"
-	"fmt"
-	"os"
 	"sync"
 )
-
-const logFunctions = false
-const logContext = false
 
 const regexpIdentifier = "⧆"
 const substitionIdentifier = "⧈"
 
 func main() {
-	if logFunctions {
-		fmt.Println("00 main")
-	}
-
 	var https bool
 	var hostname string
 
@@ -35,28 +26,26 @@ func main() {
 	}
 
 	context := &context{
-		HTTPS:         https,
-		HostName:      hostname,
-		Pathnames:     flag.Args(),
-		URIScheme:     uriScheme,
-		Substitutions: map[string]string{},
-		WaitGroup:     &sync.WaitGroup{},
+		LogFunctions:          false,
+		LogContext:            false,
+		HTTPS:                 https,
+		HostName:              hostname,
+		Pathnames:             flag.Args(),
+		URIScheme:             uriScheme,
+		WaitGroup:             &sync.WaitGroup{},
+		ResultGathererChannel: make(chan context),
 	}
 
-	processSpecFilesConcurrently(context)
-}
+	context.log("00 main")
 
-func exitWithSucess() {
-	os.Exit(0)
-}
+	// not in WaitGroup, terminated at close of ResultGathererChannel below
+	go resultGatherer(*context)
 
-func exitWithFailure(message string) {
-	os.Stderr.WriteString(message + "\n")
-	os.Exit(1)
-}
+	specFileScatter(context)
 
-func exitWithFailureOn(err error) {
-	if err != nil {
-		exitWithFailure(err.Error())
-	}
+	context.WaitGroup.Wait()
+
+	close(context.ResultGathererChannel)
+
+	select {}
 }

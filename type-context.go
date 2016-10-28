@@ -7,26 +7,32 @@ import (
 )
 
 type context struct {
-	HTTPS              bool
-	URIScheme          string
-	HostName           string
-	Pathnames          []string
-	Pathname           string
-	WaitGroup          *sync.WaitGroup
-	File               *file
-	HTTPClient         *http.Client
-	SpecTriplet        *specTriplet
-	Substitutions      map[string]string
-	HTTPResponse       *http.Response
-	ResponseLineNumber int
+	LogFunctions          bool
+	LogContext            bool
+	Stage                 string
+	HTTPS                 bool
+	URIScheme             string
+	HostName              string
+	Pathnames             []string
+	Pathname              string
+	WaitGroup             *sync.WaitGroup
+	ResultGathererChannel chan context
+	File                  *file
+	Substitutions         map[string]string
+	HTTPClient            *http.Client
+	SpecTriplet           *specTriplet
+	HTTPResponse          *http.Response
+	Err                   error
 }
 
-func (context *context) log(tag string) {
-	if logFunctions {
-		fmt.Println(tag)
+func (context *context) log(stage string) {
+	context.Stage = stage
+
+	if context.LogFunctions {
+		fmt.Println(stage)
 	}
 
-	if logContext {
+	if context.LogContext {
 		fmt.Printf("%#v\n", context)
 	}
 }

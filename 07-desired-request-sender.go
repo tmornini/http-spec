@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-func sendRequestReceiveResponse(context *context) error {
-	context.log("07-send-request-receive-response")
+func desiredRequestMaker(context *context) {
+	context.log("07-desired-request-maker")
 
 	desiredRequest := context.SpecTriplet.DesiredRequest
 
@@ -19,8 +19,8 @@ func sendRequestReceiveResponse(context *context) error {
 		body,
 	)
 
-	if err != nil {
-		return err
+	if errorHandler(context, err) {
+		return
 	}
 
 	for _, headerLine := range context.SpecTriplet.DesiredRequest.HeaderLines {
@@ -32,21 +32,11 @@ func sendRequestReceiveResponse(context *context) error {
 		request.Header.Add(key, value)
 	}
 
-	// bytes, err := httputil.DumpRequestOut(request, true)
-	//
-	// if err != nil {
-	// 	panic(err)
-	// }
-	//
-	// fmt.Println(string(bytes))
+	context.HTTPResponse, err = context.HTTPClient.Do(request)
 
-	response, err := context.HTTPClient.Do(request)
-
-	if err != nil {
-		return err
+	if errorHandler(context, err) {
+		return
 	}
 
-	context.HTTPResponse = response
-
-	return translateResponse(context)
+	actualResponseReceiver(context)
 }

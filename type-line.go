@@ -6,16 +6,6 @@ import (
 	"strings"
 )
 
-type line struct {
-	LineNumber int
-	PathName   string
-	InputText  string
-	IOPrefix   string
-	Text       string
-	RegexpName string
-	Regexp     *regexp.Regexp
-}
-
 func lineFromFile(context *context) (*line, error) {
 	inputText, err := context.File.readLine()
 
@@ -72,6 +62,16 @@ func split(inputText string) (string, string) {
 	}
 }
 
+type line struct {
+	LineNumber  int
+	PathName    string
+	InputText   string
+	IOPrefix    string
+	Text        string
+	RegexpNames []string
+	Regexp      *regexp.Regexp
+}
+
 func (line *line) validate() error {
 	if line.isBlank() ||
 		line.isEmpty() ||
@@ -110,20 +110,29 @@ func (line *line) isComment() bool {
 func (line *line) substitute(context *context) error {
 	parts := strings.Split(line.Text, substitionIdentifier)
 
-	switch len(parts) {
-	case 1:
+	count := len(parts)
+
+	if count == 1 {
 		return nil
-	case 3:
-		substitution := context.Substitutions[parts[1]]
+	}
 
-		if substitution == "" {
-			return fmt.Errorf("unknown tag: %v", parts[1])
-		}
-
-		line.Text = parts[0] + substitution + parts[2]
-	default:
+	if count == 0 || count == 2 || (count-3)%2 != 0 {
 		return fmt.Errorf("malformed substition: %s", line)
 	}
+
+	substitutedLine := parts[0]
+
+	for i := 1; i < count-1; i += 2 {
+		substitution := context.Substitutions[parts[i]]
+
+		if substitution == "" {
+			return fmt.Errorf("unknown tag: %v", parts[i])
+		}
+
+		substitutedLine += substitution + parts[i+1]
+	}
+
+	line.Text = substitutedLine
 
 	return nil
 }
@@ -144,8 +153,10 @@ func (line *line) compare(context *context, otherLine *line) error {
 			return fmt.Errorf("%v !~ %v", otherLine, line)
 		}
 
-		if line.RegexpName != "" {
-			context.Substitutions[line.RegexpName] = matches[1]
+		for i, match := range matches[1:] {
+			if line.RegexpNames[i] != "" {
+				context.Substitutions[line.RegexpNames[i]] = match
+			}
 		}
 	}
 
