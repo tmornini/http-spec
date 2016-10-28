@@ -30,7 +30,7 @@ func processSpecFile(context context) {
 	context.HTTPClient = &http.Client{}
 
 	for {
-		err = parseSpecTriplets(&context)
+		err = iterateSpecTriplets(&context)
 
 		if err != nil {
 			break

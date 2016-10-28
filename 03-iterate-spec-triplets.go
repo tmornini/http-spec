@@ -2,8 +2,8 @@ package main
 
 import "io"
 
-func parseSpecTriplets(context *context) error {
-	context.log("03 parse-spec-triplets")
+func iterateSpecTriplets(context *context) error {
+	context.log("03 iterate-spec-triplets")
 
 	for {
 		desiredRequest, err := requestFromFile(context)
