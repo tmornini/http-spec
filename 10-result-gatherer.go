@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"time"
 )
 
 func resultGatherer(context context) {
@@ -10,28 +11,47 @@ func resultGatherer(context context) {
 
 	success := true
 
-	successes := make(map[string]int)
-	failures := make(map[string]int)
+	successes := 0
+	failures := 0
+
+	startedAt := time.Now()
 
 	for completedContext := range context.ResultGathererChannel {
+		duration := time.Since(completedContext.StartedAt)
+
 		if completedContext.Err == nil {
-			successes[completedContext.Stage]++
-			fmt.Printf("[%s]: success!\n", context.Stage)
+			successes++
+			fmt.Printf(
+				"success %s %s\n",
+				duration.String(),
+				completedContext.SpecTriplet.String())
 		} else {
 			success = false
-			failures[completedContext.Stage]++
-			fmt.Printf("[%s]: failure: %s\n", completedContext.Stage, completedContext.Err.Error())
+			failures++
+
+			location := "failure " + duration.String() + " "
+
+			if completedContext.File == nil {
+				location += "[" + completedContext.Pathname + "]"
+			} else {
+				if completedContext.SpecTriplet == nil {
+					location += completedContext.File.String()
+				} else {
+					location += completedContext.SpecTriplet.String()
+				}
+			}
+
+			fmt.Println(location, completedContext.Err.Error())
 		}
 	}
 
-	fmt.Println("successes:", successes)
-	fmt.Println("failures:", failures)
+	duration := time.Since(startedAt)
+
+	fmt.Println("Total run time:", duration.String())
 
 	if success {
-		fmt.Println("http-spec: success!")
 		os.Exit(0)
-	} else {
-		fmt.Println("http-spec: failure!")
-		os.Exit(1)
 	}
+
+	os.Exit(1)
 }

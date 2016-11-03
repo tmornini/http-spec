@@ -9,12 +9,15 @@ import (
 func specFileProcessor(context context) {
 	context.log("02 spec-file-processor")
 
+	defer context.WaitGroup.Done()
+
 	osFile, err := os.Open(context.Pathname)
 
 	if errorHandler(&context, err) {
+		context.ResultGathererChannel <- context
+
 		return
 	}
-
 	context.File = &file{
 		bufio.NewReader(osFile),
 		context.Pathname,
@@ -29,6 +32,4 @@ func specFileProcessor(context context) {
 	specTripletIterator(&context)
 
 	osFile.Close()
-
-	context.WaitGroup.Done()
 }

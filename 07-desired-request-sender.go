@@ -4,10 +4,11 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"time"
 )
 
-func desiredRequestMaker(context *context) {
-	context.log("07-desired-request-maker")
+func desiredRequestSender(context *context) {
+	context.log("07-desired-request-sender")
 
 	desiredRequest := context.SpecTriplet.DesiredRequest
 
@@ -31,6 +32,8 @@ func desiredRequestMaker(context *context) {
 
 		request.Header.Add(key, value)
 	}
+
+	context.StartedAt = time.Now()
 
 	context.HTTPResponse, err = context.HTTPClient.Do(request)
 

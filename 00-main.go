@@ -38,7 +38,6 @@ func main() {
 
 	context.log("00 main")
 
-	// not in WaitGroup, terminated at close of ResultGathererChannel below
 	go resultGatherer(*context)
 
 	specFileScatter(context)

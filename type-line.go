@@ -163,6 +163,10 @@ func (line *line) compare(context *context, otherLine *line) error {
 	return nil
 }
 
+func (line *line) Location() string {
+	return fmt.Sprintf("[%s:%3d]", line.PathName, line.LineNumber)
+}
+
 func (line *line) String() string {
-	return fmt.Sprintf("[%s:%3d] %s %s", line.PathName, line.LineNumber, line.IOPrefix, line.Text)
+	return fmt.Sprintf("%s %s %s", line.Location(), line.IOPrefix, line.Text)
 }

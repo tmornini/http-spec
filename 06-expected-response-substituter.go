@@ -5,5 +5,5 @@ func expectedResponseSubstituter(context *context) {
 
 	context.SpecTriplet.ExpectedResponse.substitute(context)
 
-	desiredRequestMaker(context)
+	desiredRequestSender(context)
 }

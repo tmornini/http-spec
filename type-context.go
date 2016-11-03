@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"sync"
+	"time"
 )
 
 type context struct {
@@ -21,6 +22,7 @@ type context struct {
 	Substitutions         map[string]string
 	HTTPClient            *http.Client
 	SpecTriplet           *specTriplet
+	StartedAt             time.Time
 	HTTPResponse          *http.Response
 	Err                   error
 }
