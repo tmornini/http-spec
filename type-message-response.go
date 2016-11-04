@@ -12,12 +12,12 @@ func responseFromFile(context *context) (*response, error) {
 		return nil, err
 	}
 
-	requestLine := message.FirstLine
+	statusLine := message.FirstLine
 
-	parts := strings.Split(requestLine.Text, " ")
+	parts := strings.Split(statusLine.Text, " ")
 
 	if len(parts) != 3 {
-		return nil, fmt.Errorf("%s: malformed request-line", requestLine.String())
+		return nil, fmt.Errorf("malformed status-line: %s", statusLine.String())
 	}
 
 	return &response{
