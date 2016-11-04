@@ -17,6 +17,13 @@ func resultGatherer(context context) {
 	startedAt := time.Now()
 
 	for completedContext := range context.ResultGathererChannel {
+		if completedContext.Err == nil &&
+			completedContext.SpecTriplet != nil &&
+			completedContext.SpecTriplet.isRequestOnly() {
+			fmt.Println(completedContext.SpecTriplet.ActualResponse)
+
+			completedContext.Err = fmt.Errorf("no expected response")
+		}
 
 		if completedContext.Err == nil {
 			successCount++

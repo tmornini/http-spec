@@ -5,17 +5,6 @@ import "fmt"
 func responseComparitor(context *context) {
 	context.log("09 comparitor")
 
-	if context.SpecTriplet.ExpectedResponse == nil {
-		fmt.Println(context.SpecTriplet.ActualResponse)
-
-		errorHandler(
-			context,
-			fmt.Errorf("no expected response"),
-		)
-
-		return
-	}
-
 	expectedResponse := context.SpecTriplet.ExpectedResponse
 	actualResponse := context.SpecTriplet.ActualResponse
 

@@ -5,7 +5,7 @@ func desiredRequestSubstitor(context *context) {
 
 	context.SpecTriplet.DesiredRequest.substitute(context)
 
-	if context.SpecTriplet.ExpectedResponse == nil {
+	if context.SpecTriplet.isRequestOnly() {
 		desiredRequestSender(context)
 
 		return

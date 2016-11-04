@@ -105,5 +105,9 @@ func actualResponseReceiver(context *context) {
 		reasonPhrase,
 	}
 
+	if context.SpecTriplet.isRequestOnly() {
+		return
+	}
+
 	responseComparitor(context)
 }
