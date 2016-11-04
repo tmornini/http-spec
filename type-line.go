@@ -108,7 +108,7 @@ func (line *line) isComment() bool {
 }
 
 func (line *line) substitute(context *context) error {
-	parts := strings.Split(line.Text, substitionIdentifier)
+	parts := strings.Split(line.Text, substitutionIdentifier)
 
 	count := len(parts)
 
@@ -117,7 +117,7 @@ func (line *line) substitute(context *context) error {
 	}
 
 	if count == 0 || count == 2 || (count-3)%2 != 0 {
-		return fmt.Errorf("malformed substition: %s", line)
+		return fmt.Errorf("malformed substitution: %s", line)
 	}
 
 	substitutedLine := parts[0]

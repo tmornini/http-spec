@@ -46,10 +46,10 @@ func (response *response) String() string {
 		if content[0:7] == "< Date:" {
 			content =
 				content[0:7] +
-					substitionIdentifier +
-					substitionIdentifier +
+					substitutionIdentifier +
+					substitutionIdentifier +
 					":date" +
-					substitionIdentifier
+					substitutionIdentifier
 		}
 
 		lineStrings = append(lineStrings, content)

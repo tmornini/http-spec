@@ -87,7 +87,7 @@ results.
 ## regexp matching
 
 Expected responses are parsed for regexp matchers that allow dynamic matching
-and named capture for subsequent substition, scoped to the file, and take the
+and named capture for subsequent substitution, scoped to the file, and take the
 form:
 
     ⧆optional-name⧆mandatory-regexp⧆
@@ -95,7 +95,7 @@ form:
 That character is SQUARED ASTERISK (U+29C6)
 
 If name is provided, the complete match of the regexp is assigned to the name,
-making the matched text available for substitions later in the file.
+making the matched text available for substitutions later in the file.
 
 Matching makes it easy to match variable content items such as UUIDs and
 authentication tokens.
@@ -105,15 +105,15 @@ authentication tokens.
 ⧆optional-name⧆:date⧆ is a special-case matcher that matches the RFC-822 date
 format used by the HTTP 1.1 Date header.
 
-## substition
+## substitution
 
-Substitions allow the re-use of previous regexp matches and take the form:
+Substitutions allow the re-use of previous regexp matches and take the form:
 
     ⧈name⧈
 
 That character is SQUARED SQUARE (U+29C8)
 
-Substition allows re-use of response data in requests within the same file.
+Substitution allows re-use of response data in requests within the same file.
 
 ## TODO
 

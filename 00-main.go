@@ -6,7 +6,7 @@ import (
 )
 
 const regexpIdentifier = "⧆"
-const substitionIdentifier = "⧈"
+const substitutionIdentifier = "⧈"
 
 func main() {
 	var prefix string
