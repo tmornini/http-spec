@@ -64,19 +64,24 @@ func messageFromFile(context *context) (*message, error) {
 	}, nil
 }
 
+func (message *message) allLines() []*line {
+	allLines := []*line{message.FirstLine}
+	allLines = append(allLines, message.HeaderLines...)
+	allLines = append(allLines, message.BodyLines...)
+
+	return allLines
+}
+
 func (message *message) allHeaderAndBodyLines() []*line {
 	allHeaderAndBodyLines := append([]*line{}, message.HeaderLines...)
+	allHeaderAndBodyLines = append(allHeaderAndBodyLines, message.BodyLines...)
 
-	return append(allHeaderAndBodyLines, message.BodyLines...)
+	return allHeaderAndBodyLines
 }
 
 func (message *message) substitute(context *context) {
-	for _, headerLine := range message.HeaderLines {
-		headerLine.substitute(context)
-	}
-
-	for _, bodyLine := range message.BodyLines {
-		bodyLine.substitute(context)
+	for _, line := range message.allLines() {
+		line.substitute(context)
 	}
 }
 
