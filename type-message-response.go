@@ -43,13 +43,13 @@ func (response *response) String() string {
 	for _, l := range response.HeaderLines {
 		content := l.Content()
 
-		if content[0:7] == "< Date:" {
+		if content[0:8] == "< Date: " {
 			content =
-				content[0:7] +
-					substitutionIdentifier +
-					substitutionIdentifier +
+				content[0:8] +
+					regexpIdentifier +
+					regexpIdentifier +
 					":date" +
-					substitutionIdentifier
+					regexpIdentifier
 		}
 
 		lineStrings = append(lineStrings, content)
