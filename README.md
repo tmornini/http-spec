@@ -41,7 +41,7 @@ Let me know if you'd like a binary and I'll add your platform to future.
 
 ## basic usage
 
-    http-spec [-https] -hostname host-or-ip:port path/to/*.htsf
+    http-spec [-https] -prefix http(s)://host.name:port path/to/*.htsf
 
 ## hypertext specification format (HTSF)
 

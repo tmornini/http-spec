@@ -16,7 +16,7 @@ func desiredRequestSender(context *context) {
 
 	request, err := http.NewRequest(
 		desiredRequest.Method,
-		context.URIScheme+context.HostName+desiredRequest.Path,
+		context.URLPrefix+desiredRequest.Path,
 		body,
 	)
 

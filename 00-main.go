@@ -9,29 +9,22 @@ const regexpIdentifier = "⧆"
 const substitionIdentifier = "⧈"
 
 func main() {
-	var https bool
-	var hostname string
+	var prefix string
 
-	flag.BoolVar(&https, "https", false, "use HTTPS")
-	flag.StringVar(&hostname, "hostname", "localhost", "`hostname` to test")
+	flag.StringVar(
+		&prefix,
+		"prefix",
+		"http://localhost:80",
+		"prefix for request URLs",
+	)
 
 	flag.Parse()
-
-	var uriScheme string
-
-	if https {
-		uriScheme = "https://"
-	} else {
-		uriScheme = "http://"
-	}
 
 	context := &context{
 		LogFunctions:          false,
 		LogContext:            false,
-		HTTPS:                 https,
-		HostName:              hostname,
+		URLPrefix:             prefix,
 		Pathnames:             flag.Args(),
-		URIScheme:             uriScheme,
 		WaitGroup:             &sync.WaitGroup{},
 		ResultGathererChannel: make(chan context),
 	}

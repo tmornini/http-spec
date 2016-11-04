@@ -10,14 +10,12 @@ import (
 type context struct {
 	LogFunctions          bool
 	LogContext            bool
-	Stage                 string
-	HTTPS                 bool
-	URIScheme             string
-	HostName              string
+	URLPrefix             string
 	Pathnames             []string
 	Pathname              string
 	WaitGroup             *sync.WaitGroup
 	ResultGathererChannel chan context
+	Stage                 string
 	File                  *file
 	Substitutions         map[string]string
 	HTTPClient            *http.Client
