@@ -113,5 +113,4 @@ Substition allows re-use of response data in requests within the same file.
 ## TODO
 
 * allow ⧆optional-name⧆:http-date⧆ to use a built-in matcher for HTTP dates.
-
-* write tests :-(
+* improve testing dramatically :-(
