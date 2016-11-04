@@ -33,9 +33,12 @@ Download a binary executable from:
 
 Don't forget to put it somewhere in your PATH, and chmod 755 it!
 
-### Windows and Linux developers
+### Docker image
 
-Let me know if you'd like a binary and I'll add your platform to future.
+    docker pull tmornini/http-spec
+
+Please see https://hub.docker.com/r/tmornini/http-spec/ for instructions on how
+to use the Docker image.
 
 ## Basic Usage
 
