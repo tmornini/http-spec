@@ -69,7 +69,7 @@ type line struct {
 	IOPrefix    string
 	Text        string
 	RegexpNames []string
-	Regexp      *regexp.Regexp
+	Regexps     []*regexp.Regexp
 }
 
 func (line *line) validate() error {
@@ -138,25 +138,23 @@ func (line *line) substitute(context *context) error {
 }
 
 func (line *line) compare(context *context, otherLine *line) error {
-	if line.Regexp == nil && line.Text == otherLine.Text {
+	if line.RegexpNames == nil && line.Text == otherLine.Text {
 		return nil
 	}
 
-	if line.Regexp == nil && line.Text != otherLine.Text {
-		return fmt.Errorf("%v != %v", otherLine, line)
+	if line.RegexpNames == nil && line.Text != otherLine.Text {
+		return fmt.Errorf("%v != %v", line.Content(), otherLine.Content())
 	}
 
-	if line.Regexp != nil {
-		matches := line.Regexp.FindStringSubmatch(otherLine.Text)
+	for i, regexpName := range line.RegexpNames {
+		match := line.Regexps[i].FindString(otherLine.Text)
 
-		if len(matches) == 0 {
-			return fmt.Errorf("%v !~ %v", otherLine, line)
+		if match == "" {
+			return fmt.Errorf("%v !~ %v", line.Content(), otherLine.Content())
 		}
 
-		for i, match := range matches[1:] {
-			if line.RegexpNames[i] != "" {
-				context.Substitutions[line.RegexpNames[i]] = match
-			}
+		if regexpName != "" {
+			context.Substitutions[regexpName] = match
 		}
 	}
 

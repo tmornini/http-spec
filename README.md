@@ -100,6 +100,11 @@ making the matched text available for substitions later in the file.
 Matching makes it easy to match variable content items such as UUIDs and
 authentication tokens.
 
+## built-in matchers
+
+⧆optional-name⧆:date⧆ is a special-case matcher that matches the RFC-822 date
+format used by the HTTP 1.1 Date header.
+
 ## substition
 
 Substitions allow the re-use of previous regexp matches and take the form:
@@ -112,5 +117,4 @@ Substition allows re-use of response data in requests within the same file.
 
 ## TODO
 
-* allow ⧆optional-name⧆:http-date⧆ to use a built-in matcher for HTTP dates.
 * improve testing dramatically :-(

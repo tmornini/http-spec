@@ -41,7 +41,18 @@ func (response *response) String() string {
 	lineStrings = append(lineStrings, response.FirstLine.Content())
 
 	for _, l := range response.HeaderLines {
-		lineStrings = append(lineStrings, l.Content())
+		content := l.Content()
+
+		if content[0:7] == "< Date:" {
+			content =
+				content[0:7] +
+					substitionIdentifier +
+					substitionIdentifier +
+					":date" +
+					substitionIdentifier
+		}
+
+		lineStrings = append(lineStrings, content)
 	}
 
 	lineStrings = append(lineStrings, response.BlankLine.Content())

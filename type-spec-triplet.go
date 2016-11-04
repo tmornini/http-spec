@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strings"
 	"time"
 )
@@ -21,16 +22,27 @@ func (specTriplet *specTriplet) String() string {
 	result := []string{}
 
 	if specTriplet.DesiredRequest != nil {
-		result = append(result, specTriplet.DesiredRequest.FirstLine.Location())
+		result =
+			append(
+				result,
+				fmt.Sprintf(
+					"%s:%d",
+					specTriplet.DesiredRequest.FirstLine.PathName,
+					specTriplet.DesiredRequest.FirstLine.LineNumber,
+				),
+			)
 	}
 
 	if specTriplet.ExpectedResponse != nil {
-		result = append(result, specTriplet.ExpectedResponse.FirstLine.Location())
+		result =
+			append(
+				result,
+				fmt.Sprintf(
+					"%d",
+					specTriplet.ExpectedResponse.FirstLine.LineNumber,
+				),
+			)
 	}
 
-	if specTriplet.ActualResponse != nil {
-		result = append(result, specTriplet.ActualResponse.FirstLine.Location())
-	}
-
-	return strings.Join(result, ", ")
+	return "[" + strings.Join(result, ":") + "]"
 }

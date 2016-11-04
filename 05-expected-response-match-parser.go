@@ -34,25 +34,63 @@ func expectedResponseMatchParser(context *context) {
 			return
 		}
 
-		reString := regexp.QuoteMeta(parts[0])
+		var re *regexp.Regexp
+		var err error
 
-		for i := 1; i < count-1; i += 3 {
-			line.RegexpNames = append(line.RegexpNames, parts[i])
+		if parts[0] != "" {
+			re, err = regexp.Compile(regexp.QuoteMeta(parts[0]))
 
-			reString +=
-				"(" +
-					parts[i+1] +
-					")" +
-					regexp.QuoteMeta(parts[i+2])
+			if errorHandler(context, err) {
+				return
+			}
+
+			line.RegexpNames = append(line.RegexpNames, ":prefix")
+			line.Regexps = append(line.Regexps, re)
 		}
 
-		regexp, err := regexp.Compile(reString)
+		for i := 1; i < count-1; i += 3 {
+			reString := "("
+
+			if parts[i+1] == ":date" {
+				reString +=
+					"(Mon|Tue|Wed|Thu|Fri|Sat|Sun), " +
+						"(0\\d|1\\d|2\\d|3[01]) " +
+						"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) " +
+						"2\\d{3} " +
+						"(0\\d|1\\d|2[0-3]):" +
+						"(0\\d|1\\d|2\\d|3\\d|4\\d|5\\d):" +
+						"(0\\d|1\\d|2\\d|3\\d|4\\d|5\\d) " +
+						"(A|M|N|Y|Z|UT|GMT|[A-Z]{3}|[+-](0\\d|1[012]))"
+			} else {
+				reString += parts[i+1]
+			}
+
+			reString += ")"
+
+			re, err = regexp.Compile(reString)
+
+			if errorHandler(context, err) {
+				return
+			}
+
+			line.RegexpNames = append(line.RegexpNames, parts[i])
+			line.Regexps = append(line.Regexps, re)
+
+			if parts[i+2] != "" {
+				re, err = regexp.Compile(regexp.QuoteMeta(parts[i+2]))
+
+				if errorHandler(context, err) {
+					return
+				}
+
+				line.RegexpNames = append(line.RegexpNames, ":postfix")
+				line.Regexps = append(line.Regexps, re)
+			}
+		}
 
 		if errorHandler(context, err) {
 			return
 		}
-
-		line.Regexp = regexp
 	}
 
 	expectedResponseSubstituter(context)
