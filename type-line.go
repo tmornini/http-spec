@@ -167,6 +167,10 @@ func (line *line) Location() string {
 	return fmt.Sprintf("[%s:%3d]", line.PathName, line.LineNumber)
 }
 
+func (line *line) Content() string {
+	return fmt.Sprintf("%s %s", line.IOPrefix, line.Text)
+}
+
 func (line *line) String() string {
-	return fmt.Sprintf("%s %s %s", line.Location(), line.IOPrefix, line.Text)
+	return fmt.Sprintf("%s %s", line.Location(), line.Content())
 }

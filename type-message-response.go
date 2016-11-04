@@ -34,3 +34,23 @@ type response struct {
 	StatusCode   string
 	ReasonPhrase string
 }
+
+func (response *response) String() string {
+	lineStrings := []string{}
+
+	lineStrings = append(lineStrings, response.FirstLine.Content())
+
+	for _, l := range response.HeaderLines {
+		lineStrings = append(lineStrings, l.Content())
+	}
+
+	lineStrings = append(lineStrings, response.BlankLine.Content())
+
+	if response.BodyLines != nil {
+		for _, l := range response.BodyLines {
+			lineStrings = append(lineStrings, l.Content())
+		}
+	}
+
+	return strings.Join(lineStrings, "\n")
+}

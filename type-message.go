@@ -99,23 +99,3 @@ func (message *message) Body() string {
 
 	return strings.Join(bodyLineTexts, "\n")
 }
-
-func (message *message) String() string {
-	lineStrings := []string{}
-
-	lineStrings = append(lineStrings, message.FirstLine.String())
-
-	for _, l := range message.HeaderLines {
-		lineStrings = append(lineStrings, l.String())
-	}
-
-	lineStrings = append(lineStrings, message.BlankLine.String())
-
-	if message.BodyLines != nil {
-		for _, l := range message.BodyLines {
-			lineStrings = append(lineStrings, l.String())
-		}
-	}
-
-	return strings.Join(lineStrings, "\n")
-}

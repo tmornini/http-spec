@@ -34,3 +34,23 @@ type request struct {
 	Path    string
 	Version string
 }
+
+func (request *request) String() string {
+	lineStrings := []string{}
+
+	lineStrings = append(lineStrings, request.FirstLine.String())
+
+	for _, l := range request.HeaderLines {
+		lineStrings = append(lineStrings, l.String())
+	}
+
+	lineStrings = append(lineStrings, request.BlankLine.String())
+
+	if request.BodyLines != nil {
+		for _, l := range request.BodyLines {
+			lineStrings = append(lineStrings, l.String())
+		}
+	}
+
+	return strings.Join(lineStrings, "\n")
+}
