@@ -1,25 +1,24 @@
 # http-spec
 Template-based HTTP request/response specification tool
 
-As I immersed myself in HTTP API development and become a huge fan of HTTP
-itself, I wanted a very lightweight way to test APIs.
+As an API developer who loves HTTP and test driven development, I wanted a very lightweight way to test APIs and could not find anything that felt "just right."
 
-I couldn't find anything that satisified my desire for a direct, explicit,
-flexible and fast way to develop and execute HTTP level testing against those
-APIs.
+I wanted a direct, explicit, flexible and fast way to develop and execute HTTP level testing against those APIs.
 
 If you have code that executes behind an HTTP API, then it would be ideal to
 test that code via HTTP, right?
 
 Stated another way: Good APIs are contracts executed via HTTP. Why not test
-contract conformance via HTTP requests and responses?
+contract conformance via HTTP requests and responses? Anything else sort of
+misses the point.
 
-While low-level tests are still required for edge cases such as networking
+While low-level tests may still be required for edge cases such as networking
 exceptions and intermittent service retry, for instance, the *vast* majority
 of the code behind the API should be exercisable via HTTP requests.
 
 A not insignificant advantage of this method is that it requires you stare at
-your API's input and output. There is much to be learned from that experience!
+your API's input and output, including request and response headers. There is
+much to be learned from that experience!
 
 ## installation
 
@@ -41,7 +40,7 @@ Let me know if you'd like a binary and I'll add your platform to future.
 
 ## basic usage
 
-    http-spec [-https] -prefix http(s)://host.name:port path/to/*.htsf
+    http-spec [-prefix http(s)://host.name:port] path/to/\*.htsf
 
 ## hypertext specification format (HTSF)
 
@@ -50,20 +49,19 @@ HTSF is, first and foremost, modeled after curl -v output.
 It consists of a *complete* HTTP request, including the request line, HTTP
 headers, mandatory empty line, and optional body.
 
-Each line of the request is prefix with "> " -- though ">" is allowed for the
+Each line of the request is prefixed by "> " -- though ">" is allowed for the
 blank line.
 
-Another blank line separate the request from the expected response.
+An empty line separates the request from the expected response.
 
 The expected response is a *complete* HTTP response, including the status line,
-followed by HTTP headers *in ASCII order*, a mandatory empty line, and an
+followed by HTTP headers sort *in ASCII order*, a mandatory empty line, and an
 optional body.
 
 Each line of the expected response is prepended by "< " though "<" is acceptable
 for the blank line.
 
-http-spec will perform each request, setting the Content-Length header if it's
-not already present and then compare the expected response.
+http-spec will perform each request, then compare the expected response.
 
 If the response matches, the next request/response pair is executed until the
 end of the file.
@@ -74,31 +72,46 @@ exit code 1.
 If all responses match, http-spec exists silently with exit code 0.
 
 If passed more than one file, including the globbed example above, http-spec
-will process each file concurrently.
+will process each file concurrently, allowing for large spec runs to be
+completed quickly.
+
+## request-only non-pairs
+
+If no expected response follows a request, http-spec will make the request and
+output the response formatted as an http-spec expected response allowing for
+rapid, iterative request/response development.
+
+Request only non-pairs are reported as a failure to prevent false-positive test
+results.
 
 ## regexp matching
 
 Expected responses are parsed for regexp matchers that allow dynamic matching
-and named capture for subsequent re-use.
-
-Named captures are file scoped, and take the form:
+and named capture for subsequent substition, scoped to the file, and take the
+form:
 
     ⧆optional-name⧆mandatory-regexp⧆
 
 That character is SQUARED ASTERISK (U+29C6)
 
 If name is provided, the complete match of the regexp is assigned to the name,
-making the matched text available to subsequent requests.
+making the matched text available for substitions later in the file.
 
-Substitions take the form:
+Matching makes it easy to match variable content items such as UUIDs and
+authentication tokens.
 
-    ⧈x-frame-options⧈
+## substition
+
+Substitions allow the re-use of previous regexp matches and take the form:
+
+    ⧈name⧈
 
 That character is SQUARED SQUARE (U+29C8)
 
+Substition allows re-use of response data in requests within the same file.
+
 ## TODO
 
-* allow ⧆optional-name⧆:built-in⧆ syntax to access built-in set of matchers,
-mostly obviously for Dates and other common items
+* allow ⧆optional-name⧆:http-date⧆ to use a built-in matcher for HTTP dates.
 
 * write tests :-(
