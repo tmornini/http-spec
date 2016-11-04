@@ -1,11 +1,16 @@
 package main
 
-import "strings"
+import (
+	"strings"
+	"time"
+)
 
 type specTriplet struct {
 	DesiredRequest   *request
 	ExpectedResponse *response
 	ActualResponse   *response
+	StartedAt        time.Time
+	Duration         time.Duration
 }
 
 func (specTriplet *specTriplet) isRequestOnly() bool {

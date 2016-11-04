@@ -7,29 +7,28 @@ import (
 )
 
 func resultGatherer(context context) {
-	// cannot log context here without overwriting context.Stage
+	context.log("10 result-gatherer")
 
 	success := true
 
-	successes := 0
-	failures := 0
+	successCount := 0
+	failureCount := 0
 
 	startedAt := time.Now()
 
 	for completedContext := range context.ResultGathererChannel {
-		duration := time.Since(completedContext.StartedAt)
 
 		if completedContext.Err == nil {
-			successes++
+			successCount++
 			fmt.Printf(
 				"success %s %s\n",
-				duration.String(),
+				completedContext.SpecTriplet.Duration.String(),
 				completedContext.SpecTriplet.String())
 		} else {
 			success = false
-			failures++
+			failureCount++
 
-			location := "failure " + duration.String() + " "
+			location := "failure "
 
 			if completedContext.File == nil {
 				location += "[" + completedContext.Pathname + "]"
@@ -37,7 +36,9 @@ func resultGatherer(context context) {
 				if completedContext.SpecTriplet == nil {
 					location += completedContext.File.String()
 				} else {
-					location += completedContext.SpecTriplet.String()
+					location +=
+						completedContext.SpecTriplet.Duration.String() + " " +
+							completedContext.SpecTriplet.String()
 				}
 			}
 
@@ -47,6 +48,8 @@ func resultGatherer(context context) {
 
 	duration := time.Since(startedAt)
 
+	fmt.Println("Total successes:", successCount)
+	fmt.Println("Total failures:", failureCount)
 	fmt.Println("Total run time:", duration.String())
 
 	if success {

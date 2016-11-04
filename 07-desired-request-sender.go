@@ -33,7 +33,7 @@ func desiredRequestSender(context *context) {
 		request.Header.Add(key, value)
 	}
 
-	context.StartedAt = time.Now()
+	context.SpecTriplet.StartedAt = time.Now()
 
 	context.HTTPResponse, err = context.HTTPClient.Do(request)
 

@@ -1,5 +1,7 @@
 package main
 
+import "time"
+
 func specTripletIterator(context *context) {
 	context.log("03 spec-triplet-iterator")
 
@@ -25,6 +27,7 @@ func specTripletIterator(context *context) {
 
 		desiredRequestSubstitor(context)
 
+		context.SpecTriplet.Duration = time.Since(context.SpecTriplet.StartedAt)
 		context.ResultGathererChannel <- *context
 	}
 }
