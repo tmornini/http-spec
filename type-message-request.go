@@ -20,19 +20,23 @@ func requestFromFile(context *context) (*request, error) {
 		return nil, fmt.Errorf("%s: malformed request-line", requestLine.String())
 	}
 
-	return &request{
-		message,
-		parts[0],
-		parts[1],
-		parts[2],
-	}, err
+	return &request{message}, err
 }
 
 type request struct {
 	*message
-	Method  string
-	Path    string
-	Version string
+}
+
+func (request *request) Method() string {
+	return strings.Split(request.FirstLine.Text, " ")[0]
+}
+
+func (request *request) Path() string {
+	return strings.Split(request.FirstLine.Text, " ")[1]
+}
+
+func (request *request) Version() string {
+	return strings.Split(request.FirstLine.Text, " ")[2]
 }
 
 func (request *request) String() string {

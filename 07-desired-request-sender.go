@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -14,9 +15,11 @@ func desiredRequestSender(context *context) {
 
 	body := ioutil.NopCloser(strings.NewReader(desiredRequest.Body() + "\n"))
 
+	fmt.Println(desiredRequest.Method(), context.URLPrefix+desiredRequest.Path())
+
 	request, err := http.NewRequest(
-		desiredRequest.Method,
-		context.URLPrefix+desiredRequest.Path,
+		desiredRequest.Method(),
+		context.URLPrefix+desiredRequest.Path(),
 		body,
 	)
 

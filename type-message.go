@@ -65,7 +65,9 @@ func messageFromFile(context *context) (*message, error) {
 }
 
 func (message *message) allLines() []*line {
-	allLines := []*line{message.FirstLine}
+	var allLines []*line
+
+	allLines = append(allLines, message.FirstLine)
 	allLines = append(allLines, message.HeaderLines...)
 	allLines = append(allLines, message.BodyLines...)
 
@@ -73,7 +75,9 @@ func (message *message) allLines() []*line {
 }
 
 func (message *message) allHeaderAndBodyLines() []*line {
-	allHeaderAndBodyLines := append([]*line{}, message.HeaderLines...)
+	var allHeaderAndBodyLines []*line
+
+	allHeaderAndBodyLines = append(allHeaderAndBodyLines, message.HeaderLines...)
 	allHeaderAndBodyLines = append(allHeaderAndBodyLines, message.BodyLines...)
 
 	return allHeaderAndBodyLines

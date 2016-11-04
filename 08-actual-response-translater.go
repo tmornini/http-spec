@@ -98,12 +98,7 @@ func actualResponseReceiver(context *context) {
 
 	message.BodyLines = bodyLines
 
-	context.SpecTriplet.ActualResponse = &response{
-		message,
-		version,
-		statusCode,
-		reasonPhrase,
-	}
+	context.SpecTriplet.ActualResponse = &response{message}
 
 	if context.SpecTriplet.isRequestOnly() {
 		return

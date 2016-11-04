@@ -20,19 +20,23 @@ func responseFromFile(context *context) (*response, error) {
 		return nil, fmt.Errorf("malformed status-line: %s", statusLine.String())
 	}
 
-	return &response{
-		message,
-		parts[0],
-		parts[1],
-		parts[2],
-	}, nil
+	return &response{message}, nil
 }
 
 type response struct {
 	*message
-	Version      string
-	StatusCode   string
-	ReasonPhrase string
+}
+
+func (response *response) Version() string {
+	return strings.Split(response.FirstLine.Text, " ")[0]
+}
+
+func (response *response) StatusCode() string {
+	return strings.Split(response.FirstLine.Text, " ")[1]
+}
+
+func (response *response) ReasonPhrase() string {
+	return strings.Split(response.FirstLine.Text, " ")[2]
 }
 
 func (response *response) String() string {
