@@ -23,7 +23,7 @@ func actualResponseReceiver(context *context) {
 	statusLineText := "< " + version + " " + statusCode + " " + reasonPhrase
 
 	statusLine, err :=
-		lineFromText("response", responseLineNumber, statusLineText)
+		newLineFromText("response", responseLineNumber, statusLineText)
 
 	if errorHandler(context, err) {
 		return
@@ -48,7 +48,7 @@ func actualResponseReceiver(context *context) {
 		headerText := "< " + name + ": " + context.HTTPResponse.Header.Get(name)
 
 		headerLine, err =
-			lineFromText("response", responseLineNumber, headerText)
+			newLineFromText("response", responseLineNumber, headerText)
 
 		if errorHandler(context, err) {
 			return
@@ -63,7 +63,7 @@ func actualResponseReceiver(context *context) {
 	message.HeaderLines = headerLines
 
 	message.BlankLine, err =
-		lineFromText("response", responseLineNumber, "<")
+		newLineFromText("response", responseLineNumber, "<")
 
 	if errorHandler(context, err) {
 		return
@@ -82,7 +82,7 @@ func actualResponseReceiver(context *context) {
 		}
 
 		bodyLine, err =
-			lineFromText("response", responseLineNumber, "< "+scanner.Text())
+			newLineFromText("response", responseLineNumber, "< "+scanner.Text())
 
 		if errorHandler(context, err) {
 			return

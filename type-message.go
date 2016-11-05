@@ -13,7 +13,7 @@ type message struct {
 }
 
 func messageFromFile(context *context) (*message, error) {
-	firstLine, err := lineFromFile(context)
+	firstLine, err := newLineFromFile(context)
 
 	if err != nil {
 		return nil, err
@@ -24,7 +24,7 @@ func messageFromFile(context *context) (*message, error) {
 	var emptyLine *line
 
 	for {
-		headerLine, err = lineFromFile(context)
+		headerLine, err = newLineFromFile(context)
 
 		if err != nil {
 			return nil, err
@@ -43,7 +43,7 @@ func messageFromFile(context *context) (*message, error) {
 	var bodyLines []*line
 
 	for {
-		bodyLine, err = lineFromFile(context)
+		bodyLine, err = newLineFromFile(context)
 
 		if err == io.EOF || bodyLine.isBlank() {
 			break

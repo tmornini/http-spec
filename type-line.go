@@ -6,24 +6,34 @@ import (
 	"strings"
 )
 
-func lineFromFile(context *context) (*line, error) {
-	inputText, err := context.File.readLine()
+func newLineFromFile(context *context) (*line, error) {
+	var inputText string
+	var err error
+	var line *line
 
-	if err != nil {
-		return nil, err
-	}
+	for {
+		inputText, err = context.File.readLine()
 
-	line, err :=
-		lineFromText(context.File.PathName, context.File.LineNumber, inputText)
+		if err != nil {
+			return nil, err
+		}
 
-	if err != nil {
-		return nil, err
+		line, err =
+			newLineFromText(context.File.PathName, context.File.LineNumber, inputText)
+
+		if err != nil {
+			return nil, err
+		}
+
+		if !line.isComment() {
+			break
+		}
 	}
 
 	return line, nil
 }
 
-func lineFromText(
+func newLineFromText(
 	pathName string,
 	lineNumber int,
 	inputText string) (*line, error) {
