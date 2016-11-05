@@ -3,10 +3,11 @@
 echo "releasing http-spec..."
 
 (
-  go install .                         && \
-  docker build -t tmornini/http-spec . && \
+  go install .                                                    && \
+  docker build -t tmornini/http-spec .                            && \
+  docker build -t tmornini/test-http-spec -f example-Dockerfile . && \
+  docker run tmornini/test-http-spec                              && \
   docker push tmornini/http-spec
-  # docker run tmornini/http-spec        && \
 ) && exit 0
 
 echo "$0 failed"
