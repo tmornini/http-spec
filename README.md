@@ -109,10 +109,12 @@ authentication tokens.
 
 * character is SQUARED ASTERISK (U+29C6)
 
-## Built-in Date Matcher
+## Built-in Matchers
 
-⧆optional-name⧆:date⧆ is a special-case matcher that matches the RFC-822 date
-format used by the HTTP 1.1 Date header.
+⧆optional-name⧆:date⧆ is a matcher for RFC-822 dates used by the HTTP 1.1 Date
+header.
+
+⧆optional-name⧆:b62:22⧆ is a matcher for 22 characters of base 62 characters.
 
 ## Substitution
 
@@ -127,5 +129,4 @@ Substitutions are applied to both requests and responses within the same file.
 ## TODO
 
 * integrate Travis CI
-* integrate Dockerhub
 * improve testing dramatically :-(

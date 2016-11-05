@@ -51,7 +51,8 @@ func expectedResponseMatchParser(context *context) {
 		for i := 1; i < count-1; i += 3 {
 			reString := "("
 
-			if parts[i+1] == ":date" {
+			switch parts[i+1] {
+			case ":date":
 				reString +=
 					"(Mon|Tue|Wed|Thu|Fri|Sat|Sun), " +
 						"(0\\d|1\\d|2\\d|3[01]) " +
@@ -61,7 +62,9 @@ func expectedResponseMatchParser(context *context) {
 						"(0\\d|1\\d|2\\d|3\\d|4\\d|5\\d):" +
 						"(0\\d|1\\d|2\\d|3\\d|4\\d|5\\d) " +
 						"(A|M|N|Y|Z|UT|GMT|[A-Z]{3}|[+-](0\\d|1[012]))"
-			} else {
+			case ":b62:22":
+				reString += "[0-9A-Za-z]{22}"
+			default:
 				reString += parts[i+1]
 			}
 

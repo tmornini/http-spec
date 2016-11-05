@@ -22,10 +22,10 @@
 < X-Content-Type-Options: nosniff
 < X-Frame-Options: SAMEORIGIN
 < X-Subledger-Request-Duration: ⧆x-s-request-duration⧆[0-9]{1,4}⧆ ms
-< X-Subledger-Request-Id: ⧆request-id⧆[0-9A-Za-z]{22}⧆
+< X-Subledger-Request-Id: ⧆request-id⧆:b62:22⧆
 < X-Xss-Protection: 1; mode=block
 <
-< {"active_identity":{"id":"⧆identity-id⧆[0-9A-Za-z]{22}⧆","email":"tmornini@me.com","description":"http-spec API testing utility","reference":"https://github.com/tmornini/http-spec","version":1},"active_key":{"id":"⧆active-key-id⧆[0-9A-Za-z]{22}⧆","identity":"⧆identity⧆[0-9A-Za-z]{22}⧆","secret":"⧆secret⧆[0-9A-Za-z]{22}⧆"}}
+< {"active_identity":{"id":"⧆identity-id⧆:b62:22⧆","email":"tmornini@me.com","description":"http-spec API testing utility","reference":"https://github.com/tmornini/http-spec","version":1},"active_key":{"id":"⧆active-key-id⧆:b62:22⧆","identity":"⧆identity⧆:b62:22⧆","secret":"⧆secret⧆:b62:22⧆"}}
 
 > GET /v2/identities/⧈identity-id⧈ HTTP/1.1
 > Host: api.subledger.com
@@ -43,7 +43,7 @@
 < X-Content-Type-Options: nosniff
 < X-Frame-Options: SAMEORIGIN
 < X-Subledger-Request-Duration: ⧆x-s-request-duration⧆[0-9]{1,4}⧆ ms
-< X-Subledger-Request-Id: ⧆request-id⧆[0-9A-Za-z]{22}⧆
+< X-Subledger-Request-Id: ⧆request-id⧆:b62:22⧆
 < X-Xss-Protection: 1; mode=block
 <
 < Unauthorized
