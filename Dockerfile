@@ -5,13 +5,10 @@ RUN apk update   && \
     apk add bash && \
     apk add git
 
-RUN (                                                        \
-      mkdir -p /go/src/github.com/tmornini                && \
-      cd /go/src/github.com/tmornini                      && \
-      git clone https://github.com/tmornini/http-spec.git && \
-      cd http-spec                                        && \
-      go install .                                           \
-    )
+COPY * /go/src/github.com/tmornini/http-spec/
+
+RUN cd /go/src/github.com/tmornini/http-spec && \
+    go install .
 
 WORKDIR /
 
