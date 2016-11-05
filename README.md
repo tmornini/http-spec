@@ -35,10 +35,26 @@ Don't forget to put it somewhere in your PATH, and chmod 755 it!
 
 ### Docker image
 
-    docker pull tmornini/http-spec
+    https://hub.docker.com/r/tmornini/http-spec/
 
-Please see https://hub.docker.com/r/tmornini/http-spec/ for instructions on how
-to use the Docker image.
+This image is not intended to be used directly, but as the base to build your
+own custom http-spec container atop.
+
+Just COPY your .htsf files and /run-http-specs executable to the image.
+
+/run-http-specs allows you to orchestrate the test invocation order, timing,
+and prefix handling when testing microservices within a docker-compose cluster.
+
+### Dockerfile example
+
+```
+FROM tmornini/http-spec
+MAINTAINER Tom Mornini <tmornini@incentivenetworks.com>
+
+COPY run-http-specs /run-http-specs
+
+COPY *.htsf /
+```
 
 ## Basic Usage
 
