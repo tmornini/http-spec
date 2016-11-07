@@ -79,24 +79,24 @@ an optional body.
 Each line of the expected response is prepended by "< " though "<" is acceptable
 for the blank line.
 
-http-spec will send the first request and compare the expected response to the
-actual response.
+http-spec will send the request and compare the expected response to the actual
+response.
 
 If the responses match, the next request/response pair is executed until the
 end of the file.
 
 If a response doesn't match, a error is logged to STDERR. Any response mismatch
-or any error of any sort will cause http-spec to terinate with exit code 1 to
+or any error of any sort will cause http-spec to terminate with exit code 1 to
 signal failure.
 
-If a response matches, a success is logged to STDERR along with the response
+If a response matches, a success is logged to STDOUT along with the response
 time.
 
 If all responses in all files match, http-spec terminates with exit code 0
 to signal success.
 
 When passed more than one file http-spec processes each file concurrently,
-allowing for large spec suites to be completed quickly.
+allowing for large spec suites to be run quickly.
 
 ## Request-Only Mode
 
@@ -108,7 +108,7 @@ development.
 Request-only mode reports as a failure to prevent false-positives on incomplete
 specs.
 
-## Regexp Matching and Capture
+## Regexp Matchers and Capture
 
 Expected responses are parsed for regexp matchers that allow dynamic matching
 and named capture for subsequent substitution within the file.
@@ -135,11 +135,11 @@ for 128+ bit UUIDs.
 
 ## Substitution
 
-Substitutions allows the re-use of previous regexp matches and take the form:
+Substitution allows the re-use of previous regexp matches and take the form:
 
     ⧈name⧈
 
-Substitutions are applied to both requests and responses within the same file.
+Substitutions are applied to requests and responses within the same file.
 
 * character is SQUARED SQUARE (U+29C8)
 

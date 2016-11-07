@@ -28,9 +28,12 @@ func resultGatherer(context context) {
 		if completedContext.Err == nil {
 			successCount++
 			fmt.Printf(
-				"success %s %s\n",
+				"%ssuccess %s %s%s\n",
+				Green,
 				completedContext.SpecTriplet.Duration.String(),
-				completedContext.SpecTriplet.String())
+				completedContext.SpecTriplet.String(),
+				Reset,
+			)
 		} else {
 			success = false
 			failureCount++
@@ -49,15 +52,22 @@ func resultGatherer(context context) {
 				}
 			}
 
-			fmt.Println(location, completedContext.Err.Error())
+			fmt.Fprintf(
+				os.Stderr,
+				"%s%s %s%s\n",
+				Red,
+				location,
+				completedContext.Err.Error(),
+				Reset,
+			)
 		}
 	}
 
 	duration := time.Since(startedAt)
 
-	fmt.Println("Total successes:", successCount)
-	fmt.Println("Total failures:", failureCount)
-	fmt.Println("Total run time:", duration.String())
+	fmt.Printf("%sTotal successes: %d%s\n", Green, successCount, Reset)
+	fmt.Printf("%sTotal failures: %d%s\n", Red, failureCount, Reset)
+	fmt.Printf("%sTotal run time: %s%s\n", Reset, duration.String(), Reset)
 
 	if success {
 		os.Exit(0)
