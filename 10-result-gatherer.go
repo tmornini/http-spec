@@ -71,13 +71,20 @@ func resultGatherer(context context) {
 
 	duration := time.Since(startedAt)
 
-	fmt.Printf("%sTotal successes: %d%s\n", Green, successCount, Reset)
-	fmt.Printf("%sTotal failures: %d%s\n", Red, failureCount, Reset)
-	fmt.Printf("%sTotal run time: %s%s\n", Reset, duration.String(), Reset)
+	fmt.Println()
+	fmt.Printf("%ssuccess count: %d%s\n", Green, successCount, Reset)
 
-	if success {
-		os.Exit(0)
+	if failureCount != 0 {
+		fmt.Printf("%sfailure count: %d%s\n", Red, failureCount, Reset)
 	}
 
-	os.Exit(1)
+	fmt.Println()
+
+	if !success {
+		fmt.Printf("%sFAILURE: %s%s\n", Red, duration.String(), Reset)
+		os.Exit(1)
+	}
+
+	fmt.Printf("%sSUCCESS: %s%s\n", Green, duration.String(), Reset)
+	os.Exit(0)
 }
