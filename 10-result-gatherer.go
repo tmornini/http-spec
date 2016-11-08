@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -49,6 +50,11 @@ func resultGatherer(context context) {
 					location +=
 						completedContext.SpecTriplet.Duration.String() + " " +
 							completedContext.SpecTriplet.String()
+
+					if strings.HasPrefix(
+						completedContext.Err.Error(), "response line count") {
+						fmt.Println(completedContext.SpecTriplet.ActualResponse)
+					}
 				}
 			}
 

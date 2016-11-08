@@ -1,0 +1,8 @@
+> GET /v3/system/status HTTP/1.1
+> Host: api.subledger.com
+>
+
+< HTTP/1.1 200 OK
+< Connection: keep-alive
+<
+< {"dynamodb":true,"sqs":true,"redis":true}
