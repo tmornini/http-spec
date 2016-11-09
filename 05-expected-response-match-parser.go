@@ -64,6 +64,13 @@ func expectedResponseMatchParser(context *context) {
 						"(A|M|N|Y|Z|UT|GMT|[A-Z]{3}|[+-](0\\d|1[012]))"
 			case ":b62:22":
 				reString += "[0-9A-Za-z]{22}"
+			case ":uuid":
+				reString +=
+					"[[:xdigit:]]{8}-" +
+						"[[:xdigit:]]{4}-" +
+						"[[:xdigit:]]{4}-" +
+						"[[:xdigit:]]{4}-" +
+						"[[:xdigit:]]{12}"
 			default:
 				reString += parts[i+1]
 			}

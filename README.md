@@ -130,6 +130,8 @@ authentication tokens.
 ⧆optional-name⧆:date⧆ is a matcher for RFC-822 dates used by the HTTP 1.1 Date
 header.
 
+⧆optional-name⧆:uuid⧆ is a matcher for [RFC-4122](https://tools.ietf.org/html/rfc4122) UUIDs.
+
 ⧆optional-name⧆:b62:22⧆ is a matcher for 22 base 62 characters sometimes used
 for 128+ bit UUIDs.
 
