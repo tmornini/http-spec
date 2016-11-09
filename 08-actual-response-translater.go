@@ -19,7 +19,7 @@ func actualResponseReceiver(context *context) {
 	parts := strings.Split(context.HTTPResponse.Status, " ")
 
 	statusCode := parts[0]
-	reasonPhrase := parts[1]
+	reasonPhrase := strings.Join(parts[1:], " ")
 
 	statusLineText := "< " + version + " " + statusCode + " " + reasonPhrase
 

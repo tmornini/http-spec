@@ -36,7 +36,12 @@ func (response *response) StatusCode() string {
 }
 
 func (response *response) ReasonPhrase() string {
-	return strings.Split(response.FirstLine.Text, " ")[2]
+	return strings.Join(
+		strings.Split(
+			response.FirstLine.Text, " ",
+		)[2:],
+		" ",
+	)
 }
 
 func (response *response) String() string {

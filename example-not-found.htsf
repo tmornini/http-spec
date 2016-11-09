@@ -1,0 +1,24 @@
+> GET /v0/system/status HTTP/1.1
+> Host: api.subledger.com
+>
+
+< HTTP/1.1 404 Not Found
+< Connection: keep-alive
+< Content-Length: 162
+< Content-Security-Policy: default-src https: data: 'unsafe-inline' 'unsafe-eval'
+< Content-Type: text/html
+< Date: ⧆⧆:date⧆
+< Public-Key-Pins: pin-sha256="hEJVeNxwqLnjseFv/doE3XU6Nr/hXJnoKdhn12iwavY="; pin-sha256="cTduB9g7EP4xd2glLUNhEq40f/jtyJF24dTzgVuKsZk="; max-age=300
+< Server: nginx
+< Strict-Transport-Security: max-age=10886400; includeSubDomains; preload
+< X-Content-Type-Options: nosniff
+< X-Frame-Options: SAMEORIGIN
+< X-Xss-Protection: 1; mode=block
+<
+< <html>
+< <head><title>404 Not Found</title></head>
+< <body bgcolor="white">
+< <center><h1>404 Not Found</h1></center>
+< <hr><center>nginx</center>
+< </body>
+< </html>
