@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"sort"
 	"strings"
 )
@@ -101,6 +102,8 @@ func actualResponseReceiver(context *context) {
 	context.SpecTriplet.ActualResponse = &response{message}
 
 	if context.SpecTriplet.isRequestOnly() {
+		context.Err = fmt.Errorf("no expected response")
+
 		return
 	}
 

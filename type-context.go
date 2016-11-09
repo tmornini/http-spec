@@ -2,12 +2,14 @@ package main
 
 import (
 	"fmt"
+	"math/big"
 	"net/http"
 	"sync"
 	"time"
 )
 
 type context struct {
+	ID                    *big.Int
 	LogFunctions          bool
 	LogContext            bool
 	URLPrefix             string

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/big"
 	"os"
 	"strings"
 	"time"
@@ -15,26 +16,29 @@ func resultGatherer(context context) {
 	successCount := 0
 	failureCount := 0
 
+	outputs := map[*big.Int]string{}
+
 	startedAt := time.Now()
 
 	for completedContext := range context.ResultGathererChannel {
-		if completedContext.Err == nil &&
-			completedContext.SpecTriplet != nil &&
-			completedContext.SpecTriplet.isRequestOnly() {
-			fmt.Println(completedContext.SpecTriplet.ActualResponse)
-
-			completedContext.Err = fmt.Errorf("no expected response")
-		}
+		// if completedContext.Err == nil &&
+		// 	completedContext.SpecTriplet != nil &&
+		// 	completedContext.SpecTriplet.isRequestOnly() {
+		// 	outputs[completedContext.ID] +=
+		// 		completedContext.SpecTriplet.ActualResponse.String() + "\n"
+		// 	completedContext.Err = fmt.Errorf("no expected response")
+		// }
 
 		if completedContext.Err == nil {
 			successCount++
-			fmt.Printf(
-				"%ssuccess %s %s%s\n",
-				Green,
-				completedContext.SpecTriplet.Duration.String(),
-				completedContext.SpecTriplet.String(),
-				Reset,
-			)
+			outputs[completedContext.ID] +=
+				fmt.Sprintf(
+					"%ssuccess %s %s%s\n",
+					Green,
+					completedContext.SpecTriplet.Duration.String(),
+					completedContext.SpecTriplet.String(),
+					Reset,
+				)
 		} else {
 			success = false
 			failureCount++
@@ -51,34 +55,41 @@ func resultGatherer(context context) {
 						completedContext.SpecTriplet.Duration.String() + " " +
 							completedContext.SpecTriplet.String()
 
-					if strings.HasPrefix(
-						completedContext.Err.Error(), "response line count") {
-						fmt.Println(completedContext.SpecTriplet.ActualResponse)
+					if completedContext.SpecTriplet.isRequestOnly() ||
+						strings.HasPrefix(
+							completedContext.Err.Error(), "response line count") {
+						outputs[completedContext.ID] +=
+							completedContext.SpecTriplet.ActualResponse.String() + "\n"
 					}
 				}
 			}
 
-			fmt.Fprintf(
-				os.Stderr,
-				"%s%s %s%s\n",
-				Red,
-				location,
-				completedContext.Err.Error(),
-				Reset,
-			)
+			outputs[completedContext.ID] +=
+				fmt.Sprintf(
+					"%s%s %s%s\n",
+					Red,
+					location,
+					completedContext.Err.Error(),
+					Reset,
+				)
 		}
 	}
 
 	duration := time.Since(startedAt)
 
 	fmt.Println()
-	fmt.Printf("%ssuccess count: %d%s\n", Green, successCount, Reset)
+
+	for _, result := range outputs {
+		fmt.Print(result)
+	}
+
+	if successCount != 0 {
+		fmt.Printf("%ssuccess count: %d%s\n", Green, successCount, Reset)
+	}
 
 	if failureCount != 0 {
 		fmt.Printf("%sfailure count: %d%s\n", Red, failureCount, Reset)
 	}
-
-	fmt.Println()
 
 	if !success {
 		fmt.Printf("%sFAILURE: %s%s\n", Red, duration.String(), Reset)
