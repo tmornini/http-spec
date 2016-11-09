@@ -9,7 +9,7 @@ docker images | grep http-spec | awk '{print $3}' | xargs docker rmi -f
   go install .                                                        && \
   docker build -t tmornini/http-spec .                                && \
   docker build -t tmornini/validate-http-spec -f example-Dockerfile . && \
-  docker run tmornini/validate-http-spec
+  docker run --rm tmornini/validate-http-spec
 ) && exit 0
 
 echo "$0 failed"
