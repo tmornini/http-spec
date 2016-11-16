@@ -33,27 +33,27 @@ func resultGatherer(context context) {
 			successCount++
 			outputs[completedContext.ID] +=
 				fmt.Sprintf(
-					"%ssuccess %s %s%s\n",
+					"%s%s %s%s\n",
 					Green,
-					completedContext.SpecTriplet.Duration.String(),
 					completedContext.SpecTriplet.String(),
+					completedContext.SpecTriplet.Duration.String(),
 					Reset,
 				)
 		} else {
 			success = false
 			failureCount++
 
-			location := "failure "
+			output := ""
 
 			if completedContext.File == nil {
-				location += "[" + completedContext.Pathname + "]"
+				output += "[" + completedContext.Pathname + "]"
 			} else {
 				if completedContext.SpecTriplet == nil {
-					location += completedContext.File.String()
+					output += completedContext.File.String()
 				} else {
-					location +=
-						completedContext.SpecTriplet.Duration.String() + " " +
-							completedContext.SpecTriplet.String()
+					output +=
+						completedContext.SpecTriplet.String() + " " +
+							completedContext.SpecTriplet.Duration.String()
 
 					if completedContext.SpecTriplet.isRequestOnly() ||
 						strings.HasPrefix(
@@ -68,7 +68,7 @@ func resultGatherer(context context) {
 				fmt.Sprintf(
 					"%s%s %s%s\n",
 					Red,
-					location,
+					output,
 					completedContext.Err.Error(),
 					Reset,
 				)
@@ -83,19 +83,32 @@ func resultGatherer(context context) {
 		fmt.Print(result)
 	}
 
-	if successCount != 0 {
-		fmt.Printf("%ssuccess count: %d%s\n", Green, successCount, Reset)
-	}
-
-	if failureCount != 0 {
-		fmt.Printf("%sfailure count: %d%s\n", Red, failureCount, Reset)
-	}
-
 	if !success {
-		fmt.Printf("%sFAILURE: %s%s\n", Red, duration.String(), Reset)
+		fmt.Printf(
+			"%sFAILURE:%s %s+%d%s %s-%d%s in %s\n",
+			Red,
+			Reset,
+			Green,
+			successCount,
+			Reset,
+			Red,
+			failureCount,
+			Reset,
+			duration.String(),
+		)
+
 		os.Exit(1)
 	}
 
-	fmt.Printf("%sSUCCESS: %s%s\n", Green, duration.String(), Reset)
+	fmt.Printf(
+		"%sSUCCESS:%s %s+%d%s in %s\n",
+		Green,
+		Reset,
+		Green,
+		successCount,
+		Reset,
+		duration.String(),
+	)
+
 	os.Exit(0)
 }
