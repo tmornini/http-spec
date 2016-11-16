@@ -1,23 +1,12 @@
 package main
 
-import (
-	"fmt"
-	"strings"
-)
+import "strings"
 
 func requestFromFile(context *context) (*request, error) {
 	message, err := messageFromFile(context)
 
 	if err != nil {
 		return nil, err
-	}
-
-	requestLine := message.FirstLine
-
-	parts := strings.Split(requestLine.Text, " ")
-
-	if len(parts) != 3 {
-		return nil, fmt.Errorf("%s: malformed request-line", requestLine.String())
 	}
 
 	return &request{message}, err
