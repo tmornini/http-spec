@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"math/big"
 	"os"
-	"strings"
 	"time"
 )
 
@@ -20,47 +19,50 @@ func resultGatherer(context context) {
 
 	for completedContext := range context.ResultGathererChannel {
 		if completedContext.Err == nil {
+			// SUCCESS
 			successCount++
 			outputs[completedContext.ID] +=
 				fmt.Sprintf(
-					"%s%s %s%s\n",
+					"%s%s%s %s\n",
 					Green,
 					completedContext.SpecTriplet.String(),
-					completedContext.SpecTriplet.Duration.String(),
 					Reset,
+					completedContext.SpecTriplet.Duration.String(),
 				)
 		} else {
+			// FAILURE
 			success = false
 			failureCount++
 
-			output := ""
+			location := ""
+			response := ""
 
 			if completedContext.File == nil {
-				output += "[" + completedContext.Pathname + "]"
+				// file open failure
+				location += "[" + completedContext.Pathname + "]"
 			} else {
 				if completedContext.SpecTriplet == nil {
-					output += completedContext.File.String()
+					// request/response parsing failure
+					location += completedContext.File.String()
 				} else {
-					output +=
+					// request/response matching failure
+					location +=
 						completedContext.SpecTriplet.String() + " " +
 							completedContext.SpecTriplet.Duration.String()
 
-					if completedContext.SpecTriplet.isRequestOnly() ||
-						strings.HasPrefix(
-							completedContext.Err.Error(), "response line count") {
-						outputs[completedContext.ID] +=
-							completedContext.SpecTriplet.ActualResponse.String() + "\n"
-					}
+					response = completedContext.SpecTriplet.ActualResponse.String() + "\n"
+
 				}
 			}
 
 			outputs[completedContext.ID] +=
 				fmt.Sprintf(
-					"%s%s %s%s\n",
+					"%s%s%s %s\n%s\n",
 					Red,
-					output,
-					completedContext.Err.Error(),
+					location,
 					Reset,
+					completedContext.Err.Error(),
+					response,
 				)
 		}
 	}
@@ -75,7 +77,7 @@ func resultGatherer(context context) {
 
 	if !success {
 		fmt.Printf(
-			"%sFAILURE:%s %s+%d%s %s-%d%s in %s\n",
+			"%sFAILURE:%s %s+%d%s %s-%d%s %s\n",
 			Red,
 			Reset,
 			Green,
@@ -91,7 +93,7 @@ func resultGatherer(context context) {
 	}
 
 	fmt.Printf(
-		"%sSUCCESS:%s %s+%d%s in %s\n",
+		"\n%sSUCCESS:%s %s+%d%s %s\n",
 		Green,
 		Reset,
 		Green,
