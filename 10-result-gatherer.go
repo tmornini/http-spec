@@ -18,8 +18,6 @@ func resultGatherer(context context) {
 
 	outputs := map[*big.Int]string{}
 
-	startedAt := time.Now()
-
 	for completedContext := range context.ResultGathererChannel {
 		// if completedContext.Err == nil &&
 		// 	completedContext.SpecTriplet != nil &&
@@ -75,7 +73,7 @@ func resultGatherer(context context) {
 		}
 	}
 
-	duration := time.Since(startedAt)
+	duration := time.Since(context.StartedAt)
 
 	fmt.Println()
 

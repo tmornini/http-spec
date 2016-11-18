@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"sync"
+	"time"
 )
 
 const regexpIdentifier = "⧆"
@@ -10,6 +11,8 @@ const substitutionIdentifier = "⧈"
 
 func main() {
 	var prefix string
+
+	startedAt := time.Now()
 
 	flag.StringVar(
 		&prefix,
@@ -27,6 +30,7 @@ func main() {
 		Pathnames:             flag.Args(),
 		WaitGroup:             &sync.WaitGroup{},
 		ResultGathererChannel: make(chan context),
+		StartedAt:             startedAt,
 	}
 
 	context.log("00 main")
