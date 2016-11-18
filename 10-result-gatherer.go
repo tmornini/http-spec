@@ -19,14 +19,6 @@ func resultGatherer(context context) {
 	outputs := map[*big.Int]string{}
 
 	for completedContext := range context.ResultGathererChannel {
-		// if completedContext.Err == nil &&
-		// 	completedContext.SpecTriplet != nil &&
-		// 	completedContext.SpecTriplet.isRequestOnly() {
-		// 	outputs[completedContext.ID] +=
-		// 		completedContext.SpecTriplet.ActualResponse.String() + "\n"
-		// 	completedContext.Err = fmt.Errorf("no expected response")
-		// }
-
 		if completedContext.Err == nil {
 			successCount++
 			outputs[completedContext.ID] +=
