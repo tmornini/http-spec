@@ -50,8 +50,9 @@ func resultGatherer(context context) {
 						completedContext.SpecTriplet.String() + " " +
 							completedContext.SpecTriplet.Duration.String()
 
-					response = completedContext.SpecTriplet.ActualResponse.String() + "\n"
-
+					if completedContext.SpecTriplet.ActualResponse != nil {
+						response = completedContext.SpecTriplet.ActualResponse.String() + "\n"
+					}
 				}
 			}
 
