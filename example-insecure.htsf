@@ -1,0 +1,31 @@
+> GET https://self-signed.badssl.com/ HTTP/1.1
+>
+
+< HTTP/1.1 200 OK
+< Cache-Control: no-store
+< Connection: keep-alive
+< Content-Type: text/html
+< Date: ⧆⧆:date⧆
+< Etag: ⧆⧆.+⧆
+< Last-Modified: ⧆⧆:date⧆
+< Server: nginx/1.10.0 (Ubuntu)
+<
+< <!DOCTYPE html>
+< <html>
+< <head>
+<   <meta name="viewport" content="width=device-width, initial-scale=1">
+<   <link rel="shortcut icon" href="/icons/favicon-red.ico"/>
+<   <link rel="apple-touch-icon" href="/icons/icon-red.png"/>
+<   <title>self-signed.badssl.com</title>
+<   <link rel="stylesheet" href="/style.css">
+<   <style>body { background: red; }</style>
+< </head>
+< <body>
+< <div id="content">
+<   <h1 style="font-size: 12vw;">
+<     self-signed.<br>badssl.com
+<   </h1>
+< </div>
+<
+< </body>
+< </html>

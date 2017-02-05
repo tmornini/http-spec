@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"crypto/rand"
+	"crypto/tls"
 	"math/big"
 	"net/http"
 	"os"
@@ -39,7 +40,14 @@ func specFileProcessor(context context) {
 
 	context.Substitutions = map[string]string{}
 
-	context.HTTPClient = &http.Client{}
+	if context.SkipTLSVerification {
+		tr := &http.Transport{
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		}
+		context.HTTPClient = &http.Client{Transport: tr}
+	} else {
+		context.HTTPClient = &http.Client{}
+	}
 
 	specTripletIterator(&context)
 

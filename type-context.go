@@ -13,6 +13,7 @@ type context struct {
 	LogFunctions          bool
 	LogContext            bool
 	URLPrefix             string
+	SkipTLSVerification   bool
 	Pathnames             []string
 	Pathname              string
 	WaitGroup             *sync.WaitGroup
