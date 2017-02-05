@@ -13,6 +13,7 @@ const substitutionIdentifier = "⧈"
 
 func main() {
 	var prefix string
+	var skipTLSVerification bool
 
 	startedAt := time.Now()
 
@@ -23,10 +24,22 @@ func main() {
 		"prefix for request URLs",
 	)
 
+	flag.BoolVar(
+		&skipTLSVerification,
+		"skip-tls-verification",
+		false,
+		"skip TLS verification (hostname mismatch, self-signed certifications, etc.)",
+	)
+
 	flag.Parse()
 
 	if prefix != "" {
-		fmt.Fprintln(os.Stderr, "-prefix has been deprecated, please use absolute URIs in the request line")
+		_, err := fmt.Fprintln(os.Stderr, "-prefix has been deprecated, please use absolute URIs in the request line")
+
+		if err != nil {
+			panic(err)
+		}
+
 		os.Exit(1)
 	} else {
 		prefix = "http://localhost:80"
@@ -36,6 +49,7 @@ func main() {
 		LogFunctions:          false,
 		LogContext:            false,
 		URLPrefix:             prefix,
+		SkipTLSVerification:   skipTLSVerification,
 		Pathnames:             flag.Args(),
 		WaitGroup:             &sync.WaitGroup{},
 		ResultGathererChannel: make(chan context),
