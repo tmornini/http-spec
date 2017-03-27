@@ -20,7 +20,7 @@ func (request *request) Method() string {
 	return strings.Split(request.FirstLine.Text, " ")[0]
 }
 
-func (request *request) Path() string {
+func (request *request) AbsoluteURI() string {
 	return strings.Split(request.FirstLine.Text, " ")[1]
 }
 

@@ -58,7 +58,7 @@ COPY *.htsf /
 
 ## Basic Usage
 
-    http-spec [-prefix http(s)://host.name:port] path/to/\*.htsf
+    http-spec path/to/\*.htsf
 
 ## HTSF (Hypertext Specification Format)
 
