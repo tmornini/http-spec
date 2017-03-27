@@ -2,6 +2,8 @@ package main
 
 import (
 	"flag"
+	"fmt"
+	"os"
 	"sync"
 	"time"
 )
@@ -17,11 +19,18 @@ func main() {
 	flag.StringVar(
 		&prefix,
 		"prefix",
-		"http://localhost:80",
+		"",
 		"prefix for request URLs",
 	)
 
 	flag.Parse()
+
+	if prefix != "" {
+		fmt.Fprintln(os.Stderr, "-prefix has been deprecated, please use absolute URIs in the request line")
+		return
+	} else {
+		prefix = "http://localhost:80"
+	}
 
 	context := &context{
 		LogFunctions:          false,

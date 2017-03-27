@@ -1,5 +1,4 @@
-> POST /v2/identities HTTP/1.1
-> Host: api.subledger.com
+> POST https://api.subledger.com/v2/identities HTTP/1.1
 > Content-Type: application/json
 >
 > {
@@ -27,8 +26,7 @@
 <
 < {"active_identity":{"id":"⧆identity-id⧆:b62:22⧆","email":"tmornini@me.com","description":"http-spec API testing utility","reference":"https://github.com/tmornini/http-spec","version":1},"active_key":{"id":"⧆active-key-id⧆:b62:22⧆","identity":"⧆identity⧆:b62:22⧆","secret":"⧆secret⧆:b62:22⧆"}}
 
-> GET /v2/identities/⧈identity-id⧈ HTTP/1.1
-> Host: api.subledger.com
+> GET https://api.subledger.com/v2/identities/⧈identity-id⧈ HTTP/1.1
 > Content-Type: application/json
 >
 
