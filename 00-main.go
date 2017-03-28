@@ -27,7 +27,7 @@ func main() {
 
 	if prefix != "" {
 		fmt.Fprintln(os.Stderr, "-prefix has been deprecated, please use absolute URIs in the request line")
-		return
+		os.Exit(1)
 	} else {
 		prefix = "http://localhost:80"
 	}
