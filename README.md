@@ -135,6 +135,17 @@ header.
 ⧆optional-name⧆:b62:22⧆ is a matcher for 22 base 62 characters sometimes used
 for 128+ bit UUIDs.
 
+## Delayed Requests
+
+If you need to delay between one request (and it's associated response) and the next,
+you can use a separating line that begins with "+ " followed by a sequence of decimal
+numbers, each with optional fraction and a unit suffix, such as "300ms" or "1.5s".
+Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h"
+
+This is useful when making a request that triggers an asyncronous operation where you need
+to wait enough time to allow the asyncronous operation to complete before sending the next
+request.
+
 ## Substitution
 
 Substitution allows the re-use of previous regexp matches and take the form:

@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func responseComparitor(context *context) {
 	context.log("09 comparitor")
@@ -31,4 +34,6 @@ func responseComparitor(context *context) {
 			return
 		}
 	}
+
+	time.Sleep(expectedResponse.Duration)
 }

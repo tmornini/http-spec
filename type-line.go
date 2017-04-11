@@ -81,10 +81,11 @@ type line struct {
 
 func (line *line) validate() error {
 	if line.isBlank() ||
+		line.isComment() ||
 		line.isEmpty() ||
 		line.isRequest() ||
 		line.isResponse() ||
-		line.isComment() {
+		line.isSleep() {
 		return nil
 	}
 
@@ -103,9 +104,8 @@ func (line *line) isEmpty() bool {
 	return line.InputText != "" && line.Text == ""
 }
 
-func (line *line) isRequest() bool {
-	return line.IOPrefix != "" &&
-		strings.HasPrefix(string(line.IOPrefix[0]), ">")
+func (line *line) isSleep() bool {
+	return line.IOPrefix != "" && string(line.IOPrefix[0]) == "+"
 }
 
 func (line *line) isRequest() bool {
