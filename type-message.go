@@ -3,6 +3,7 @@ package main
 import (
 	"io"
 	"strings"
+	"time"
 )
 
 type message struct {
@@ -10,6 +11,7 @@ type message struct {
 	HeaderLines []*line
 	BlankLine   *line
 	BodyLines   []*line
+	Duration    time.Duration
 }
 
 func messageFromFile(context *context) (*message, error) {
@@ -42,6 +44,8 @@ func messageFromFile(context *context) (*message, error) {
 	var bodyLine *line
 	var bodyLines []*line
 
+	duration := time.Duration(0)
+
 	for {
 		bodyLine, err = newLineFromFile(context)
 
@@ -53,6 +57,16 @@ func messageFromFile(context *context) (*message, error) {
 			return nil, err
 		}
 
+		if bodyLine.isSleep() {
+			duration, err = time.ParseDuration(bodyLine.Text)
+
+			if err != nil {
+				return nil, err
+			}
+
+			break
+		}
+
 		bodyLines = append(bodyLines, bodyLine)
 	}
 
@@ -61,6 +75,7 @@ func messageFromFile(context *context) (*message, error) {
 		headerLines,
 		emptyLine,
 		bodyLines,
+		duration,
 	}, nil
 }
 
