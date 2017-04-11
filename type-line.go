@@ -33,10 +33,7 @@ func newLineFromFile(context *context) (*line, error) {
 	return line, nil
 }
 
-func newLineFromText(
-	pathName string,
-	lineNumber int,
-	inputText string) (*line, error) {
+func newLineFromText(pathName string, lineNumber int, inputText string) (*line, error) {
 	ioPrefix, text := split(inputText)
 
 	line := &line{
@@ -98,6 +95,10 @@ func (line *line) isBlank() bool {
 	return line.InputText == ""
 }
 
+func (line *line) isComment() bool {
+	return line.IOPrefix != "" && string(line.IOPrefix[0]) == "#"
+}
+
 func (line *line) isEmpty() bool {
 	return line.InputText != "" && line.Text == ""
 }
@@ -107,14 +108,12 @@ func (line *line) isRequest() bool {
 		strings.HasPrefix(string(line.IOPrefix[0]), ">")
 }
 
-func (line *line) isResponse() bool {
-	return line.IOPrefix != "" &&
-		strings.HasPrefix(string(line.IOPrefix[0]), "<")
+func (line *line) isRequest() bool {
+	return line.IOPrefix != "" && string(line.IOPrefix[0]) == ">"
 }
 
-func (line *line) isComment() bool {
-	return line.IOPrefix != "" &&
-		strings.HasPrefix(string(line.IOPrefix[0]), "#")
+func (line *line) isResponse() bool {
+	return line.IOPrefix != "" && string(line.IOPrefix[0]) == "<"
 }
 
 func (line *line) substitute(context *context) error {
