@@ -135,6 +135,9 @@ header.
 ⧆optional-name⧆:b62:22⧆ is a matcher for 22 base 62 characters sometimes used
 for 128+ bit UUIDs.
 
+⧆optional-name⧆:iso8601:µs:z⧆ is a matcher for ISO 8601 format timestamps
+with microsecond resolution and zulu (Z) timezone.
+
 ## Delayed Requests
 
 If you need to delay between one request (and it's associated response) and the next,
