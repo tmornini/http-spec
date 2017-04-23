@@ -90,6 +90,8 @@ func resultGatherer(context context) {
 			duration.String(),
 		)
 
+		os.Stdout.Sync()
+
 		os.Exit(1)
 	}
 
@@ -102,6 +104,8 @@ func resultGatherer(context context) {
 		Reset,
 		duration.String(),
 	)
+
+	os.Stdout.Sync()
 
 	os.Exit(0)
 }
