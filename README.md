@@ -33,6 +33,17 @@ Download a binary executable from:
 
 Don't forget to put it somewhere in your PATH, and chmod 755 it!
 
+### Options
+
+```
+-http-retry-delay duration
+    delay between failed HTTP requests (default 250ms)
+-max-http-attempts int
+    maximum number of attempts per HTTP request (default 20)
+-skip-tls-verification
+    skip TLS verification (hostname mismatch, self-signed certifications, etc.)
+```
+
 ### Docker image
 
     https://hub.docker.com/r/tmornini/http-spec/

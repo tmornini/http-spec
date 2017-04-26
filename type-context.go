@@ -9,23 +9,25 @@ import (
 )
 
 type context struct {
-	ID                    *big.Int
-	LogFunctions          bool
-	LogContext            bool
-	URLPrefix             string
-	SkipTLSVerification   bool
-	Pathnames             []string
-	Pathname              string
-	WaitGroup             *sync.WaitGroup
-	ResultGathererChannel chan context
-	Stage                 string
-	File                  *file
-	Substitutions         map[string]string
-	HTTPClient            *http.Client
-	SpecTriplet           *specTriplet
-	StartedAt             time.Time
-	HTTPResponse          *http.Response
 	Err                   error
+	File                  *file
+	HTTPClient            *http.Client
+	HTTPResponse          *http.Response
+	HTTPRetryDelay        time.Duration
+	ID                    *big.Int
+	LogContext            bool
+	LogFunctions          bool
+	MaxHTTPAttempts       int
+	Pathname              string
+	Pathnames             []string
+	ResultGathererChannel chan context
+	SkipTLSVerification   bool
+	SpecTriplet           *specTriplet
+	Stage                 string
+	StartedAt             time.Time
+	Substitutions         map[string]string
+	URLPrefix             string
+	WaitGroup             *sync.WaitGroup
 }
 
 func (context *context) log(stage string) {

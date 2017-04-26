@@ -12,10 +12,33 @@ const regexpIdentifier = "⧆"
 const substitutionIdentifier = "⧈"
 
 func main() {
+	startedAt := time.Now()
+
+	var httpRetryDelay time.Duration
+	var maxHTTPAttempts int
 	var prefix string
 	var skipTLSVerification bool
 
-	startedAt := time.Now()
+	defaultHTTPRetryDelay, err := time.ParseDuration("250ms")
+	defaultMaxHTTPAttempts := 20
+
+	if err != nil {
+		panic(err)
+	}
+
+	flag.DurationVar(
+		&httpRetryDelay,
+		"http-retry-delay",
+		defaultHTTPRetryDelay,
+		"delay between failed HTTP requests",
+	)
+
+	flag.IntVar(
+		&maxHTTPAttempts,
+		"max-http-attempts",
+		defaultMaxHTTPAttempts,
+		"maximum number of attempts per HTTP request",
+	)
 
 	flag.StringVar(
 		&prefix,
@@ -46,14 +69,16 @@ func main() {
 	}
 
 	context := &context{
-		LogFunctions:          false,
+		HTTPRetryDelay:        httpRetryDelay,
 		LogContext:            false,
-		URLPrefix:             prefix,
-		SkipTLSVerification:   skipTLSVerification,
+		LogFunctions:          false,
+		MaxHTTPAttempts:       maxHTTPAttempts,
 		Pathnames:             flag.Args(),
-		WaitGroup:             &sync.WaitGroup{},
 		ResultGathererChannel: make(chan context),
+		SkipTLSVerification:   skipTLSVerification,
 		StartedAt:             startedAt,
+		URLPrefix:             prefix,
+		WaitGroup:             &sync.WaitGroup{},
 	}
 
 	context.log("00 main")
