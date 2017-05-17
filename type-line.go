@@ -162,7 +162,7 @@ func (line *line) compare(context *context, otherLine *line) error {
 			return fmt.Errorf("%v !~ %v", line.Content(), otherLine.Content())
 		}
 
-		if regexpName != "" {
+		if regexpName != "" && regexpName != ":prefix" && regexpName != ":postfix" {
 			context.Substitutions[regexpName] = match
 		}
 	}
