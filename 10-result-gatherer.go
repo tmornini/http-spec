@@ -58,6 +58,14 @@ func resultGatherer(context context) {
 
 			outputs[completedContext.ID] +=
 				fmt.Sprintf(
+					"%sSubstitutions: %#v%s\n",
+					Yellow,
+					completedContext.Substitutions,
+					Reset,
+				)
+
+			outputs[completedContext.ID] +=
+				fmt.Sprintf(
 					"%s%s%s %s\n%s\n",
 					Red,
 					location,
