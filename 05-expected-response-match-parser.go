@@ -20,7 +20,7 @@ func expectedResponseMatchParser(context *context) {
 			continue
 		}
 
-		if count == 0 || count == 2 || count == 3 || (count-4)%3 != 0 {
+		if (count-4)%3 != 0 {
 			errorHandler(
 				context,
 				fmt.Errorf(
