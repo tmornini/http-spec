@@ -132,9 +132,9 @@ func (line *line) substitute(context *context) error {
 	substitutedLine := parts[0]
 
 	for i := 1; i < count-1; i += 2 {
-		substitution, ok := context.Substitutions[parts[i]]
+		substitution, known := context.Substitutions[parts[i]]
 
-		if !ok {
+		if !known {
 			return fmt.Errorf("unknown tag: %v", parts[i])
 		}
 
