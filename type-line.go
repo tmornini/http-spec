@@ -129,7 +129,7 @@ func (line *line) substitute(context *context) error {
 		return fmt.Errorf("malformed substitution: %s", line)
 	}
 
-	substitutedLine := parts[0]
+	substitutedText := parts[0]
 
 	for i := 1; i < count-1; i += 2 {
 		substitution, known := context.Substitutions[parts[i]]
@@ -138,10 +138,10 @@ func (line *line) substitute(context *context) error {
 			return fmt.Errorf("unknown tag: %v", parts[i])
 		}
 
-		substitutedLine += substitution + parts[i+1]
+		substitutedText += substitution + parts[i+1]
 	}
 
-	line.Text = substitutedLine
+	line.Text = substitutedText
 
 	return nil
 }
