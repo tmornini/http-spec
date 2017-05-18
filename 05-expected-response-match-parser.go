@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"regexp"
 	"strings"
@@ -49,6 +50,17 @@ func expectedResponseMatchParser(context *context) {
 		}
 
 		for i := 1; i < count-1; i += 3 {
+			captureName := parts[i]
+
+			if captureName == ":prefix" || captureName == ":postfix" {
+				errorHandler(
+					context,
+					errors.New("capture names cannot be :prefix or :postfix"),
+				)
+
+				return
+			}
+
 			reString := "("
 
 			switch parts[i+1] {
