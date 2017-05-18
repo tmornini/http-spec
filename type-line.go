@@ -125,7 +125,7 @@ func (line *line) substitute(context *context) error {
 		return nil
 	}
 
-	if count == 0 || count == 2 || (count-3)%2 != 0 {
+	if (count-3)%2 != 0 {
 		return fmt.Errorf("malformed substitution: %s", line)
 	}
 
