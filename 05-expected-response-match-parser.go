@@ -101,10 +101,6 @@ func expectedResponseMatchParser(context *context) {
 				line.Regexps = append(line.Regexps, re)
 			}
 		}
-
-		if errorHandler(context, err) {
-			return
-		}
 	}
 
 	expectedResponseSubstituter(context)
