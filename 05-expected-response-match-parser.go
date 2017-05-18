@@ -88,8 +88,10 @@ func expectedResponseMatchParser(context *context) {
 			line.RegexpNames = append(line.RegexpNames, parts[i])
 			line.Regexps = append(line.Regexps, re)
 
-			if parts[i+2] != "" {
-				re, err = regexp.Compile(regexp.QuoteMeta(parts[i+2]))
+			postfix := parts[i+2]
+
+			if postfix != "" {
+				re, err = regexp.Compile(regexp.QuoteMeta(postfix))
 
 				if errorHandler(context, err) {
 					return
