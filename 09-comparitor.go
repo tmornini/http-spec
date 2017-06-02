@@ -11,8 +11,8 @@ func responseComparitor(context *context) {
 	expectedResponse := context.SpecTriplet.ExpectedResponse
 	actualResponse := context.SpecTriplet.ActualResponse
 
-	expectedResponseLines := expectedResponse.allHeaderAndBodyLines()
-	actualResponseLines := actualResponse.allHeaderAndBodyLines()
+	expectedResponseLines := expectedResponse.allLines()
+	actualResponseLines := actualResponse.allLines()
 
 	if len(actualResponseLines) != len(expectedResponseLines) {
 		errorHandler(

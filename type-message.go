@@ -84,18 +84,10 @@ func (message *message) allLines() []*line {
 
 	allLines = append(allLines, message.FirstLine)
 	allLines = append(allLines, message.HeaderLines...)
+	allLines = append(allLines, message.BlankLine)
 	allLines = append(allLines, message.BodyLines...)
 
 	return allLines
-}
-
-func (message *message) allHeaderAndBodyLines() []*line {
-	var allHeaderAndBodyLines []*line
-
-	allHeaderAndBodyLines = append(allHeaderAndBodyLines, message.HeaderLines...)
-	allHeaderAndBodyLines = append(allHeaderAndBodyLines, message.BodyLines...)
-
-	return allHeaderAndBodyLines
 }
 
 func (message *message) substitute(context *context) {

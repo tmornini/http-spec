@@ -12,7 +12,7 @@ func expectedResponseMatchParser(context *context) {
 
 	expectedResponse := context.SpecTriplet.ExpectedResponse
 
-	for _, line := range expectedResponse.allHeaderAndBodyLines() {
+	for _, line := range expectedResponse.allLines() {
 		parts := strings.Split(line.Text, regexpIdentifier)
 
 		count := len(parts)
