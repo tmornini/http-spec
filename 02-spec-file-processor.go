@@ -41,12 +41,20 @@ func specFileProcessor(context context) {
 	context.Substitutions = map[string]string{}
 
 	if context.SkipTLSVerification {
-		tr := &http.Transport{
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		context.HTTPClient = &http.Client{
+			Transport: &http.Transport{
+				TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+			},
+			CheckRedirect: func(req *http.Request, via []*http.Request) error {
+				return http.ErrUseLastResponse
+			},
 		}
-		context.HTTPClient = &http.Client{Transport: tr}
 	} else {
-		context.HTTPClient = &http.Client{}
+		context.HTTPClient = &http.Client{
+			CheckRedirect: func(req *http.Request, via []*http.Request) error {
+				return http.ErrUseLastResponse
+			},
+		}
 	}
 
 	specTripletIterator(&context)
