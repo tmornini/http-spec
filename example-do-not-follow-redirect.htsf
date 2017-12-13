@@ -1,13 +1,13 @@
 > GET https://jigsaw.w3.org/HTTP/300/302.html HTTP/1.1
 >
 
-< HTTP/1.1 302 Found
+< HTTP/2.0 302 Found
 < Content-Length: 389
 < Content-Type: text/html;charset=ISO-8859-1
 < Date: ⧆⧆:date⧆
 < Location: https://jigsaw.w3.org/HTTP/300/Overview.html
 < Public-Key-Pins: pin-sha256="cN0QSpPIkuwpT6iP2YjEo1bEwGpH/yiUn6yhdy+HNto="; pin-sha256="WGJkyYjx1QMdMe0UqlyOKXtydPDVrk7sl2fV+nNm1r4="; pin-sha256="LrKdTxZLRTvyHM4/atX2nquX9BeHRZMCxg3cf4rhc2I="; max-age=864000
-< Server: Jigsaw/2.3.0-beta2
+< Server: Jigsaw/2.3.0-beta⧆⧆\d+⧆
 < Strict-Transport-Security: max-age=15552015; includeSubDomains; preload
 < X-Frame-Options: deny
 < X-Xss-Protection: 1; mode=block

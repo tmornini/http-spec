@@ -7,7 +7,7 @@
 < Content-Security-Policy: default-src https: data: 'unsafe-inline' 'unsafe-eval'
 < Content-Type: text/html
 < Date: ⧆⧆:date⧆
-< Public-Key-Pins: pin-sha256="hEJVeNxwqLnjseFv/doE3XU6Nr/hXJnoKdhn12iwavY="; pin-sha256="cTduB9g7EP4xd2glLUNhEq40f/jtyJF24dTzgVuKsZk="; max-age=300
+< Public-Key-Pins: pin-sha256="NRx3RbA+pNNyfX8GvCJGysRCFQJnqiNhM+u8dVaqn90="; pin-sha256="wn7UqCaQr4O5YYeHLnz52CD6jasiTYyFz0plWceOlgM="; max-age=300
 < Server: nginx
 < Strict-Transport-Security: max-age=10886400; includeSubDomains; preload
 < X-Content-Type-Options: nosniff
