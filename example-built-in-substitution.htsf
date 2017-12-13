@@ -2,14 +2,32 @@
 >
 
 < HTTP/1.1 200 OK
+< Access-Control-Allow-Credentials: true
+< Access-Control-Allow-Origin: *
 < Connection: keep-alive
-< Content-Security-Policy: default-src https: data: 'unsafe-inline' 'unsafe-eval'
+< Content-Length: ⧆⧆\d+⧆
+< Content-Type: application/json
 < Date: ⧆⧆:date⧆
-< Public-Key-Pins: pin-sha256="hEJVeNxwqLnjseFv/doE3XU6Nr/hXJnoKdhn12iwavY="; pin-sha256="cTduB9g7EP4xd2glLUNhEq40f/jtyJF24dTzgVuKsZk="; max-age=300
-< Server: nginx
-< Strict-Transport-Security: max-age=10886400; includeSubDomains; preload
-< X-Content-Type-Options: nosniff
-< ⧆x-frame-options⧆X-Frame-Options⧆: ⧆same-origin⧆SAMEORIGIN⧆
-< X-Xss-Protection: 1; mode=block
+< Server: meinheld/0.6.1
+< Via: 1.1 vegur
+< X-Powered-By: Flask
+< X-Processed-Time: ⧆⧆\d+[.]\d+⧆
 <
-< {"dynamodb":true,"sqs":true,"redis":true}
+< {
+<   "args": {
+<     "created-at": "⧈YYYY-MM-DD⧈"
+<   },⧆⧆ ⧆
+<   "data": "",⧆⧆ ⧆
+<   "files": {},⧆⧆ ⧆
+<   "form": {},⧆⧆ ⧆
+<   "headers": {
+<     "Accept-Encoding": "gzip",⧆⧆ ⧆
+<     "Connection": "close",⧆⧆ ⧆
+<     "Host": "httpbin.org",⧆⧆ ⧆
+<     "User-Agent": "Go-http-client/1.1"⧆⧆ ⧆
+<   },⧆⧆ ⧆
+<   "json": null,⧆⧆ ⧆
+<   "method": "GET",⧆⧆ ⧆
+<   "origin": "198.0.201.75",⧆⧆ ⧆
+<   "url": "https://httpbin.org/anything?created-at=⧈YYYY-MM-DD⧈"
+< }

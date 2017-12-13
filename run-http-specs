@@ -14,6 +14,8 @@ time (
   http-spec -skip-tls-verification example-insecure.htsf || exit 1
 
   http-spec example-do-not-follow-redirect.htsf          || exit 1
+
+  http-spec example-built-in-substitution.htsf           || exit 1
 ) || exit 1
 
 echo
