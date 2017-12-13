@@ -28,6 +28,6 @@
 <   },⧆⧆ ⧆
 <   "json": null,⧆⧆ ⧆
 <   "method": "GET",⧆⧆ ⧆
-<   "origin": "198.0.201.75",⧆⧆ ⧆
+<   "origin": "⧆⧆\d+[.]\d+[.]\d+[.]\d+⧆",⧆⧆ ⧆
 <   "url": "https://httpbin.org/anything?created-at=⧈YYYY-MM-DD⧈"
 < }
