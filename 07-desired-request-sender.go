@@ -12,7 +12,7 @@ func desiredRequestSender(context *context) {
 
 	desiredRequest := context.SpecTriplet.DesiredRequest
 
-	body := ioutil.NopCloser(strings.NewReader(desiredRequest.Body() + "\n"))
+	body := ioutil.NopCloser(strings.NewReader(desiredRequest.Body()))
 
 	request, err := http.NewRequest(
 		desiredRequest.Method(),
