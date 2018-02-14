@@ -146,20 +146,29 @@ func (line *line) substitute(context *context) error {
 	return nil
 }
 
+func comparisonError(line, otherLine *line) error {
+	return fmt.Errorf(
+		"line: %d: |%v| != |%v|",
+		line.LineNumber,
+		line.Content(),
+		otherLine.Content(),
+	)
+}
+
 func (line *line) compare(context *context, otherLine *line) error {
 	if line.RegexpNames == nil && line.Text == otherLine.Text {
 		return nil
 	}
 
 	if line.RegexpNames == nil && line.Text != otherLine.Text {
-		return fmt.Errorf("%v != %v", line.Content(), otherLine.Content())
+		return comparisonError(line, otherLine)
 	}
 
 	for i, regexpName := range line.RegexpNames {
 		match := line.Regexps[i].FindString(otherLine.Text)
 
 		if match == "" {
-			return fmt.Errorf("%v !~ %v", line.Content(), otherLine.Content())
+			return comparisonError(line, otherLine)
 		}
 
 		if regexpName != "" && regexpName != ":prefix" && regexpName != ":postfix" {
