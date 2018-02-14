@@ -23,7 +23,8 @@ func (f *file) readLine() (string, error) {
 
 	f.LineNumber++
 
-	inputText = strings.TrimSpace(inputText)
+	inputText = strings.TrimSuffix(inputText, "\n")
+	inputText = strings.TrimSuffix(inputText, "\r")
 
 	return inputText, nil
 }
