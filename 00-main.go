@@ -19,8 +19,8 @@ func main() {
 	var prefix string
 	var skipTLSVerification bool
 
-	defaultHTTPRetryDelay, err := time.ParseDuration("250ms")
-	defaultMaxHTTPAttempts := 20
+	defaultHTTPRetryDelay, err := time.ParseDuration("1s")
+	defaultMaxHTTPAttempts := 180
 
 	if err != nil {
 		panic(err)
