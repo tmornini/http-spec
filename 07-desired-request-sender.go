@@ -35,20 +35,26 @@ func desiredRequestSender(context *context) {
 
 	context.SpecTriplet.StartedAt = time.Now()
 
-	for attempt := 1; attempt <= context.MaxHTTPAttempts; attempt++ {
+	attempt := 0
+
+	for {
 		context.HTTPResponse, err = context.HTTPClient.Do(request)
 
-		if errorHandler(context, err) {
-			if attempt < context.MaxHTTPAttempts {
-				time.Sleep(context.HTTPRetryDelay)
+		attempt++
 
-				continue
-			}
+		if err == nil {
+			break
+		}
+
+		if attempt >= context.MaxHTTPAttempts {
+			context.Err = err
 
 			return
 		}
 
-		break
+		time.Sleep(context.HTTPRetryDelay)
+
+		continue
 	}
 
 	actualResponseReceiver(context)
