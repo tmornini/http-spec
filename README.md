@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/tmornini/http-spec.svg?branch=master)](https://travis-ci.org/tmornini/http-spec)
+
 # http-spec
 Template-based HTTP request/response specification tool
 
