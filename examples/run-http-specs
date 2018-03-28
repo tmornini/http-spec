@@ -1,10 +1,15 @@
 #!/bin/bash
 
 time (
-  http-spec example-file-not-found.htsf                  && exit 1
-  http-spec example-line-count-mismatch.htsf             && exit 1
-  http-spec example-request-only.htsf                    && exit 1
-  http-spec example-uuid.htsf                            && exit 1
+  # http-spec example-file-not-found.htsf                  && exit 1
+  # http-spec example-line-count-mismatch.htsf             && exit 1
+  # http-spec example-request-only.htsf                    && exit 1
+  # http-spec example-uuid.htsf                            && exit 1
+
+  http-spec example-file-not-found.htsf                  \
+            example-line-count-mismatch.htsf             \
+            example-request-only.htsf                    \
+            example-uuid.htsf                            && exit 1
 
   http-spec example-not-found.htsf                       \
             example-post.htsf                            \

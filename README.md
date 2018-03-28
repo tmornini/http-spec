@@ -15,7 +15,7 @@ While low-level tests may still be required for edge cases such as networking
 exceptions and intermittent service retry, for instance, the *vast* majority
 of the code behind the API should be exercisable via HTTP requests.
 
-A significant advantage of this method is that it requires you consider every
+A significant advantage of this method is that it requires you to consider every
 byte of your API's input and output, including request and response headers.
 There is much to be learned from that experience!
 
@@ -37,11 +37,11 @@ Don't forget to put it somewhere in your PATH, and chmod 755 it!
 
 ```
 -http-retry-delay duration
-    delay between failed HTTP requests (default 250ms)
+    delay between failed HTTP requests (default 1 second)
 -max-http-attempts int
-    maximum number of attempts per HTTP request (default 20)
+    maximum number of attempts per HTTP request (default 10)
 -skip-tls-verification
-    skip TLS verification (hostname mismatch, self-signed certifications, etc.)
+    skip TLS verification (hostname mismatch, self-signed certifications, etc. default false)
 ```
 
 ### Docker image
@@ -52,6 +52,7 @@ This image is not intended to be used directly, but as the base to build your
 own custom http-spec container atop.
 
 Just COPY your .htsf files and /run-http-specs executable to the image.
+See the example-Dockerfile in the examples directory.
 
 /run-http-specs allows you to orchestrate the test invocation order, timing,
 and prefix handling when testing microservices within a docker-compose cluster.
@@ -60,16 +61,18 @@ and prefix handling when testing microservices within a docker-compose cluster.
 
 ```
 FROM tmornini/http-spec
-MAINTAINER Tom Mornini <tmornini@incentivenetworks.com>
+MAINTAINER Loren Hale <loren.hale@gmail.com>
 
-COPY run-http-specs /run-http-specs
+COPY examples/* /
 
-COPY *.htsf /
+WORKDIR /
+
+CMD ["/run-http-specs"]
 ```
 
 ## Basic Usage
 
-    http-spec path/to/\*.htsf
+    http-spec path/to/http-spec-file.htsf
 
 ## HTSF (Hypertext Specification Format)
 
@@ -177,4 +180,4 @@ Substitutions are applied to requests and responses within the same file.
 ## TODO
 
 * integrate Travis CI
-* improve testing dramatically :-(
+* improve testing

@@ -6,20 +6,33 @@ import (
 	"strings"
 )
 
-func newLineFromFile(context *context) (*line, error) {
+type line struct {
+	LineNumber  int
+	PathName    string
+	InputText   string
+	IOPrefix    string
+	Text        string
+	RegexpNames []string
+	Regexps     []*regexp.Regexp
+}
+
+func getNextLineFromFile(state *state) (*line, error) {
 	var inputText string
 	var err error
 	var line *line
 
 	for {
-		inputText, err = context.File.readLine()
+		inputText, err = state.File.readLine()
 
 		if err != nil {
 			return nil, err
 		}
 
-		line, err =
-			newLineFromText(context.File.PathName, context.File.LineNumber, inputText)
+		line, err = newLineFromText(
+			state.File.PathName,
+			state.File.LineNumber,
+			inputText,
+		)
 
 		if err != nil {
 			return nil, err
@@ -69,16 +82,6 @@ func split(inputText string) (string, string) {
 	}
 }
 
-type line struct {
-	LineNumber  int
-	PathName    string
-	InputText   string
-	IOPrefix    string
-	Text        string
-	RegexpNames []string
-	Regexps     []*regexp.Regexp
-}
-
 func (line *line) validate() error {
 	if line.isBlank() ||
 		line.isComment() ||
@@ -116,7 +119,7 @@ func (line *line) isResponse() bool {
 	return line.IOPrefix != "" && string(line.IOPrefix[0]) == "<"
 }
 
-func (line *line) substitute(context *context) error {
+func (line *line) substitute(state *state) error {
 	parts := strings.Split(line.Text, substitutionIdentifier)
 
 	count := len(parts)
@@ -132,7 +135,7 @@ func (line *line) substitute(context *context) error {
 	substitutedText := parts[0]
 
 	for i := 1; i < count-1; i += 2 {
-		substitution, known := context.Substitutions[parts[i]]
+		substitution, known := state.Substitutions[parts[i]]
 
 		if !known {
 			return fmt.Errorf("unknown tag: %v", parts[i])
@@ -155,7 +158,7 @@ func comparisonError(line, otherLine *line) error {
 	)
 }
 
-func (line *line) compare(context *context, otherLine *line) error {
+func (line *line) compare(state *state, otherLine *line) error {
 	if line.RegexpNames == nil && line.Text == otherLine.Text {
 		return nil
 	}
@@ -172,7 +175,7 @@ func (line *line) compare(context *context, otherLine *line) error {
 		}
 
 		if regexpName != "" && regexpName != ":prefix" && regexpName != ":postfix" {
-			context.Substitutions[regexpName] = match
+			state.Substitutions[regexpName] = match
 		}
 	}
 

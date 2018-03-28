@@ -2,16 +2,6 @@ package main
 
 import "strings"
 
-func requestFromFile(context *context) (*request, error) {
-	message, err := messageFromFile(context)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return &request{message}, err
-}
-
 type request struct {
 	*message
 }

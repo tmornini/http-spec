@@ -14,40 +14,36 @@ type message struct {
 	Duration    time.Duration
 }
 
-func messageFromFile(context *context) (*message, error) {
-	firstLine, err := newLineFromFile(context)
+func getMessageFromFile(state *state) (*message, error) {
+	msg := &message{}
+	var err error
+
+	msg.FirstLine, err = getNextLineFromFile(state)
 
 	if err != nil {
 		return nil, err
 	}
 
-	var headerLine *line
-	var headerLines []*line
-	var emptyLine *line
-
 	for {
-		headerLine, err = newLineFromFile(context)
+		headerLine, err := getNextLineFromFile(state)
 
 		if err != nil {
 			return nil, err
 		}
 
 		if headerLine.isEmpty() {
-			emptyLine = headerLine
+			msg.BlankLine = headerLine
 
 			break
 		}
 
-		headerLines = append(headerLines, headerLine)
+		msg.HeaderLines = append(msg.HeaderLines, headerLine)
 	}
 
-	var bodyLine *line
-	var bodyLines []*line
-
-	duration := time.Duration(0)
+	msg.Duration = time.Duration(0)
 
 	for {
-		bodyLine, err = newLineFromFile(context)
+		bodyLine, err := getNextLineFromFile(state)
 
 		if err == io.EOF || bodyLine.isBlank() {
 			break
@@ -58,7 +54,7 @@ func messageFromFile(context *context) (*message, error) {
 		}
 
 		if bodyLine.isSleep() {
-			duration, err = time.ParseDuration(bodyLine.Text)
+			msg.Duration, err = time.ParseDuration(bodyLine.Text)
 
 			if err != nil {
 				return nil, err
@@ -67,16 +63,10 @@ func messageFromFile(context *context) (*message, error) {
 			break
 		}
 
-		bodyLines = append(bodyLines, bodyLine)
+		msg.BodyLines = append(msg.BodyLines, bodyLine)
 	}
 
-	return &message{
-		firstLine,
-		headerLines,
-		emptyLine,
-		bodyLines,
-		duration,
-	}, nil
+	return msg, nil
 }
 
 func (message *message) allLines() []*line {
@@ -90,9 +80,9 @@ func (message *message) allLines() []*line {
 	return allLines
 }
 
-func (message *message) substitute(context *context) {
+func (message *message) substitute(state *state) {
 	for _, line := range message.allLines() {
-		line.substitute(context)
+		line.substitute(state)
 	}
 }
 

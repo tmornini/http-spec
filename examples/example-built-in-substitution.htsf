@@ -11,7 +11,7 @@
 < Server: meinheld/0.6.1
 < Via: 1.1 vegur
 < X-Powered-By: Flask
-< X-Processed-Time: ⧆⧆\d+[.]\d+⧆
+< X-Processed-Time: ⧆⧆\d+(.\d+)?⧆
 <
 < {
 <   "args": {

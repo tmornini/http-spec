@@ -7,42 +7,39 @@ import (
 	"strings"
 )
 
-func expectedResponseMatchParser(context *context) {
-	context.log("05 expected-response-match-parser")
+func parseExpectedResponse(state *state) error {
+	state.log("parse-expected-response")
 
-	expectedResponse := context.SpecTriplet.ExpectedResponse
-
-	for _, line := range expectedResponse.allLines() {
+	for _, line := range state.SpecTriplet.ExpectedResponse.allLines() {
 		parts := strings.Split(line.Text, regexpIdentifier)
 
 		count := len(parts)
 
+		// line does not contain any substitions
 		if count == 1 {
 			continue
 		}
 
+		// invalid substition format
 		if (count-4)%3 != 0 {
-			errorHandler(
-				context,
-				fmt.Errorf(
-					"regexp must be formed %soptional-capture-name%sregexp%s",
-					regexpIdentifier,
-					regexpIdentifier,
-					regexpIdentifier,
-				),
+			return fmt.Errorf(
+				"regexp must be formed %soptional-capture-name%sregexp%s",
+				regexpIdentifier,
+				regexpIdentifier,
+				regexpIdentifier,
 			)
-
-			return
 		}
 
 		var re *regexp.Regexp
 		var err error
 
+		// TODO: when would this ever be empty at this point?
+		// This is the beginning of the line and will be tagged :prefix
 		if parts[0] != "" {
 			re, err = regexp.Compile(regexp.QuoteMeta(parts[0]))
 
-			if errorHandler(context, err) {
-				return
+			if err != nil {
+				return err
 			}
 
 			line.RegexpNames = append(line.RegexpNames, ":prefix")
@@ -50,20 +47,18 @@ func expectedResponseMatchParser(context *context) {
 		}
 
 		for i := 1; i < count-1; i += 3 {
-			captureName := parts[i]
+			key := parts[i]
+			value := parts[i+1]
 
-			if captureName == ":prefix" || captureName == ":postfix" {
-				errorHandler(
-					context,
-					errors.New("capture names cannot be :prefix or :postfix"),
-				)
-
-				return
+			// :prefix and :postfix are used as tags for beginning of line and end of line
+			if key == ":prefix" || key == ":postfix" {
+				return errors.New("capture names cannot be :prefix or :postfix")
 			}
 
 			reString := "("
 
-			switch parts[i+1] {
+			// Check for any builtin matchers or use what is passed in as default
+			switch value {
 			case ":date":
 				reString +=
 					"(Mon|Tue|Wed|Thu|Fri|Sat|Sun), " +
@@ -86,18 +81,18 @@ func expectedResponseMatchParser(context *context) {
 						"[[:xdigit:]]{4}-" +
 						"[[:xdigit:]]{12}"
 			default:
-				reString += parts[i+1]
+				reString += value
 			}
 
 			reString += ")"
 
 			re, err = regexp.Compile(reString)
 
-			if errorHandler(context, err) {
-				return
+			if err != nil {
+				return err
 			}
 
-			line.RegexpNames = append(line.RegexpNames, parts[i])
+			line.RegexpNames = append(line.RegexpNames, key)
 			line.Regexps = append(line.Regexps, re)
 
 			postfix := parts[i+2]
@@ -105,8 +100,8 @@ func expectedResponseMatchParser(context *context) {
 			if postfix != "" {
 				re, err = regexp.Compile(regexp.QuoteMeta(postfix))
 
-				if errorHandler(context, err) {
-					return
+				if err != nil {
+					return err
 				}
 
 				line.RegexpNames = append(line.RegexpNames, ":postfix")
@@ -115,5 +110,5 @@ func expectedResponseMatchParser(context *context) {
 		}
 	}
 
-	expectedResponseSubstituter(context)
+	return performExpectedResponseSubstitutions(state)
 }

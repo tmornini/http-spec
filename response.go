@@ -2,16 +2,6 @@ package main
 
 import "strings"
 
-func responseFromFile(context *context) (*response, error) {
-	message, err := messageFromFile(context)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return &response{message}, nil
-}
-
 type response struct {
 	*message
 }

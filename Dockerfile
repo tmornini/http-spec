@@ -1,15 +1,9 @@
 FROM golang:alpine
-MAINTAINER Tom Mornini <tmornini@incentivenetworks.com>
+MAINTAINER Tom Mornini <tom@subledger.com>
 
 RUN apk update   && \
-    apk add bash && \
-    apk add git
+    apk add bash
 
-COPY * /go/src/github.com/tmornini/http-spec/
+COPY http-spec /
 
-RUN cd /go/src/github.com/tmornini/http-spec && \
-    go install .
-
-WORKDIR /
-
-CMD ["/run-http-specs"]
+ENV PATH="/:${PATH}"

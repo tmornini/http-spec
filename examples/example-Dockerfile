@@ -1,0 +1,8 @@
+FROM tmornini/http-spec
+MAINTAINER Loren Hale <loren.hale@gmail.com>
+
+COPY examples/* /
+
+WORKDIR /
+
+CMD ["/run-http-specs"]
