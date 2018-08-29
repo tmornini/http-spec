@@ -1,6 +1,10 @@
 package main
 
-import "strings"
+import (
+	"fmt"
+	"os"
+	"strings"
+)
 
 func requestFromFile(context *context) (*request, error) {
 	message, err := messageFromFile(context)
@@ -32,6 +36,15 @@ func (request *request) uri() string {
 
 func (request *request) URL() string {
 	if request.Scheme == "" || request.Hostname == "" {
+		fmt.Fprintf(
+			os.Stderr,
+			"%s%s%s%s\n",
+			Yellow,
+			"DEPRECATION: absolute (proxy) URLs support will be removed in 1.0\n",
+			"DEPRECATION: use -hostname and -scheme cli options instead",
+			Reset,
+		)
+
 		return request.uri()
 	}
 
