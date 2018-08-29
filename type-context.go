@@ -26,7 +26,6 @@ type context struct {
 	Stage                 string
 	StartedAt             time.Time
 	Substitutions         map[string]string
-	URLPrefix             string
 	WaitGroup             *sync.WaitGroup
 }
 

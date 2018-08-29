@@ -2,8 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
-	"os"
 	"sync"
 	"time"
 )
@@ -16,7 +14,6 @@ func main() {
 
 	var httpRetryDelay time.Duration
 	var maxHTTPAttempts int
-	var prefix string
 	var skipTLSVerification bool
 
 	defaultHTTPRetryDelay, err := time.ParseDuration("1s")
@@ -40,13 +37,6 @@ func main() {
 		"maximum number of attempts per HTTP request",
 	)
 
-	flag.StringVar(
-		&prefix,
-		"prefix",
-		"",
-		"prefix for request URLs",
-	)
-
 	flag.BoolVar(
 		&skipTLSVerification,
 		"skip-tls-verification",
@@ -55,18 +45,6 @@ func main() {
 	)
 
 	flag.Parse()
-
-	if prefix != "" {
-		_, err := fmt.Fprintln(os.Stderr, "-prefix has been deprecated, please use absolute URIs in the request line")
-
-		if err != nil {
-			panic(err)
-		}
-
-		os.Exit(1)
-	} else {
-		prefix = "http://localhost:80"
-	}
 
 	context := &context{
 		HTTPRetryDelay:        httpRetryDelay,
@@ -77,7 +55,6 @@ func main() {
 		ResultGathererChannel: make(chan context),
 		SkipTLSVerification:   skipTLSVerification,
 		StartedAt:             startedAt,
-		URLPrefix:             prefix,
 		WaitGroup:             &sync.WaitGroup{},
 	}
 
