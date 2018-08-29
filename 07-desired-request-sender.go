@@ -16,7 +16,7 @@ func desiredRequestSender(context *context) {
 
 	request, err := http.NewRequest(
 		desiredRequest.Method(),
-		desiredRequest.AbsoluteURI(),
+		desiredRequest.URL(),
 		body,
 	)
 

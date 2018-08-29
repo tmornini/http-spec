@@ -9,19 +9,33 @@ func requestFromFile(context *context) (*request, error) {
 		return nil, err
 	}
 
-	return &request{message}, err
+	return &request{
+		message,
+		context.Hostname,
+		context.Scheme,
+	}, err
 }
 
 type request struct {
 	*message
+	Hostname string
+	Scheme   string
 }
 
 func (request *request) Method() string {
 	return strings.Split(request.FirstLine.Text, " ")[0]
 }
 
-func (request *request) AbsoluteURI() string {
+func (request *request) uri() string {
 	return strings.Split(request.FirstLine.Text, " ")[1]
+}
+
+func (request *request) URL() string {
+	if request.Scheme == "" || request.Hostname == "" {
+		return request.uri()
+	}
+
+	return request.Scheme + "://" + request.Hostname + request.uri()
 }
 
 func (request *request) Version() string {
