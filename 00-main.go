@@ -14,6 +14,7 @@ func main() {
 
 	var httpRetryDelay time.Duration
 	var maxHTTPAttempts int
+	var scheme string
 	var skipTLSVerification bool
 
 	defaultHTTPRetryDelay, err := time.ParseDuration("1s")
@@ -36,6 +37,13 @@ func main() {
 		"maximum number of attempts per HTTP request",
 	)
 
+	flag.StringVar(
+		&scheme,
+		"scheme",
+		"",
+		"scheme (http/https)",
+	)
+
 	flag.BoolVar(
 		&skipTLSVerification,
 		"skip-tls-verification",
@@ -54,6 +62,7 @@ func main() {
 		ResultGathererChannel: make(chan context),
 		SkipTLSVerification:   skipTLSVerification,
 		StartedAt:             startedAt,
+		Scheme:                scheme,
 		WaitGroup:             &sync.WaitGroup{},
 	}
 
