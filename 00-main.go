@@ -12,6 +12,7 @@ const substitutionIdentifier = "⧈"
 func main() {
 	startedAt := time.Now()
 
+	var hostname string
 	var httpRetryDelay time.Duration
 	var maxHTTPAttempts int
 	var scheme string
@@ -22,6 +23,13 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	flag.StringVar(
+		&hostname,
+		"hostname",
+		"",
+		"hostname",
+	)
 
 	flag.DurationVar(
 		&httpRetryDelay,
@@ -54,6 +62,7 @@ func main() {
 	flag.Parse()
 
 	context := &context{
+		Hostname:              hostname,
 		HTTPRetryDelay:        httpRetryDelay,
 		LogContext:            false,
 		LogFunctions:          false,

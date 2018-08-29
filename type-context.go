@@ -11,6 +11,7 @@ import (
 type context struct {
 	Err                   error
 	File                  *file
+	Hostname              string
 	HTTPClient            *http.Client
 	HTTPResponse          *http.Response
 	HTTPRetryDelay        time.Duration
