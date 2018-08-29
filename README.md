@@ -38,12 +38,16 @@ Don't forget to put it somewhere in your PATH, and chmod 755 it!
 ### Options
 
 ```
+-hostname string
+      hostname
 -http-retry-delay duration
-    delay between failed HTTP requests (default 250ms)
+      delay between failed HTTP requests (default 1s)
 -max-http-attempts int
-    maximum number of attempts per HTTP request (default 20)
+      maximum number of attempts per HTTP request (default 180)
+-scheme string
+      scheme (http/https)
 -skip-tls-verification
-    skip TLS verification (hostname mismatch, self-signed certifications, etc.)
+      skip TLS verification (hostname mismatch, self-signed certifications, etc.)
 ```
 
 ### Docker image
