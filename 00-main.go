@@ -17,7 +17,6 @@ func main() {
 	var skipTLSVerification bool
 
 	defaultHTTPRetryDelay, err := time.ParseDuration("1s")
-	defaultMaxHTTPAttempts := 180
 
 	if err != nil {
 		panic(err)
@@ -33,7 +32,7 @@ func main() {
 	flag.IntVar(
 		&maxHTTPAttempts,
 		"max-http-attempts",
-		defaultMaxHTTPAttempts,
+		180,
 		"maximum number of attempts per HTTP request",
 	)
 
