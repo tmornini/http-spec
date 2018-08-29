@@ -16,6 +16,12 @@ time (
   http-spec example-do-not-follow-redirect.htsf          || exit 1
 
   http-spec example-built-in-substitution.htsf           || exit 1
+
+  http-spec -hostname api.subledger.com -scheme http     \
+            example-scheme-and-hostname-1.htsf           || exit 1
+
+  http-spec -hostname api.subledger.com -scheme https    \
+            example-scheme-and-hostname-2.htsf           || exit 1
 ) || exit 1
 
 echo
