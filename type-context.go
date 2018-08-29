@@ -26,6 +26,7 @@ type context struct {
 	Stage                 string
 	StartedAt             time.Time
 	Substitutions         map[string]string
+	Scheme                string
 	WaitGroup             *sync.WaitGroup
 }
 
