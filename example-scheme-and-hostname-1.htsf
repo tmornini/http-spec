@@ -1,0 +1,20 @@
+> GET /v3/system/status HTTP/1.1
+>
+
+< HTTP/1.1 301 Moved Permanently
+< Cache-Control: public, max-age=31536000
+< Connection: keep-alive
+< Content-Length: 178
+< Content-Type: text/html
+< Date: ⧆⧆:date⧆
+< Location: https://api.subledger.com/v3/system/status
+< Server: nginx
+< Strict-Transport-Security: max-age=10886400; includeSubDomains; preload
+<
+< <html>
+< <head><title>301 Moved Permanently</title></head>
+< <body bgcolor="white">
+< <center><h1>301 Moved Permanently</h1></center>
+< <hr><center>nginx</center>
+< </body>
+< </html>
