@@ -1,0 +1,67 @@
+> GET https://httpbin.org/anything?data=%7B%22uuid1%22%3A%2210eadefa-58b8-4c3f-80d6-e6da08f58ae6%22%2C%22uuid2%22%3A%2220eadefa-58b8-4c3f-80d6-e6da08f58ae6%22%2C%22uuid3%22%3A%2230eadefa-58b8-4c3f-80d6-e6da08f58ae6%22%7D HTTP/1.1
+> Accept: application/json
+>
+
+< HTTP/1.1 200 OK
+< Access-Control-Allow-Credentials: true
+< Access-Control-Allow-Origin: *
+< Connection: keep-alive
+< Content-Length: ⧆⧆\d+⧆
+< Content-Type: application/json
+< Date: ⧆⧆:date⧆
+< Server: gunicorn/19.9.0
+< Via: 1.1 vegur
+<
+< {
+<   "args": {
+<     "data": "{\"uuid1\":\"⧆⧆[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}⧆\",\"uuid2\":\"⧆uuid⧆[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}⧆\",\"uuid3\":\"⧆⧆[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}⧆\"}"⧆⧆ ⧆
+<   },⧆⧆ ⧆
+<   "data": "",⧆⧆ ⧆
+<   "files": {},⧆⧆ ⧆
+<   "form": {},⧆⧆ ⧆
+<   "headers": {
+<     "Accept": "application/json",⧆⧆ ⧆
+<     "Accept-Encoding": "gzip",⧆⧆ ⧆
+<     "Connection": "close",⧆⧆ ⧆
+<     "Host": "httpbin.org",⧆⧆ ⧆
+<     "User-Agent": "Go-http-client/1.1"⧆⧆ ⧆
+<   },⧆⧆ ⧆
+<   "json": null,⧆⧆ ⧆
+<   "method": "GET",⧆⧆ ⧆
+<   "origin": "⧆⧆\d+[.]\d+[.]\d+[.]\d+⧆",⧆⧆ ⧆
+<   "url": "https://httpbin.org/anything?data={\"uuid1\"%3A\"10eadefa-58b8-4c3f-80d6-e6da08f58ae6\"%2C\"uuid2\"%3A\"20eadefa-58b8-4c3f-80d6-e6da08f58ae6\"%2C\"uuid3\"%3A\"30eadefa-58b8-4c3f-80d6-e6da08f58ae6\"}"⧆⧆ ⧆
+< }
+
+> GET https://httpbin.org/anything?uuid=⧈uuid⧈ HTTP/1.1
+> Accept: application/json
+>
+
+< HTTP/1.1 200 OK
+< Access-Control-Allow-Credentials: true
+< Access-Control-Allow-Origin: *
+< Connection: keep-alive
+< Content-Length: ⧆⧆\d+⧆
+< Content-Type: application/json
+< Date: ⧆⧆:date⧆
+< Server: gunicorn/19.9.0
+< Via: 1.1 vegur
+<
+< {
+<   "args": {
+<     "uuid": "20eadefa-58b8-4c3f-80d6-e6da08f58ae6"⧆⧆ ⧆
+<   },⧆⧆ ⧆
+<   "data": "",⧆⧆ ⧆
+<   "files": {},⧆⧆ ⧆
+<   "form": {},⧆⧆ ⧆
+<   "headers": {
+<     "Accept": "application/json",⧆⧆ ⧆
+<     "Accept-Encoding": "gzip",⧆⧆ ⧆
+<     "Connection": "close",⧆⧆ ⧆
+<     "Host": "httpbin.org",⧆⧆ ⧆
+<     "User-Agent": "Go-http-client/1.1"⧆⧆ ⧆
+<   },⧆⧆ ⧆
+<   "json": null,⧆⧆ ⧆
+<   "method": "GET",⧆⧆ ⧆
+<   "origin": "⧆⧆\d+[.]\d+[.]\d+[.]\d+⧆",⧆⧆ ⧆
+<   "url": "https://httpbin.org/anything?uuid=20eadefa-58b8-4c3f-80d6-e6da08f58ae6"⧆⧆ ⧆
+< }
