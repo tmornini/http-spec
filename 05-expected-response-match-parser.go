@@ -63,29 +63,11 @@ func expectedResponseMatchParser(context *context) {
 
 			reString := "("
 
-			switch parts[i+1] {
-			case ":date":
-				reString +=
-					"(Mon|Tue|Wed|Thu|Fri|Sat|Sun), " +
-						"(0\\d|1\\d|2\\d|3[01]) " +
-						"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) " +
-						"2\\d{3} " +
-						"(0\\d|1\\d|2[0-3]):" +
-						"(0\\d|1\\d|2\\d|3\\d|4\\d|5\\d):" +
-						"(0\\d|1\\d|2\\d|3\\d|4\\d|5\\d) " +
-						"(A|M|N|Y|Z|UT|GMT|[A-Z]{3}|[+-](0\\d|1[012]))"
-			case ":b62:22":
-				reString += "[0-9A-Za-z]{22}"
-			case ":iso8601:µs:z":
-				reString += "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}[.]\\d{6}Z"
-			case ":uuid":
-				reString +=
-					"[[:xdigit:]]{8}-" +
-						"[[:xdigit:]]{4}-" +
-						"[[:xdigit:]]{4}-" +
-						"[[:xdigit:]]{4}-" +
-						"[[:xdigit:]]{12}"
-			default:
+			_, ok := context.Matchers[parts[i+1]]
+
+			if ok {
+				reString += context.Matchers[parts[i+1]]
+			} else {
 				reString += parts[i+1]
 			}
 
