@@ -71,6 +71,8 @@ MAINTAINER Tom Mornini <tmornini@incentivenetworks.com>
 COPY run-http-specs /run-http-specs
 
 COPY *.htsf /
+
+COPY matchers.yml /
 ```
 
 ## Basic Usage
@@ -154,6 +156,24 @@ for 128+ bit UUIDs.
 
 ⧆optional-name⧆:iso8601:µs:z⧆ is a matcher for ISO 8601 format timestamps
 with microsecond resolution and zulu (Z) timezone.
+
+## Custom Matchers
+
+Custom matchers work just like built-in matchers and are loaded from an optionally
+provided matchers.yml file in the docker container. See the example-Dockerfile and
+matchers.yml file.
+
+The matchers.yml file is a basic YAML file with the keys coresponding to the mandatory-regexp
+portion of the matcher and the value corresponding to the actual regexp.
+
+matchers.yml example:
+```
+RFC4122v4: "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+```
+usage of the custom matcher:
+```
+⧆optional-name⧆:RFC4122v4⧆
+```
 
 ## Built-in Substitutes
 

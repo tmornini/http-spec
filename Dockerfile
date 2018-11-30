@@ -8,6 +8,7 @@ RUN apk update   && \
 COPY * /go/src/github.com/tmornini/http-spec/
 
 RUN cd /go/src/github.com/tmornini/http-spec && \
+    go get ./...                             && \
     go install .
 
 WORKDIR /
