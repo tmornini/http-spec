@@ -66,6 +66,7 @@ func main() {
 		HTTPRetryDelay:        httpRetryDelay,
 		LogContext:            false,
 		LogFunctions:          false,
+		Matchers:              make(map[string]string),
 		MaxHTTPAttempts:       maxHTTPAttempts,
 		Pathnames:             flag.Args(),
 		ResultGathererChannel: make(chan context),
@@ -73,6 +74,12 @@ func main() {
 		StartedAt:             startedAt,
 		Scheme:                scheme,
 		WaitGroup:             &sync.WaitGroup{},
+	}
+
+	err = loadMatchers(context)
+
+	if err != nil {
+		panic(err)
 	}
 
 	context.log("00 main")

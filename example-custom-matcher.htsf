@@ -1,4 +1,4 @@
-> GET /v3/system/status HTTP/1.1
+> GET https://api.subledger.com/v3/system/status HTTP/1.1
 >
 
 < HTTP/1.1 200 OK
@@ -9,7 +9,7 @@
 < Server: nginx
 < Strict-Transport-Security: max-age=10886400; includeSubDomains; preload
 < X-Content-Type-Options: nosniff
-< X-Frame-Options: SAMEORIGIN
+< X-Frame-Options: ⧆⧆:same-origin⧆
 < X-Xss-Protection: 1; mode=block
 <
 < {"dynamodb":true,"sqs":true,"redis":true}

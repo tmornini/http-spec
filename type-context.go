@@ -18,6 +18,7 @@ type context struct {
 	ID                    *big.Int
 	LogContext            bool
 	LogFunctions          bool
+	Matchers              map[string]string
 	MaxHTTPAttempts       int
 	Pathname              string
 	Pathnames             []string
