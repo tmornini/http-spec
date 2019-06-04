@@ -1,4 +1,4 @@
-> GET https://api.subledger.com/v3/system/status HTTP/1.1
+> GET /v3/system/status HTTP/1.1
 >
 
 < HTTP/1.1 200 OK

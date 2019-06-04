@@ -1,15 +1,31 @@
-> GET https://api.subledger.com/v3/system/status HTTP/1.1
+# ⧆⧆:uuid⧆
+> GET /anything/f81d4fae-7dec-11d0-a765-00a0c91e6bf6 HTTP/1.1
 >
 
 < HTTP/1.1 200 OK
-< Connection: keep-alive ⧆⧆:uuid⧆
-< Content-Security-Policy: default-src https: data: 'unsafe-inline' 'unsafe-eval'
+< Access-Control-Allow-Credentials: true
+< Access-Control-Allow-Origin: *
+< Connection: keep-alive
+< Content-Type: application/json
 < Date: ⧆⧆:date⧆
-< Public-Key-Pins: pin-sha256="hEJVeNxwqLnjseFv/doE3XU6Nr/hXJnoKdhn12iwavY="; pin-sha256="cTduB9g7EP4xd2glLUNhEq40f/jtyJF24dTzgVuKsZk="; max-age=300
+< Referrer-Policy: no-referrer-when-downgrade
 < Server: nginx
-< Strict-Transport-Security: max-age=10886400; includeSubDomains; preload
 < X-Content-Type-Options: nosniff
-< X-Frame-Options: SAMEORIGIN
+< X-Frame-Options: DENY
 < X-Xss-Protection: 1; mode=block
-<
-< {"dynamodb":true,"sqs":true,"redis":true}
+< 
+< {
+<   "args": {}, 
+<   "data": "", 
+<   "files": {}, 
+<   "form": {}, 
+<   "headers": {
+<     "Accept-Encoding": "gzip", 
+<     "Host": "httpbin.org", 
+<     "User-Agent": "Go-http-client/1.1"
+<   }, 
+<   "json": null, 
+<   "method": "GET", 
+<   "origin": "⧆⧆\S+⧆, ⧆⧆\S+⧆", 
+<   "url": "https://httpbin.org/anything/⧆⧆:uuid⧆"
+< }

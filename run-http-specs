@@ -1,27 +1,47 @@
 #!/bin/bash
 
 time (
-  http-spec example-file-not-found.htsf                  && exit 1
-  http-spec example-line-count-mismatch.htsf             && exit 1
-  http-spec example-request-only.htsf                    && exit 1
-  http-spec example-uuid.htsf                            && exit 1
+  http-spec -scheme http  -hostname api.subledger.com                            \
+            example-file-not-found.htsf                                          && exit 1
+  
+  http-spec -scheme https -hostname api.subledger.com                            \
+            example-line-count-mismatch.htsf                                     && exit 1
+  
+  http-spec -scheme https -hostname api.subledger.com                            \
+            example-request-only.htsf                                            && exit 1
+  
+  http-spec -scheme https -hostname httpbin.org                                  \
+            example-uuid.htsf                                                    || exit 1
 
-  http-spec example-not-found.htsf                       \
-            example-post.htsf                            \
-            example-regexp-and-substitution.htsf         \
-            example-sleep.htsf                           || exit 1
+  http-spec -scheme https -hostname api.subledger.com                            \
+            example-not-found.htsf                                               || exit 1
+  
+  http-spec -scheme https -hostname api.subledger.com                            \
+            example-post.htsf                                                    || exit 1
+  
+  http-spec -scheme https -hostname api.subledger.com                            \
+            example-regexp-and-substitution.htsf                                 || exit 1
+  
+  http-spec -scheme https -hostname api.subledger.com                            \
+            example-sleep.htsf                                                   || exit 1
 
-  http-spec -skip-tls-verification example-insecure.htsf || exit 1
+  http-spec -scheme https -hostname self-signed.badssl.com                       \
+            -skip-tls-verification example-insecure.htsf                         || exit 1
 
-  http-spec example-do-not-follow-redirect.htsf          || exit 1
+  http-spec -scheme https -hostname jigsaw.w3.org                                \
+            example-do-not-follow-redirect.htsf                                  || exit 1
 
-  http-spec example-built-in-substitution.htsf           || exit 1
+  http-spec -scheme https -hostname httpbin.org                                  \
+            example-built-in-substitution.htsf                                   || exit 1
 
-  http-spec -hostname api.subledger.com -scheme http     \
-            example-scheme-and-hostname-1.htsf           || exit 1
+  http-spec -scheme http -hostname api.subledger.com                             \
+            example-scheme-and-hostname-1.htsf                                   || exit 1
 
-  http-spec -hostname api.subledger.com -scheme https    \
-            example-scheme-and-hostname-2.htsf           || exit 1
+  http-spec -scheme https -hostname api.subledger.com                            \
+            example-scheme-and-hostname-2.htsf                                   || exit 1
+  
+  http-spec -scheme https -hostname httpbin.org                                  \
+            example-random-uuid.htsf                                             || exit 1
 ) || exit 1
 
 echo

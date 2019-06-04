@@ -1,0 +1,47 @@
+# ⧈random-uuid⧈ will insert a random uuid. Currently only one random number is 
+# generated per htsf file.
+> POST /post HTTP/1.1
+> Content-Type: application/json
+>
+> {
+>   "id":          "⧈random-uuid⧈",
+>   "description": "http-spec API testing utility",
+>   "reference":   "https://github.com/tmornini/http-spec"
+> }
+
+< HTTP/1.1 200 OK
+< Access-Control-Allow-Credentials: true
+< Access-Control-Allow-Origin: *
+< Connection: keep-alive
+< Content-Type: application/json
+< Date: ⧆⧆:date⧆
+< Referrer-Policy: no-referrer-when-downgrade
+< Server: nginx
+< X-Content-Type-Options: nosniff
+< X-Frame-Options: DENY
+< X-Xss-Protection: 1; mode=block
+< 
+< {
+<   "args": {}, 
+<   "data": "{\n  \"id\":          \"⧈random-uuid⧈\",\n  \"description\": \"http-spec API testing utility\",\n  \"reference\":   \"https://github.com/tmornini/http-spec\"\n}", 
+<   "files": {}, 
+<   "form": {}, 
+<   "headers": {
+<     "Accept-Encoding": "gzip", 
+<     "Content-Length": "153", 
+<     "Content-Type": "application/json", 
+<     "Host": "httpbin.org", 
+<     "User-Agent": "Go-http-client/1.1"
+<   }, 
+<   "json": {
+<     "description": "http-spec API testing utility", 
+<     "id": "⧈random-uuid⧈", 
+<     "reference": "https://github.com/tmornini/http-spec"
+<   }, 
+<   "origin": "⧆⧆\d+[.]\d+[.]\d+[.]\d+⧆",⧆⧆ ⧆, 
+<   "url": "https://httpbin.org/post"
+< }
+
+[example-random-uuid.htsf:3:12] 410.4219ms line: 37: 
+|<     "description": "http-spec API testing utility", | != 
+|<     "ID": "tbk6srD7yOBKbEiIy0Dbyh", |
