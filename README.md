@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/tmornini/http-spec.svg?branch=master)](https://travis-ci.org/tmornini/http-spec)
+[![CI](https://github.com/tmornini/http-spec/actions/workflows/ci.yml/badge.svg)](https://github.com/tmornini/http-spec/actions/workflows/ci.yml)
 
 # http-spec
 Template-based HTTP request/response specification tool
@@ -25,7 +25,7 @@ There is much to be learned from that experience!
 
 ### Go developers
 
-    go get github.com/tmornini/http-spec
+    go install github.com/tmornini/http-spec@latest
 
 ### Mac OS X developers
 
@@ -66,10 +66,10 @@ and prefix handling when testing microservices within a docker-compose cluster.
 
 ```
 FROM tmornini/http-spec
-MAINTAINER Tom Mornini <tmornini@me.com>
+
+LABEL maintainer="Tom Mornini <tmornini@me.com>"
 
 COPY run-http-specs /run-http-specs
-
 COPY *.htsf /
 ```
 
@@ -182,5 +182,4 @@ Substitutions are applied to requests and responses within the same file.
 
 ## TODO
 
-* integrate Travis CI
 * improve testing dramatically :-(
