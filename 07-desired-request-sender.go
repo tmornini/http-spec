@@ -8,7 +8,7 @@ import (
 )
 
 func desiredRequestSender(context *context) {
-	context.log("07-desired-request-sender")
+	context.log("07 desired-request-sender")
 
 	desiredRequest := context.SpecTriplet.DesiredRequest
 
