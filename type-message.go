@@ -92,7 +92,9 @@ func (message *message) allLines() []*line {
 
 func (message *message) substitute(context *context) {
 	for _, line := range message.allLines() {
-		line.substitute(context)
+		if errorHandler(context, line.substitute(context)) {
+			return
+		}
 	}
 }
 

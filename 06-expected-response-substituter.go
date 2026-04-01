@@ -5,5 +5,9 @@ func expectedResponseSubstituter(context *context) {
 
 	context.SpecTriplet.ExpectedResponse.substitute(context)
 
+	if context.Err != nil {
+		return
+	}
+
 	desiredRequestSender(context)
 }

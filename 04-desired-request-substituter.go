@@ -5,6 +5,10 @@ func desiredRequestSubstitor(context *context) {
 
 	context.SpecTriplet.DesiredRequest.substitute(context)
 
+	if context.Err != nil {
+		return
+	}
+
 	if context.SpecTriplet.isRequestOnly() {
 		desiredRequestSender(context)
 
