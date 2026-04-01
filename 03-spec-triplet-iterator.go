@@ -25,7 +25,7 @@ func specTripletIterator(context *context) {
 			ExpectedResponse: expectedResponse,
 		}
 
-		desiredRequestSubstitor(context)
+		desiredRequestSubstituter(context)
 
 		context.SpecTriplet.Duration = time.Since(context.SpecTriplet.StartedAt)
 		context.ResultGathererChannel <- *context

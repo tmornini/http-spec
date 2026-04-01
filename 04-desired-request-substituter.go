@@ -1,6 +1,6 @@
 package main
 
-func desiredRequestSubstitor(context *context) {
+func desiredRequestSubstituter(context *context) {
 	context.log("04 desired-request-substituter")
 
 	context.SpecTriplet.DesiredRequest.substitute(context)
