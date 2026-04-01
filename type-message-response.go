@@ -2,6 +2,8 @@ package main
 
 import "strings"
 
+const dateHeaderPrefix = "< Date: "
+
 func responseFromFile(context *context) (*response, error) {
 	message, err := messageFromFile(context)
 
@@ -41,7 +43,7 @@ func (response *response) String() string {
 	for _, l := range response.HeaderLines {
 		content := l.Content()
 
-		if content[0:8] == "< Date: " {
+		if content[0:8] == dateHeaderPrefix {
 			content =
 				content[0:8] +
 					regexpIdentifier +
