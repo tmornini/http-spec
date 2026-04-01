@@ -8,6 +8,7 @@ import (
 
 const regexpIdentifier = "⧆"
 const substitutionIdentifier = "⧈"
+const defaultMaxHTTPAttempts = 180
 
 func main() {
 	startedAt := time.Now()
@@ -41,7 +42,7 @@ func main() {
 	flag.IntVar(
 		&maxHTTPAttempts,
 		"max-http-attempts",
-		180,
+		defaultMaxHTTPAttempts,
 		"maximum number of attempts per HTTP request",
 	)
 
