@@ -1,7 +1,7 @@
 package main
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 	"time"
@@ -12,7 +12,7 @@ func desiredRequestSender(context *context) {
 
 	desiredRequest := context.SpecTriplet.DesiredRequest
 
-	body := ioutil.NopCloser(strings.NewReader(desiredRequest.Body()))
+	body := io.NopCloser(strings.NewReader(desiredRequest.Body()))
 
 	request, err := http.NewRequest(
 		desiredRequest.Method(),
