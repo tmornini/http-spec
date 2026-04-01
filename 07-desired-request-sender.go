@@ -57,5 +57,5 @@ func desiredRequestSender(context *context) {
 		continue
 	}
 
-	actualResponseReceiver(context)
+	actualResponseTranslator(context)
 }

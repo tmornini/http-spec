@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-func actualResponseReceiver(context *context) {
-	context.log("08 actual-response-receiver")
+func actualResponseTranslator(context *context) {
+	context.log("08 actual-response-translator")
 
 	message := &message{}
 
