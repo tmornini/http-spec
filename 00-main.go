@@ -57,7 +57,7 @@ func main() {
 		&skipTLSVerification,
 		"skip-tls-verification",
 		false,
-		"skip TLS verification (hostname mismatch, self-signed certifications, etc.)",
+		"skip TLS certificate verification",
 	)
 
 	flag.Parse()

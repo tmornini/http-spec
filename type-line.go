@@ -33,7 +33,11 @@ func newLineFromFile(context *context) (*line, error) {
 	return line, nil
 }
 
-func newLineFromText(pathName string, lineNumber int, inputText string) (*line, error) {
+func newLineFromText(
+	pathName string,
+	lineNumber int,
+	inputText string,
+) (*line, error) {
 	ioPrefix, text := split(inputText)
 
 	line := &line{
