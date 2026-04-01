@@ -9,7 +9,7 @@ go install .                # build and install the binary
 http-spec path/to/*.htsf    # run spec files against a live HTTP endpoint
 ```
 
-This is a **pre-modules Go project** (single `package main`, no `go.mod`). All source files live in the root directory.
+This is a single `package main` Go module with zero external dependencies. All source files live in the root directory.
 
 There are no unit tests (`_test.go`). Testing is done by running `.htsf` spec files against live HTTP endpoints. The `./validate` script runs the full test suite inside Docker. The `./run-http-specs` script orchestrates example spec execution with expected pass/fail outcomes.
 
