@@ -1,6 +1,6 @@
 FROM tmornini/http-spec
-MAINTAINER Tom Mornini <tmornini@me.com>
+
+LABEL maintainer="Tom Mornini <tmornini@me.com>"
 
 COPY run-http-specs /run-http-specs
-
 COPY *.htsf /
