@@ -80,7 +80,7 @@ func main() {
 
 	go resultGatherer(*context)
 
-	specFileScatter(context)
+	specFileScatterer(context)
 
 	context.WaitGroup.Wait()
 
