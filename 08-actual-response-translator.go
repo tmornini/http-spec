@@ -107,5 +107,5 @@ func actualResponseTranslator(context *context) {
 		return
 	}
 
-	responseComparitor(context)
+	responseComparator(context)
 }

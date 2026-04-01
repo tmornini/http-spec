@@ -5,8 +5,8 @@ import (
 	"time"
 )
 
-func responseComparitor(context *context) {
-	context.log("09 comparitor")
+func responseComparator(context *context) {
+	context.log("09 comparator")
 
 	expectedResponse := context.SpecTriplet.ExpectedResponse
 	actualResponse := context.SpecTriplet.ActualResponse
