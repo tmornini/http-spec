@@ -66,7 +66,7 @@ and prefix handling when testing microservices within a docker-compose cluster.
 
 ```
 FROM tmornini/http-spec
-MAINTAINER Tom Mornini <tmornini@incentivenetworks.com>
+MAINTAINER Tom Mornini <tmornini@me.com>
 
 COPY run-http-specs /run-http-specs
 

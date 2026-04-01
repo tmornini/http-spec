@@ -1,5 +1,5 @@
 FROM golang:alpine
-MAINTAINER Tom Mornini <tmornini@incentivenetworks.com>
+MAINTAINER Tom Mornini <tmornini@me.com>
 
 RUN apk update   && \
     apk add bash && \
