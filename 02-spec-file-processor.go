@@ -9,6 +9,9 @@ import (
 	"os"
 )
 
+const idBase = 62
+const idLength = 22
+
 func specFileProcessor(context context) {
 	context.log("02 spec-file-processor")
 
@@ -22,7 +25,11 @@ func specFileProcessor(context context) {
 		return
 	}
 
-	space := new(big.Int).Exp(big.NewInt(62), big.NewInt(22), nil)
+	space := new(big.Int).Exp(
+		big.NewInt(idBase),
+		big.NewInt(idLength),
+		nil,
+	)
 	uuid, err := rand.Int(rand.Reader, space)
 
 	if err != nil {
