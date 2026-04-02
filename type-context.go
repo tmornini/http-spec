@@ -15,6 +15,7 @@ type context struct {
 	HTTPClient            *http.Client
 	HTTPResponse          *http.Response
 	HTTPRetryDelay        time.Duration
+	HTTPTimeout           time.Duration
 	ID                    *big.Int
 	LogContext            bool
 	LogFunctions          bool

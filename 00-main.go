@@ -18,6 +18,7 @@ func main() {
 
 	var hostname string
 	var httpRetryDelay time.Duration
+	var httpTimeout time.Duration
 	var matchersPath string
 	var maxHTTPAttempts int
 	var retryStatusCodesStr string
@@ -42,6 +43,13 @@ func main() {
 		"http-retry-delay",
 		defaultHTTPRetryDelay,
 		"delay between failed HTTP requests",
+	)
+
+	flag.DurationVar(
+		&httpTimeout,
+		"http-timeout",
+		30*time.Second,
+		"timeout per HTTP request",
 	)
 
 	flag.StringVar(
@@ -102,6 +110,7 @@ func main() {
 	context := &context{
 		Hostname:              hostname,
 		HTTPRetryDelay:        httpRetryDelay,
+		HTTPTimeout:           httpTimeout,
 		LogContext:            false,
 		LogFunctions:          false,
 		Matchers:              make(map[string]string),

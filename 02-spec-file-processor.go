@@ -54,6 +54,7 @@ func specFileProcessor(context context) {
 
 	if context.SkipTLSVerification {
 		context.HTTPClient = &http.Client{
+			Timeout: context.HTTPTimeout,
 			Transport: &http.Transport{
 				TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 			},
@@ -63,6 +64,7 @@ func specFileProcessor(context context) {
 		}
 	} else {
 		context.HTTPClient = &http.Client{
+			Timeout: context.HTTPTimeout,
 			CheckRedirect: func(req *http.Request, via []*http.Request) error {
 				return http.ErrUseLastResponse
 			},
