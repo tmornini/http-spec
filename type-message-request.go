@@ -1,10 +1,6 @@
 package main
 
-import (
-	"fmt"
-	"os"
-	"strings"
-)
+import "strings"
 
 func requestFromFile(context *context) (*request, error) {
 	message, err := messageFromFile(context, ">")
@@ -55,17 +51,6 @@ func (request *request) URL() string {
 	}
 
 	if hostname == "" {
-		fmt.Fprintf(
-			os.Stderr,
-			"%s%s%s%s\n",
-			Yellow,
-			"DEPRECATION: absolute (proxy) URLs support "+
-				"will be removed in 1.0\n",
-			"DEPRECATION: use -hostname and -scheme "+
-				"cli options or Host header instead",
-			Reset,
-		)
-
 		return request.uri()
 	}
 
