@@ -2,6 +2,8 @@ package main
 
 import (
 	"flag"
+	"strconv"
+	"strings"
 	"sync"
 	"time"
 )
@@ -17,6 +19,7 @@ func main() {
 	var httpRetryDelay time.Duration
 	var matchersPath string
 	var maxHTTPAttempts int
+	var retryStatusCodesStr string
 	var scheme string
 	var skipTLSVerification bool
 
@@ -55,6 +58,13 @@ func main() {
 	)
 
 	flag.StringVar(
+		&retryStatusCodesStr,
+		"retry-status-codes",
+		"",
+		"comma-separated HTTP status codes to retry on (e.g. 502,503)",
+	)
+
+	flag.StringVar(
 		&scheme,
 		"scheme",
 		"",
@@ -70,6 +80,20 @@ func main() {
 
 	flag.Parse()
 
+	var retryStatusCodes []int
+
+	if retryStatusCodesStr != "" {
+		for _, s := range strings.Split(retryStatusCodesStr, ",") {
+			code, err := strconv.Atoi(strings.TrimSpace(s))
+
+			if err != nil {
+				panic("invalid status code: " + s)
+			}
+
+			retryStatusCodes = append(retryStatusCodes, code)
+		}
+	}
+
 	context := &context{
 		Hostname:              hostname,
 		HTTPRetryDelay:        httpRetryDelay,
@@ -80,6 +104,7 @@ func main() {
 		MaxHTTPAttempts:       maxHTTPAttempts,
 		Pathnames:             flag.Args(),
 		ResultGathererChannel: make(chan context),
+		RetryStatusCodes:      retryStatusCodes,
 		SkipTLSVerification:   skipTLSVerification,
 		StartedAt:             startedAt,
 		Scheme:                scheme,

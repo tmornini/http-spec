@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 	"strings"
@@ -42,19 +43,28 @@ func desiredRequestSender(context *context) {
 
 		attempt++
 
-		if err == nil {
+		if err == nil && !context.isRetryStatusCode() {
 			break
 		}
 
 		if attempt >= context.MaxHTTPAttempts {
-			context.Err = err
+			if err != nil {
+				context.Err = err
+			} else {
+				context.Err = fmt.Errorf(
+					"retry limit reached on status %d",
+					context.HTTPResponse.StatusCode,
+				)
+			}
 
 			return
 		}
 
-		time.Sleep(context.HTTPRetryDelay)
+		if err == nil {
+			context.HTTPResponse.Body.Close()
+		}
 
-		continue
+		time.Sleep(context.HTTPRetryDelay)
 	}
 
 	actualResponseTranslator(context)

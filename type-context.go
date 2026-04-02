@@ -21,6 +21,7 @@ type context struct {
 	Matchers              map[string]string
 	MatchersPath          string
 	MaxHTTPAttempts       int
+	RetryStatusCodes      []int
 	Pathname              string
 	Pathnames             []string
 	ResultGathererChannel chan context
@@ -31,6 +32,16 @@ type context struct {
 	Substitutions         map[string]string
 	Scheme                string
 	WaitGroup             *sync.WaitGroup
+}
+
+func (context *context) isRetryStatusCode() bool {
+	for _, code := range context.RetryStatusCodes {
+		if context.HTTPResponse.StatusCode == code {
+			return true
+		}
+	}
+
+	return false
 }
 
 func (context *context) log(stage string) {

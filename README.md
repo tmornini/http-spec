@@ -46,6 +46,8 @@ Don't forget to put it somewhere in your PATH, and chmod 755 it!
       delay between failed HTTP requests (default 1s)
 -max-http-attempts int
       maximum number of attempts per HTTP request (default 180)
+-retry-status-codes string
+      comma-separated HTTP status codes to retry on (e.g. 502,503)
 -scheme string
       scheme (http/https)
 -skip-tls-verification
