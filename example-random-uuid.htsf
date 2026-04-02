@@ -1,0 +1,4 @@
+# ⧈random-uuid⧈ inserts a random uuid, generated once per htsf file.
+# Request-only mode: demonstrates the substitution in action.
+> GET https://httpbin.org/anything?id=⧈random-uuid⧈ HTTP/1.1
+>

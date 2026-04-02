@@ -185,9 +185,12 @@ Usage via CLI:
 http-spec -matchers matchers.json specs/*.htsf
 ```
 
-## Built-in Substitutes
+## Built-in Substitutions
 
-    ⧈YYYY-MM-DD⧈ is a substitute for today's date
+    ⧈YYYY-MM-DD⧈ is a substitution for today's date
+
+    ⧈random-uuid⧈ is a substitution for a randomly generated uuid,
+    created once per .htsf file
 
 ## Delayed Requests
 
