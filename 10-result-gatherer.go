@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"math/big"
 	"os"
+	"sort"
+	"strings"
 	"time"
 )
 
@@ -56,21 +58,9 @@ func resultGatherer(context context) {
 				}
 			}
 
-			if len(completedContext.Substitutions) > 0 {
-				substitutions := ""
-
-				for k, v := range completedContext.Substitutions {
-					substitutions +=
-						fmt.Sprintf("  %s = %s\n", k, v)
-				}
-
+			if completedContext.ShowSubstitutions && len(completedContext.Substitutions) > 0 {
 				outputs[completedContext.ID] +=
-					fmt.Sprintf(
-						"%sSubstitutions:\n%s%s",
-						Yellow,
-						substitutions,
-						Reset,
-					)
+					substitutionsTable(completedContext.Substitutions)
 			}
 
 			outputs[completedContext.ID] +=
@@ -121,4 +111,63 @@ func resultGatherer(context context) {
 	)
 
 	os.Exit(0)
+}
+
+func substitutionsTable(substitutions map[string]string) string {
+	keys := make([]string, 0, len(substitutions))
+
+	for k := range substitutions {
+		keys = append(keys, k)
+	}
+
+	sort.Strings(keys)
+
+	nameWidth := 0
+	valueWidth := 0
+
+	for _, k := range keys {
+		if len(k) > nameWidth {
+			nameWidth = len(k)
+		}
+
+		if len(substitutions[k]) > valueWidth {
+			valueWidth = len(substitutions[k])
+		}
+	}
+
+	var b strings.Builder
+
+	b.WriteString(Yellow)
+
+	b.WriteString("Substitutions\n")
+
+	b.WriteString("┌")
+	b.WriteString(strings.Repeat("─", nameWidth+2))
+	b.WriteString("┬")
+	b.WriteString(strings.Repeat("─", valueWidth+2))
+	b.WriteString("┐\n")
+
+	divider := "├" +
+		strings.Repeat("─", nameWidth+2) +
+		"┼" +
+		strings.Repeat("─", valueWidth+2) +
+		"┤\n"
+
+	for i, k := range keys {
+		if i > 0 {
+			b.WriteString(divider)
+		}
+
+		b.WriteString(fmt.Sprintf("│ %-*s │ %-*s │\n", nameWidth, k, valueWidth, substitutions[k]))
+	}
+
+	b.WriteString("└")
+	b.WriteString(strings.Repeat("─", nameWidth+2))
+	b.WriteString("┴")
+	b.WriteString(strings.Repeat("─", valueWidth+2))
+	b.WriteString("┘\n")
+
+	b.WriteString(Reset + "\n")
+
+	return b.String()
 }

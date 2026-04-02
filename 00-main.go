@@ -23,6 +23,7 @@ func main() {
 	var maxHTTPAttempts int
 	var retryStatusCodesStr string
 	var scheme string
+	var showSubstitutions bool
 	var skipTLSVerification bool
 
 	defaultHTTPRetryDelay, err := time.ParseDuration("1s")
@@ -81,6 +82,13 @@ func main() {
 	)
 
 	flag.BoolVar(
+		&showSubstitutions,
+		"show-substitutions",
+		false,
+		"show substitutions table on failure",
+	)
+
+	flag.BoolVar(
 		&skipTLSVerification,
 		"skip-tls-verification",
 		false,
@@ -119,6 +127,7 @@ func main() {
 		Pathnames:             flag.Args(),
 		ResultGathererChannel: make(chan context),
 		RetryStatusCodes:      retryStatusCodes,
+		ShowSubstitutions:     showSubstitutions,
 		SkipTLSVerification:   skipTLSVerification,
 		StartedAt:             startedAt,
 		Scheme:                scheme,

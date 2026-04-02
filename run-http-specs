@@ -29,6 +29,13 @@ time (
             examples/scheme-and-hostname-2.htsf            || exit 1
 
   http-spec examples/multiple-matchers.htsf                || exit 1
+
+  output=$(http-spec -show-substitutions                     \
+                     examples/malformed-prefix.htsf 2>&1)   && exit 1
+  echo "$output" | grep -q 'Substitutions'                    || exit 1
+
+  output=$(http-spec examples/malformed-prefix.htsf 2>&1)   && exit 1
+  ! echo "$output" | grep -q 'Substitutions'                || exit 1
 ) || exit 1
 
 echo

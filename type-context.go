@@ -26,6 +26,7 @@ type context struct {
 	Pathname              string
 	Pathnames             []string
 	ResultGathererChannel chan context
+	ShowSubstitutions     bool
 	SkipTLSVerification   bool
 	SpecTriplet           *specTriplet
 	Stage                 string
