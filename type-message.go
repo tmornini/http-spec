@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"strings"
 	"time"
@@ -14,11 +15,24 @@ type message struct {
 	Duration    time.Duration
 }
 
-func messageFromFile(context *context) (*message, error) {
+func messageFromFile(
+	context *context,
+	expectedPrefix string,
+) (*message, error) {
 	firstLine, err := newLineFromFile(context)
 
 	if err != nil {
 		return nil, err
+	}
+
+	if firstLine.IOPrefix != expectedPrefix {
+		return nil, fmt.Errorf(
+			"expected %q prefix, got %q at line %d: %s",
+			expectedPrefix,
+			firstLine.IOPrefix,
+			firstLine.LineNumber,
+			firstLine.InputText,
+		)
 	}
 
 	var headerLine *line
@@ -36,6 +50,16 @@ func messageFromFile(context *context) (*message, error) {
 			emptyLine = headerLine
 
 			break
+		}
+
+		if headerLine.IOPrefix != expectedPrefix {
+			return nil, fmt.Errorf(
+				"expected %q prefix, got %q at line %d: %s",
+				expectedPrefix,
+				headerLine.IOPrefix,
+				headerLine.LineNumber,
+				headerLine.InputText,
+			)
 		}
 
 		headerLines = append(headerLines, headerLine)
@@ -65,6 +89,16 @@ func messageFromFile(context *context) (*message, error) {
 			}
 
 			break
+		}
+
+		if bodyLine.IOPrefix != expectedPrefix {
+			return nil, fmt.Errorf(
+				"expected %q prefix, got %q at line %d: %s",
+				expectedPrefix,
+				bodyLine.IOPrefix,
+				bodyLine.LineNumber,
+				bodyLine.InputText,
+			)
 		}
 
 		bodyLines = append(bodyLines, bodyLine)

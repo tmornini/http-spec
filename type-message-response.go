@@ -5,7 +5,7 @@ import "strings"
 const dateHeaderPrefix = "< Date: "
 
 func responseFromFile(context *context) (*response, error) {
-	message, err := messageFromFile(context)
+	message, err := messageFromFile(context, "<")
 
 	if err != nil {
 		return nil, err

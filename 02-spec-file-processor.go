@@ -32,8 +32,10 @@ func specFileProcessor(context context) {
 	)
 	uuid, err := rand.Int(rand.Reader, space)
 
-	if err != nil {
-		panic(err)
+	if errorHandler(&context, err) {
+		context.ResultGathererChannel <- context
+
+		return
 	}
 
 	context.ID = uuid

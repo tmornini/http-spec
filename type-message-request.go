@@ -7,7 +7,7 @@ import (
 )
 
 func requestFromFile(context *context) (*request, error) {
-	message, err := messageFromFile(context)
+	message, err := messageFromFile(context, ">")
 
 	if err != nil {
 		return nil, err
