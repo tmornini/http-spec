@@ -53,7 +53,7 @@ Don't forget to put it somewhere in your PATH, and chmod 755 it!
 -scheme string
       scheme (http/https)
 -show-substitutions
-      show substitutions table on failure
+      show substitutions table on success (always shown on failure)
 -skip-tls-verification
       skip TLS verification (hostname mismatch, self-signed certifications, etc.)
 ```

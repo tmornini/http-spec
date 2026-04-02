@@ -43,11 +43,14 @@ time (
   [ $SECONDS -ge 1 ]                                         || exit 1
   echo "$output" | grep -q 'retry limit reached'             || exit 1
 
-  output=$(http-spec -show-substitutions                     \
-                     examples/malformed-prefix.htsf 2>&1)   && exit 1
-  echo "$output" | grep -q 'Substitutions'                    || exit 1
-
   output=$(http-spec examples/malformed-prefix.htsf 2>&1)   && exit 1
+  echo "$output" | grep -q 'Substitutions'                   || exit 1
+
+  output=$(http-spec -show-substitutions                      \
+                     examples/not-found.htsf 2>&1)           || exit 1
+  echo "$output" | grep -q 'Substitutions'                   || exit 1
+
+  output=$(http-spec examples/not-found.htsf 2>&1)          || exit 1
   ! echo "$output" | grep -q 'Substitutions'                || exit 1
 ) || exit 1
 

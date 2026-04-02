@@ -31,6 +31,11 @@ func resultGatherer(context context) {
 					Reset,
 					completedContext.SpecTriplet.Duration.String(),
 				)
+
+			if completedContext.ShowSubstitutions && len(completedContext.Substitutions) > 0 {
+				outputs[completedContext.ID] +=
+					substitutionsTable(completedContext.Substitutions)
+			}
 		} else {
 			// FAILURE
 			success = false
@@ -58,7 +63,7 @@ func resultGatherer(context context) {
 				}
 			}
 
-			if completedContext.ShowSubstitutions && len(completedContext.Substitutions) > 0 {
+			if len(completedContext.Substitutions) > 0 {
 				outputs[completedContext.ID] +=
 					substitutionsTable(completedContext.Substitutions)
 			}

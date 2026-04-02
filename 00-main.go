@@ -85,7 +85,7 @@ func main() {
 		&showSubstitutions,
 		"show-substitutions",
 		false,
-		"show substitutions table on failure",
+		"show substitutions table on success (always shown on failure)",
 	)
 
 	flag.BoolVar(
