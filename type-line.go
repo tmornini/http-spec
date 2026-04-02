@@ -168,16 +168,27 @@ func (line *line) compare(context *context, otherLine *line) error {
 		return comparisonError(line, otherLine)
 	}
 
-	for i, regexpName := range line.RegexpNames {
-		match := line.Regexps[i].FindString(otherLine.Text)
+	remaining := otherLine.Text
 
-		if match == "" {
+	for i, regexpName := range line.RegexpNames {
+		loc := line.Regexps[i].FindStringIndex(remaining)
+
+		if loc == nil || loc[0] != 0 {
 			return comparisonError(line, otherLine)
 		}
 
-		if regexpName != "" && regexpName != ":prefix" && regexpName != ":postfix" {
+		match := remaining[loc[0]:loc[1]]
+		remaining = remaining[loc[1]:]
+
+		if regexpName != "" &&
+			regexpName != ":prefix" &&
+			regexpName != ":postfix" {
 			context.Substitutions[regexpName] = match
 		}
+	}
+
+	if remaining != "" {
+		return comparisonError(line, otherLine)
 	}
 
 	return nil
