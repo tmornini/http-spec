@@ -158,6 +158,8 @@ header.
 ⧆optional-name⧆:b62:22⧆ is a matcher for 22 base 62 characters sometimes used
 for 128+ bit UUIDs.
 
+⧆optional-name⧆:digits:⧆ is a matcher for one or more decimal digits.
+
 ⧆optional-name⧆:iso8601:µs:z⧆ is a matcher for ISO 8601 format timestamps
 with microsecond resolution and zulu (Z) timezone.
 

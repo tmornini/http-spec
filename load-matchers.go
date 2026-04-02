@@ -17,6 +17,7 @@ func loadMatchers(context *context) error {
 			"(0\\d|1\\d|2\\d|3\\d|4\\d|5\\d) " +
 			"(A|M|N|Y|Z|UT|GMT|[A-Z]{3}|[+-](0\\d|1[012]))"
 	context.Matchers[":b62:22"] = "[0-9A-Za-z]{22}"
+	context.Matchers[":digits:"] = "\\d+"
 	context.Matchers[":iso8601:µs:z"] =
 		"\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}[.]\\d{6}Z"
 	context.Matchers[":uuid"] =
