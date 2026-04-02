@@ -168,7 +168,7 @@ with microsecond resolution and zulu (Z) timezone.
 ## Custom Matchers
 
 Custom matchers work just like built-in matchers and are loaded from a JSON
-file specified via the `-matchers` flag. See the example-Dockerfile and
+file specified via the `-matchers` flag. See the examples/Dockerfile and
 matchers.json file.
 
 The JSON file maps matcher names to regexp patterns. Keys become the

@@ -1,34 +1,34 @@
 #!/bin/bash
 
 time (
-  http-spec example-file-not-found.htsf                  && exit 1
-  http-spec example-line-count-mismatch.htsf             && exit 1
-  http-spec example-request-only.htsf                    && exit 1
-  http-spec example-uuid.htsf                            && exit 1
-  http-spec example-random-uuid.htsf                     && exit 1
-  http-spec example-malformed-prefix.htsf                && exit 1
+  http-spec examples/file-not-found.htsf                   && exit 1
+  http-spec examples/line-count-mismatch.htsf              && exit 1
+  http-spec examples/request-only.htsf                     && exit 1
+  http-spec examples/uuid.htsf                             && exit 1
+  http-spec examples/random-uuid.htsf                      && exit 1
+  http-spec examples/malformed-prefix.htsf                 && exit 1
 
-  http-spec example-not-found.htsf                       \
-            example-post.htsf                            \
-            example-regexp-and-substitution.htsf         \
-            example-sleep.htsf                           || exit 1
+  http-spec examples/not-found.htsf                        \
+            examples/post.htsf                             \
+            examples/regexp-and-substitution.htsf          \
+            examples/sleep.htsf                            || exit 1
 
-  http-spec -skip-tls-verification example-insecure.htsf || exit 1
+  http-spec -skip-tls-verification examples/insecure.htsf  || exit 1
 
-  http-spec example-do-not-follow-redirect.htsf          || exit 1
+  http-spec examples/do-not-follow-redirect.htsf           || exit 1
 
-  http-spec example-built-in-substitution.htsf           || exit 1
+  http-spec examples/built-in-substitution.htsf            || exit 1
 
-  http-spec -matchers matchers.json                       \
-            example-custom-matcher.htsf                  || exit 1
+  http-spec -matchers matchers.json                         \
+            examples/custom-matcher.htsf                   || exit 1
 
-  http-spec -hostname httpbin.org -scheme http            \
-            example-scheme-and-hostname-1.htsf           || exit 1
+  http-spec -hostname httpbin.org -scheme http              \
+            examples/scheme-and-hostname-1.htsf            || exit 1
 
-  http-spec -hostname httpbin.org -scheme https           \
-            example-scheme-and-hostname-2.htsf           || exit 1
+  http-spec -hostname httpbin.org -scheme https             \
+            examples/scheme-and-hostname-2.htsf            || exit 1
 
-  http-spec example-multiple-matchers.htsf               || exit 1
+  http-spec examples/multiple-matchers.htsf                || exit 1
 ) || exit 1
 
 echo
