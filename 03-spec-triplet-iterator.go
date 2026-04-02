@@ -1,6 +1,9 @@
 package main
 
-import "time"
+import (
+	"io"
+	"time"
+)
 
 func specTripletIterator(context *context) {
 	context.log("03 spec-triplet-iterator")
@@ -11,12 +14,18 @@ func specTripletIterator(context *context) {
 		desiredRequest, err := requestFromFile(context)
 
 		if errorHandler(context, err) {
+			if err != io.EOF {
+				context.ResultGathererChannel <- *context
+			}
+
 			return
 		}
 
 		expectedResponse, err := responseFromFile(context)
 
 		if errorNotEOFHandler(context, err) {
+			context.ResultGathererChannel <- *context
+
 			return
 		}
 
