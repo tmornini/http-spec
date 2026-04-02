@@ -22,10 +22,10 @@ time (
   http-spec -matchers matchers.json                       \
             example-custom-matcher.htsf                  || exit 1
 
-  http-spec -hostname api.subledger.com -scheme http     \
+  http-spec -hostname httpbin.org -scheme http            \
             example-scheme-and-hostname-1.htsf           || exit 1
 
-  http-spec -hostname api.subledger.com -scheme https    \
+  http-spec -hostname httpbin.org -scheme https           \
             example-scheme-and-hostname-2.htsf           || exit 1
 
   http-spec example-multiple-matchers.htsf               || exit 1

@@ -19,10 +19,19 @@ func messageFromFile(
 	context *context,
 	expectedPrefix string,
 ) (*message, error) {
-	firstLine, err := newLineFromFile(context)
+	var firstLine *line
+	var err error
 
-	if err != nil {
-		return nil, err
+	for {
+		firstLine, err = newLineFromFile(context)
+
+		if err != nil {
+			return nil, err
+		}
+
+		if !firstLine.isBlank() {
+			break
+		}
 	}
 
 	if firstLine.IOPrefix != expectedPrefix {

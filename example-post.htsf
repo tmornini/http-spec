@@ -1,47 +1,68 @@
-> POST https://api.subledger.com/v2/identities HTTP/1.1
+> POST http://httpbin.org/post HTTP/1.1
 > Content-Type: application/json
 >
 > {
->   "email":       "tmornini@me.com",
 >   "description": "http-spec API testing utility",
 >   "reference":   "https://github.com/tmornini/http-spec"
 > }
 
-< HTTP/1.1 201 Created
-< Cache-Control: no-cache
+< HTTP/1.1 200 OK
+< Access-Control-Allow-Credentials: true
+< Access-Control-Allow-Origin: *
 < Connection: keep-alive
-< Content-Length: 302
-< Content-Security-Policy: default-src https: data: 'unsafe-inline' 'unsafe-eval'
+< Content-Length: ⧆⧆\d+⧆
 < Content-Type: application/json
 < Date: ⧆⧆:date⧆
-< Public-Key-Pins: pin-sha256="⧆⧆[^"]+⧆"; pin-sha256="⧆⧆[^"]+⧆"; max-age=300
-< Server: nginx
-< Strict-Transport-Security: max-age=10886400; includeSubDomains; preload
-< Vary: Origin
-< X-Content-Type-Options: nosniff
-< X-Frame-Options: SAMEORIGIN
-< X-Subledger-Request-Duration: ⧆x-s-request-duration⧆[0-9]{1,4}⧆ ms
-< X-Subledger-Request-Id: ⧆request-id⧆:b62:22⧆
-< X-Xss-Protection: 1; mode=block
+< Server: gunicorn/19.9.0
 <
-< {"active_identity":{"id":"⧆identity-id⧆:b62:22⧆","email":"tmornini@me.com","description":"http-spec API testing utility","reference":"https://github.com/tmornini/http-spec","version":1},"active_key":{"id":"⧆active-key-id⧆:b62:22⧆","identity":"⧆identity⧆:b62:22⧆","secret":"⧆secret⧆:b62:22⧆"}}
+< {
+<   "args": {},⧆⧆ ⧆
+<   "data": "⧆⧆.+⧆",⧆⧆ ⧆
+<   "files": {},⧆⧆ ⧆
+<   "form": {},⧆⧆ ⧆
+<   "headers": {
+<     "Accept-Encoding": "gzip",⧆⧆ ⧆
+<     "Content-Length": "⧆content-length⧆\d+⧆",⧆⧆ ⧆
+<     "Content-Type": "application/json",⧆⧆ ⧆
+<     "Host": "httpbin.org",⧆⧆ ⧆
+<     "User-Agent": "Go-http-client/1.1",⧆⧆ ⧆
+<     "X-Amzn-Trace-Id": "⧆⧆.+⧆"
+<   },⧆⧆ ⧆
+<   "json": {
+<     "description": "http-spec API testing utility",⧆⧆ ⧆
+<     "reference": "https://github.com/tmornini/http-spec"
+<   },⧆⧆ ⧆
+<   "origin": "⧆⧆\d+[.]\d+[.]\d+[.]\d+⧆",⧆⧆ ⧆
+<   "url": "http://httpbin.org/post"
+< }
 
-> GET https://api.subledger.com/v2/identities/⧈identity-id⧈ HTTP/1.1
-> Content-Type: application/json
+> GET http://httpbin.org/anything?content-length=⧈content-length⧈ HTTP/1.1
 >
 
-< HTTP/1.1 401 Unauthorized
+< HTTP/1.1 200 OK
+< Access-Control-Allow-Credentials: true
+< Access-Control-Allow-Origin: *
 < Connection: keep-alive
-< Content-Security-Policy: default-src https: data: 'unsafe-inline' 'unsafe-eval'
+< Content-Length: ⧆⧆\d+⧆
+< Content-Type: application/json
 < Date: ⧆⧆:date⧆
-< Public-Key-Pins: pin-sha256="⧆⧆[^"]+⧆"; pin-sha256="⧆⧆[^"]+⧆"; max-age=300
-< Server: nginx
-< Strict-Transport-Security: max-age=10886400; includeSubDomains; preload
-< Www-Authenticate: Basic realm="Subledger API v2"
-< X-Content-Type-Options: nosniff
-< X-Frame-Options: SAMEORIGIN
-< X-Subledger-Request-Duration: ⧆x-s-request-duration⧆[0-9]{1,4}⧆ ms
-< X-Subledger-Request-Id: ⧆request-id⧆:b62:22⧆
-< X-Xss-Protection: 1; mode=block
+< Server: gunicorn/19.9.0
 <
-< Unauthorized
+< {
+<   "args": {
+<     "content-length": "⧈content-length⧈"
+<   },⧆⧆ ⧆
+<   "data": "",⧆⧆ ⧆
+<   "files": {},⧆⧆ ⧆
+<   "form": {},⧆⧆ ⧆
+<   "headers": {
+<     "Accept-Encoding": "gzip",⧆⧆ ⧆
+<     "Host": "httpbin.org",⧆⧆ ⧆
+<     "User-Agent": "Go-http-client/1.1",⧆⧆ ⧆
+<     "X-Amzn-Trace-Id": "⧆⧆.+⧆"
+<   },⧆⧆ ⧆
+<   "json": null,⧆⧆ ⧆
+<   "method": "GET",⧆⧆ ⧆
+<   "origin": "⧆⧆\d+[.]\d+[.]\d+[.]\d+⧆",⧆⧆ ⧆
+<   "url": "http://httpbin.org/anything?content-length=⧈content-length⧈"
+< }

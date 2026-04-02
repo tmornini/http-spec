@@ -168,27 +168,44 @@ func (line *line) compare(context *context, otherLine *line) error {
 		return comparisonError(line, otherLine)
 	}
 
-	remaining := otherLine.Text
+	pattern := "^"
 
-	for i, regexpName := range line.RegexpNames {
-		loc := line.Regexps[i].FindStringIndex(remaining)
-
-		if loc == nil || loc[0] != 0 {
-			return comparisonError(line, otherLine)
-		}
-
-		match := remaining[loc[0]:loc[1]]
-		remaining = remaining[loc[1]:]
-
-		if regexpName != "" &&
-			regexpName != ":prefix" &&
-			regexpName != ":postfix" {
-			context.Substitutions[regexpName] = match
-		}
+	type capture struct {
+		name       string
+		groupIndex int
 	}
 
-	if remaining != "" {
+	var captures []capture
+
+	groupIndex := 1
+
+	for i, re := range line.Regexps {
+		pattern += re.String()
+		name := line.RegexpNames[i]
+
+		if name != "" && name != ":prefix" && name != ":postfix" {
+			captures = append(captures, capture{name, groupIndex})
+		}
+
+		groupIndex += re.NumSubexp()
+	}
+
+	pattern += "$"
+
+	compositeRe, err := regexp.Compile(pattern)
+
+	if err != nil {
 		return comparisonError(line, otherLine)
+	}
+
+	matches := compositeRe.FindStringSubmatch(otherLine.Text)
+
+	if matches == nil {
+		return comparisonError(line, otherLine)
+	}
+
+	for _, c := range captures {
+		context.Substitutions[c.name] = matches[c.groupIndex]
 	}
 
 	return nil

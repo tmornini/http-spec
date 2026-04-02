@@ -1,31 +1,47 @@
-> GET https://api.subledger.com/v3/system/status HTTP/1.1
+> GET http://httpbin.org/get HTTP/1.1
 >
 
 < HTTP/1.1 200 OK
+< Access-Control-Allow-Credentials: true
+< Access-Control-Allow-Origin: *
 < Connection: keep-alive
-< Content-Security-Policy: default-src https: data: 'unsafe-inline' 'unsafe-eval'
+< Content-Length: ⧆⧆\d+⧆
+< Content-Type: ⧆content-type⧆[a-z/]+⧆
 < Date: ⧆⧆:date⧆
-< Public-Key-Pins: pin-sha256="⧆⧆[^"]+⧆"; pin-sha256="⧆⧆[^"]+⧆"; max-age=300
-< Server: nginx
-< Strict-Transport-Security: max-age=10886400; includeSubDomains; preload
-< X-Content-Type-Options: nosniff
-< ⧆x-frame-options⧆X-Frame-Options⧆: ⧆same-origin⧆SAMEORIGIN⧆
-< X-Xss-Protection: 1; mode=block
+< Server: ⧆server⧆[a-z0-9/.]+⧆
 <
-< {"dynamodb":true,"sqs":true,"redis":true}
+< {
+<   "args": {},⧆⧆ ⧆
+<   "headers": {
+<     "Accept-Encoding": "gzip",⧆⧆ ⧆
+<     "Host": "httpbin.org",⧆⧆ ⧆
+<     "User-Agent": "Go-http-client/1.1",⧆⧆ ⧆
+<     "X-Amzn-Trace-Id": "⧆⧆.+⧆"
+<   },⧆⧆ ⧆
+<   "origin": "⧆⧆\d+[.]\d+[.]\d+[.]\d+⧆",⧆⧆ ⧆
+<   "url": "http://httpbin.org/get"
+< }
 
-> GET https://api.subledger.com/v3/system/status HTTP/1.1
+> GET http://httpbin.org/get HTTP/1.1
 >
 
 < HTTP/1.1 200 OK
+< Access-Control-Allow-Credentials: true
+< Access-Control-Allow-Origin: *
 < Connection: keep-alive
-< Content-Security-Policy: default-src https: data: 'unsafe-inline' 'unsafe-eval'
+< Content-Length: ⧆⧆\d+⧆
+< Content-Type: ⧈content-type⧈
 < Date: ⧆⧆:date⧆
-< Public-Key-Pins: pin-sha256="⧆⧆[^"]+⧆"; pin-sha256="⧆⧆[^"]+⧆"; max-age=300
-< Server: nginx
-< Strict-Transport-Security: max-age=10886400; includeSubDomains; preload
-< X-Content-Type-Options: nosniff
-< ⧈x-frame-options⧈: ⧈same-origin⧈
-< X-Xss-Protection: 1; mode=block
+< Server: ⧈server⧈
 <
-< {"dynamodb":true,"sqs":true,"redis":true}
+< {
+<   "args": {},⧆⧆ ⧆
+<   "headers": {
+<     "Accept-Encoding": "gzip",⧆⧆ ⧆
+<     "Host": "httpbin.org",⧆⧆ ⧆
+<     "User-Agent": "Go-http-client/1.1",⧆⧆ ⧆
+<     "X-Amzn-Trace-Id": "⧆⧆.+⧆"
+<   },⧆⧆ ⧆
+<   "origin": "⧆⧆\d+[.]\d+[.]\d+[.]\d+⧆",⧆⧆ ⧆
+<   "url": "http://httpbin.org/get"
+< }

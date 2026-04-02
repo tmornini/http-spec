@@ -1,20 +1,23 @@
-> GET /v3/system/status HTTP/1.1
+> GET /get HTTP/1.1
 >
 
-< HTTP/1.1 301 Moved Permanently
-< Cache-Control: public, max-age=31536000
+< HTTP/1.1 200 OK
+< Access-Control-Allow-Credentials: true
+< Access-Control-Allow-Origin: *
 < Connection: keep-alive
-< Content-Length: 178
-< Content-Type: text/html
+< Content-Length: ⧆⧆\d+⧆
+< Content-Type: application/json
 < Date: ⧆⧆:date⧆
-< Location: https://api.subledger.com/v3/system/status
-< Server: nginx
-< Strict-Transport-Security: max-age=10886400; includeSubDomains; preload
+< Server: gunicorn/19.9.0
 <
-< <html>
-< <head><title>301 Moved Permanently</title></head>
-< <body bgcolor="white">
-< <center><h1>301 Moved Permanently</h1></center>
-< <hr><center>nginx</center>
-< </body>
-< </html>
+< {
+<   "args": {},⧆⧆ ⧆
+<   "headers": {
+<     "Accept-Encoding": "gzip",⧆⧆ ⧆
+<     "Host": "httpbin.org",⧆⧆ ⧆
+<     "User-Agent": "Go-http-client/1.1",⧆⧆ ⧆
+<     "X-Amzn-Trace-Id": "⧆⧆.+⧆"
+<   },⧆⧆ ⧆
+<   "origin": "⧆⧆\d+[.]\d+[.]\d+[.]\d+⧆",⧆⧆ ⧆
+<   "url": "http://httpbin.org/get"
+< }

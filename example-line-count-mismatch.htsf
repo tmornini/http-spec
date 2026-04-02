@@ -1,7 +1,6 @@
-> GET https://api.subledger.com/v3/system/status HTTP/1.1
+> GET https://httpbin.org/get HTTP/1.1
 >
 
-< HTTP/1.1 200 OK
-< Connection: keep-alive
+< HTTP/2.0 200 OK
+< Content-Type: application/json
 <
-< {"dynamodb":true,"sqs":true,"redis":true}
