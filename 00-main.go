@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"os"
 	"strconv"
 	"strings"
 	"sync"
@@ -79,6 +80,10 @@ func main() {
 	)
 
 	flag.Parse()
+
+	if len(flag.Args()) == 0 {
+		os.Exit(0)
+	}
 
 	var retryStatusCodes []int
 
