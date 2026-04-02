@@ -34,21 +34,46 @@ func (request *request) uri() string {
 	return strings.Split(request.FirstLine.Text, " ")[1]
 }
 
+func (request *request) hostHeader() string {
+	for _, headerLine := range request.HeaderLines {
+		parts := strings.SplitN(headerLine.Text, ":", 2)
+
+		if strings.TrimSpace(parts[0]) == "Host" {
+			return strings.TrimSpace(parts[1])
+		}
+	}
+
+	return ""
+}
+
 func (request *request) URL() string {
-	if request.Scheme == "" || request.Hostname == "" {
+	hostname := request.Hostname
+	scheme := request.Scheme
+
+	if hostname == "" {
+		hostname = request.hostHeader()
+	}
+
+	if hostname == "" {
 		fmt.Fprintf(
 			os.Stderr,
 			"%s%s%s%s\n",
 			Yellow,
-			"DEPRECATION: absolute (proxy) URLs support will be removed in 1.0\n",
-			"DEPRECATION: use -hostname and -scheme cli options instead",
+			"DEPRECATION: absolute (proxy) URLs support "+
+				"will be removed in 1.0\n",
+			"DEPRECATION: use -hostname and -scheme "+
+				"cli options or Host header instead",
 			Reset,
 		)
 
 		return request.uri()
 	}
 
-	return request.Scheme + "://" + request.Hostname + request.uri()
+	if scheme == "" {
+		scheme = "http"
+	}
+
+	return scheme + "://" + hostname + request.uri()
 }
 
 func (request *request) Version() string {

@@ -39,7 +39,7 @@ Don't forget to put it somewhere in your PATH, and chmod 755 it!
 
 ```
 -hostname string
-      hostname
+      hostname (also inferred from Host header in spec)
 -matchers string
       path to custom matchers JSON file
 -http-retry-delay duration
