@@ -40,6 +40,8 @@ Don't forget to put it somewhere in your PATH, and chmod 755 it!
 ```
 -hostname string
       hostname
+-matchers string
+      path to custom matchers JSON file
 -http-retry-delay duration
       delay between failed HTTP requests (default 1s)
 -max-http-attempts int
@@ -159,20 +161,28 @@ with microsecond resolution and zulu (Z) timezone.
 
 ## Custom Matchers
 
-Custom matchers work just like built-in matchers and are loaded from an optionally
-provided matchers.yml file in the docker container. See the example-Dockerfile and
-matchers.yml file.
+Custom matchers work just like built-in matchers and are loaded from a JSON
+file specified via the `-matchers` flag. See the example-Dockerfile and
+matchers.json file.
 
-The matchers.yml file is a basic YAML file with the keys coresponding to the mandatory-regexp
-portion of the matcher and the value corresponding to the actual regexp.
+The JSON file maps matcher names to regexp patterns. Keys become the
+mandatory-regexp portion of the matcher, prefixed with `:`.
 
-matchers.yml example:
+matchers.json example:
+```json
+{
+  "RFC4122v4": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+}
 ```
-RFC4122v4: "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
-```
-usage of the custom matcher:
+
+Usage of the custom matcher:
 ```
 ⧆optional-name⧆:RFC4122v4⧆
+```
+
+Usage via CLI:
+```
+http-spec -matchers matchers.json specs/*.htsf
 ```
 
 ## Built-in Substitutes

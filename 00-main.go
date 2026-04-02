@@ -15,6 +15,7 @@ func main() {
 
 	var hostname string
 	var httpRetryDelay time.Duration
+	var matchersPath string
 	var maxHTTPAttempts int
 	var scheme string
 	var skipTLSVerification bool
@@ -37,6 +38,13 @@ func main() {
 		"http-retry-delay",
 		defaultHTTPRetryDelay,
 		"delay between failed HTTP requests",
+	)
+
+	flag.StringVar(
+		&matchersPath,
+		"matchers",
+		"",
+		"path to custom matchers JSON file",
 	)
 
 	flag.IntVar(
@@ -68,6 +76,7 @@ func main() {
 		LogContext:            false,
 		LogFunctions:          false,
 		Matchers:              make(map[string]string),
+		MatchersPath:          matchersPath,
 		MaxHTTPAttempts:       maxHTTPAttempts,
 		Pathnames:             flag.Args(),
 		ResultGathererChannel: make(chan context),

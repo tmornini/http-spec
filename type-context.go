@@ -19,6 +19,7 @@ type context struct {
 	LogContext            bool
 	LogFunctions          bool
 	Matchers              map[string]string
+	MatchersPath          string
 	MaxHTTPAttempts       int
 	Pathname              string
 	Pathnames             []string
