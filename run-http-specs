@@ -30,6 +30,19 @@ time (
 
   http-spec examples/multiple-matchers.htsf                || exit 1
 
+  output=$(http-spec -http-timeout 1ms                        \
+                     -max-http-attempts 1                    \
+                     examples/not-found.htsf 2>&1)          && exit 1
+  echo "$output" | grep -qi 'timeout'                        || exit 1
+
+  SECONDS=0
+  output=$(http-spec -retry-status-codes 404                 \
+                     -max-http-attempts 2                    \
+                     -http-retry-delay 1s                    \
+                     examples/not-found.htsf 2>&1)          && exit 1
+  [ $SECONDS -ge 1 ]                                         || exit 1
+  echo "$output" | grep -q 'retry limit reached'             || exit 1
+
   output=$(http-spec -show-substitutions                     \
                      examples/malformed-prefix.htsf 2>&1)   && exit 1
   echo "$output" | grep -q 'Substitutions'                    || exit 1
