@@ -56,13 +56,22 @@ func resultGatherer(context context) {
 				}
 			}
 
-			outputs[completedContext.ID] +=
-				fmt.Sprintf(
-					"%sSubstitutions: %#v%s\n",
-					Yellow,
-					completedContext.Substitutions,
-					Reset,
-				)
+			if len(completedContext.Substitutions) > 0 {
+				substitutions := ""
+
+				for k, v := range completedContext.Substitutions {
+					substitutions +=
+						fmt.Sprintf("  %s = %s\n", k, v)
+				}
+
+				outputs[completedContext.ID] +=
+					fmt.Sprintf(
+						"%sSubstitutions:\n%s%s",
+						Yellow,
+						substitutions,
+						Reset,
+					)
+			}
 
 			outputs[completedContext.ID] +=
 				fmt.Sprintf(
