@@ -5,7 +5,7 @@ import (
 	"math/big"
 )
 
-func NewRandom(context *context) string {
+func newRandom(context *context) (string, error) {
 	var chars = []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}
 	var big62 = big.NewInt(62)
 	var space = (&big.Int{}).Exp(big62, big.NewInt(22), nil)
@@ -13,7 +13,7 @@ func NewRandom(context *context) string {
 	uuid, err := rand.Int(rand.Reader, space)
 
 	if err != nil {
-		context.log("uuid-new-random-error")
+		return "", err
 	}
 
 	base62 := ""
@@ -28,7 +28,7 @@ func NewRandom(context *context) string {
 		uuid.Div(uuid, big62)
 	}
 
-	return reverse(base62)
+	return reverse(base62), nil
 }
 
 func reverse(s string) string {

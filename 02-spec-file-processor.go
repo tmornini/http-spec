@@ -50,7 +50,15 @@ func specFileProcessor(context context) {
 	context.Substitutions = map[string]string{}
 	context.Substitutions["YYYY-MM-DD"] = context.StartedAt.Format("2006-01-02")
 
-	context.Substitutions["random-uuid"] = NewRandom(&context)
+	randomID, err := newRandom(&context)
+
+	if errorHandler(&context, err) {
+		context.ResultGathererChannel <- context
+
+		return
+	}
+
+	context.Substitutions["random-uuid"] = randomID
 
 	if context.SkipTLSVerification {
 		context.HTTPClient = &http.Client{
