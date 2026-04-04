@@ -5,10 +5,16 @@ import (
 	"math/big"
 )
 
+const idChars = "" +
+	"0123456789" +
+	"abcdefghijklmnopqrstuvwxyz" +
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 func newRandom(context *context) (string, error) {
-	var chars = []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}
-	var big62 = big.NewInt(62)
-	var space = (&big.Int{}).Exp(big62, big.NewInt(22), nil)
+	var bigBase = big.NewInt(idBase)
+	var space = new(big.Int).Exp(
+		bigBase, big.NewInt(idLength), nil,
+	)
 
 	uuid, err := rand.Int(rand.Reader, space)
 
@@ -18,14 +24,14 @@ func newRandom(context *context) (string, error) {
 
 	base62 := ""
 
-	for i := 0; i < 22; i++ {
-		index := (&big.Int{}).Set(uuid)
+	for i := 0; i < idLength; i++ {
+		index := new(big.Int).Set(uuid)
 
-		index.Mod(index, big62)
+		index.Mod(index, bigBase)
 
-		base62 = base62 + chars[index.Uint64()]
+		base62 = base62 + string(idChars[index.Uint64()])
 
-		uuid.Div(uuid, big62)
+		uuid.Div(uuid, bigBase)
 	}
 
 	return reverse(base62), nil
