@@ -43,9 +43,9 @@ func (response *response) String() string {
 	for _, l := range response.HeaderLines {
 		content := l.Content()
 
-		if content[0:8] == dateHeaderPrefix {
+		if strings.HasPrefix(content, dateHeaderPrefix) {
 			content =
-				content[0:8] +
+				dateHeaderPrefix +
 					regexpIdentifier +
 					regexpIdentifier +
 					":date" +
