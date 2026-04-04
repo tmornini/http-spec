@@ -12,6 +12,8 @@ import (
 const regexpIdentifier = "⧆"
 const substitutionIdentifier = "⧈"
 const defaultMaxHTTPAttempts = 180
+const defaultHTTPRetryDelay = 1 * time.Second
+const defaultHTTPTimeout = 30 * time.Second
 
 func main() {
 	startedAt := time.Now()
@@ -25,12 +27,6 @@ func main() {
 	var scheme string
 	var showSubstitutions bool
 	var skipTLSVerification bool
-
-	defaultHTTPRetryDelay, err := time.ParseDuration("1s")
-
-	if err != nil {
-		panic(err)
-	}
 
 	flag.StringVar(
 		&hostname,
@@ -49,7 +45,7 @@ func main() {
 	flag.DurationVar(
 		&httpTimeout,
 		"http-timeout",
-		30*time.Second,
+		defaultHTTPTimeout,
 		"timeout per HTTP request",
 	)
 
@@ -134,7 +130,7 @@ func main() {
 		WaitGroup:             &sync.WaitGroup{},
 	}
 
-	err = loadMatchers(context)
+	err := loadMatchers(context)
 
 	if err != nil {
 		panic(err)
