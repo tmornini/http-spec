@@ -2,6 +2,8 @@ package main
 
 import "strings"
 
+const defaultScheme = "http"
+
 func requestFromFile(context *context) (*request, error) {
 	message, err := messageFromFile(context, ">")
 
@@ -55,7 +57,7 @@ func (request *request) URL() string {
 	}
 
 	if scheme == "" {
-		scheme = "http"
+		scheme = defaultScheme
 	}
 
 	return scheme + "://" + hostname + request.uri()
