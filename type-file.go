@@ -14,14 +14,14 @@ type file struct {
 	LineNumber int
 }
 
-func (f *file) readLine() (string, error) {
-	inputText, err := f.ReadString(byte('\n'))
+func (file *file) readLine() (string, error) {
+	inputText, err := file.ReadString(byte('\n'))
 
 	if err != nil {
 		return "", err
 	}
 
-	f.LineNumber++
+	file.LineNumber++
 
 	inputText = strings.TrimSuffix(inputText, "\n")
 	inputText = strings.TrimSuffix(inputText, "\r")
@@ -29,6 +29,6 @@ func (f *file) readLine() (string, error) {
 	return inputText, nil
 }
 
-func (f *file) String() string {
-	return fmt.Sprintf("[%s:%3d]", f.PathName, f.LineNumber)
+func (file *file) String() string {
+	return fmt.Sprintf("[%s:%3d]", file.PathName, file.LineNumber)
 }
