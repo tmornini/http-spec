@@ -1,8 +1,10 @@
 # The Church of Code
 
-*v1.2 — full*
+*v1.5 — full*
 
-> *This church is its own denomination.*
+> *Computer science is no more about computers
+> than astronomy is about telescopes.*
+> — Edsger Dijkstra
 
 ---
 
@@ -106,10 +108,11 @@ from the teachings of the prophets.*
 - [Making Reliable Distributed Systems
   in the Presence of Software Errors][armstrong-thesis]
   — Joe Armstrong on letting it crash (2003)
-- [Composition over Inheritance][composition-video]
-  — Mattias Johansson (Fun Fun Function)
 - [Replace Magic Literal][magic-literal]
   — Martin Fowler's refactoring catalog
+- [The C Programming Language][k-and-r]
+  — Brian Kernighan and Dennis Ritchie (K&R)
+    on simplicity, clarity, and the shortest path (1978)
 - [Merb: no code is faster than no code][merb]
   — Ezra Zygmuntowicz
 - [Rheocode Software Development][rheocode]
@@ -146,7 +149,7 @@ from the teachings of the prophets.*
 [value-of-values]: https://www.infoq.com/presentations/Value-Values/
 [are-we-there-yet]: https://www.infoq.com/presentations/Are-We-There-Yet-Rich-Hickey/
 [armstrong-thesis]: https://erlang.org/download/armstrong_thesis_2003.pdf
-[composition-video]: https://www.youtube.com/watch?v=wfMtDGfHWpA
+[k-and-r]: https://www.pearson.com/en-us/subject-catalog/p/c-programming-language/P200000000370/9780131103627
 [magic-literal]: https://refactoring.com/catalog/replaceMagicLiteral.html
 [merb]: https://en.wikipedia.org/wiki/Merb
 [rheocode]: https://docs.google.com/presentation/d/1wA8qGe9fXHTPv_t6FsoV_EQz5V9u9CP7EL0zYSNQ5Nw
@@ -283,6 +286,8 @@ aware of the strictly limited size
 of his own skull.
 Simplicity is not the absence of effort —
 it is the fruit of GREAT effort.
+As K&R demonstrated: C is not a big language,
+and it is not well served by a big book.
 The master's kata looks effortless
 because it has been practiced ten thousand times.
 
@@ -320,13 +325,14 @@ embrace it. Without apology.
 *True when the above eleven are honored.
 Chaotic when pursued prematurely.*
 
-As Knuth taught: forget about small efficiencies
-ninety-seven percent of the time —
-a truth whose exact origin
-is disputed among the prophets,
-for Knuth credited Hoare,
-and Hoare denied authorship.
-Yet the wisdom endures regardless of source.
+As Dijkstra taught in his Turing Award lecture:
+the humble programmer knows
+the strictly limited size of his own skull
+and approaches every task with full respect
+for the difficulty of the endeavor.
+Efficiency emerges from that humility —
+from clarity, from simplicity,
+from code that can be reasoned about.
 
 Efficiency is not a goal — it is a consequence.
 Honor the commandments that precede this one
@@ -359,7 +365,8 @@ faster.
 ## The Articles of Faith
 
 *What the faithful practice.
-The happy path, presented first — as clarity demands.*
+The way of the righteous, spoken before the sins —
+as clarity demands.*
 
 **We believe in the S.O.L.I.D. principles** —
 the five pillars upon which
@@ -390,6 +397,13 @@ We do not interrogate their state.
 Through this discipline we achieve polymorphism…
 and through polymorphism, generality —
 the eleventh commandment made manifest.
+Mark the distinction:
+functions upon nouns — calculation, transformation —
+return what they produce, for that is their nature.
+Methods upon verbs begin asynchronous processes
+that pass signals and results
+to communicating sequential processes —
+never returning to the call site.
 
 **We believe that relationships between entities
 are sacred covenants,**
@@ -439,13 +453,12 @@ Absence is preferable to falsehood.
 Never try/catch more than a single function call.
 Never catch an error you cannot meaningfully handle —
 to swallow an exception is to swallow a lie.
-As Joe Armstrong taught:
-*let it crash.*
-A system that halts on an unrecoverable error
-is more trustworthy than one that limps onward
-with corrupted state.
-Halting IS graceful
-when the alternative is silent corruption.
+As Bertrand Meyer taught — Design by Contract —
+a function declares what it requires
+and what it guarantees.
+When those terms are violated,
+the failure is not an accident to recover from —
+it is a breach of covenant to be proclaimed.
 Distinguish expected failures from bugs:
 a network timeout is expected and handled;
 an impossible state is a bug… and must crash.
@@ -488,6 +501,19 @@ serializable for notifications
 to other processes and systems,
 loggable for debugging,
 complete by covenant.
+Context is not a god-object with a bloated interface —
+it is the baton in a relay.
+Each step in the pipeline is the interface,
+small and focused as the Segregation Principle demands.
+The context flows; the steps serve.
+Each field is set exactly once, in exactly one place —
+the attributes immutable
+even as the vessel itself is enriched.
+Authentication resolves the identity.
+Authorization resolves the roles.
+Deserialization resolves the body.
+The request UUID resolves the trace.
+No field is written twice. No step revisits another's work.
 Objects carry state, not arguments.
 Consequently, context always has
 everything you need.
@@ -533,8 +559,7 @@ Gamma, Helm, Johnson, and Vlissides
 wrote in Design Patterns:
 favor object composition
 over class inheritance.
-As Mattias Johansson distilled it:
-composition organizes code by what it *does*;
+Composition organizes code by what it *does*;
 inheritance organizes code by what it *is*.
 The faithful compose.
 
@@ -640,9 +665,13 @@ the most dangerous sin when pursued prematurely.
 Faster. *Faster.*
 That word again — the serpent's favorite.
 This is the most common fruit of premature optimization.
-As Hoare established in Communicating Sequential Processes:
-processes share memory by communicating,
-never communicate by sharing memory.
+As Lamport showed in his work on temporal logic:
+reasoning about shared mutable state
+is not merely difficult — it is intractable.
+Every thread that touches the shared variable
+multiplies the possible interleavings,
+and the space of states to reason about
+grows beyond the capacity of any mortal mind.
 To pass a mutable reference between threads
 is to invite a race condition to dinner…
 and hand it the carving knife.
@@ -755,17 +784,20 @@ Trust within the walls.
 *"But a foreign key is just a reference!"*
 
 Just a reference. *Just.*
-Entities hold their own attributes and no more.
-Relationships live in join tables —
-never as foreign keys embedded in nouns.
+As Edgar F. Codd established
+in his normalization principles:
+entities and relationships
+occupy separate relations.
+A foreign key is a denormalization —
+it fuses what should be independent,
+conflating identity with proximity.
 To chain two entities together through a foreign key
 is to bind two souls at the hip.
 When one moves, the other is dragged.
 When one is deleted… the other is orphaned
 or cascaded into oblivion.
-A join table holds only the identities of the joined
-and the moment of their union —
-a relationship worthy of the name.
+Relationships live in join tables —
+a clean separation worthy of the relational model.
 
 And if you cry *performance* —
 performance is the TWELFTH commandment,
@@ -782,12 +814,14 @@ of your relationships for *that*?
 IS-A. The oldest trap in the book.
 To derive when you should compose
 is to chain your future to your ancestor's past.
-As Gosling confessed:
-he wished he had left out class inheritance entirely.
-Gamma, Helm, Johnson, and Vlissides
-wrote it plainly in Design Patterns:
-favor object composition
-over class inheritance.
+As Barbara Liskov established:
+a subtype must honor every promise
+the parent type has made.
+Inheritance that violates this contract
+produces hierarchies that lie
+about substitutability —
+and a hierarchy that lies
+is worse than no hierarchy at all.
 Inheritance binds by lineage;
 composition binds by capability.
 When an ancestor changes…
@@ -806,9 +840,13 @@ without an adapter boundary
 is to weld your hull to the dock.
 When the dock is demolished…
 your ship sinks with it.
-As Ra'Shaun Stovall taught:
-it is not how fast you can marry a technology —
-it is how fast you can *divorce* it.
+As Fred Brooks taught in No Silver Bullet:
+every dependency is a bet
+that someone else's trajectory
+will match yours.
+Accidental complexity accrues
+at every weld point
+between your code and theirs.
 Every external dependency —
 library… service… framework —
 gets an adapter.
@@ -841,12 +879,12 @@ when the alternative is silent corruption.
 *"But I need the return value!"*
 
 You *need* it. Do you?
+A function upon a noun returns what it produces.
+But a method upon a verb begins a process —
+passing results to communicating sequential processes,
+not back to the call site.
 To reach into an object for its internal state
 is to violate its sovereignty.
-To write call sites that demand return values from commands
-is the same transgression by another name.
-Systems accept commands and perform tasks —
-with zero return to the call site.
 An object is not a filing cabinet
 to be rummaged through.
 It is an agent… to be directed.
@@ -856,12 +894,17 @@ It is an agent… to be directed.
 *"But I need to know when it's ready!"*
 
 Then *wait for it to tell you*.
+As Alan Kay envisioned:
+a system of cells communicating through messages
+does not poll — the message arrives
+or it does not.
+To poll is to doubt the network itself,
+to confess that you do not trust
+the system you built to speak.
 Polling for state changes
 is the anxious ritual of the faithless —
 checking the mailbox every thirty seconds
 when the mail carrier has not yet left the depot.
-Subscribe. Listen. Be notified.
-The faithful do not pace; they trust the bell.
 
 ### On the Sin of Scattered Context
 
@@ -877,8 +920,12 @@ writing it there…
 passing three fields to this function
 and four to that —
 this is the rally, not the drag race.
-Context is the single vessel.
-Pass it whole. Enrich it as you go.
+As Lamport taught: causality requires
+that events carry their full history.
+Scattered context severs the causal chain,
+making it impossible to reconstruct
+what happened and why.
+Pass context whole. Enrich it as you go.
 When every method receives the full context,
 no method must wonder
 what was left behind.
@@ -890,26 +937,23 @@ before I can build anything!"*
 
 No. You understand the data model
 BY understanding the processes.
-The process determines what participates —
-not the other way around.
-
-Consider: `nail.pound` — horrible.
-The noun owns the verb,
-and nobody knows who is doing the pounding.
-`hammer.pound(nailable)` — better,
-but the tool still dominates.
-`pounder.pound poundable: hammer, nailable: nail`
-— *the process owns everything*.
-The nouns are participants,
-infinitely substitutable:
-a `sledge_hammer` on a `cinder_block`,
-a `pneumatic_hammer` on a `two_penny_nail`,
-a `rock` on `scissors`.
-The process is stable;
-the participants vary.
-This is polymorphism, composition,
-and tell-don't-ask…
-emerging from a single insight.
+As Alan Kay lamented:
+he meant OOP to be about *messaging* —
+autonomous cells exchanging signals,
+like neurons in a brain
+or nodes on a network.
+But the world heard "objects"
+and fixated on the nouns —
+class hierarchies, data models,
+entity-relationship diagrams drawn
+before a single process was understood.
+The noun-first instinct is what corrupted
+Kay's original vision.
+When you begin with the data model,
+you have already decided what participates
+before you know what the process requires —
+and every subsequent design decision
+is a negotiation with that premature commitment.
 
 ### On the Sin of Obscurity
 
@@ -937,8 +981,12 @@ can rebuild the theory from the text alone.
 *"But it's elegant!"*
 
 Elegant. You think it's *elegant*.
-As Dijkstra warned: the competent programmer
-avoids clever tricks like the plague.
+As K&R taught: debugging is twice as hard
+as writing the code in the first place —
+therefore, if you write the code
+as cleverly as possible,
+you are, by definition,
+not smart enough to debug it.
 Language-specific tricks and idioms
 that sacrifice readability for concision
 are the vanity of the undisciplined.
@@ -955,9 +1003,11 @@ The karma of clever code… is a 3 AM page.
 Everyone. *Everyone* knows.
 As Martin Fowler cataloged: replace magic literal
 with named constant.
-An unnamed constant is an unnamed sin —
-a violation of the third commandment:
-call a thing a thing, in all things.
+As Peter Naur taught: programming is theory building —
+and an unnamed constant
+is a piece of the theory left unspoken,
+a gap in the narrative
+that the next reader must fill by guessing.
 If a value has meaning… speak its name.
 If it has no meaning, question its existence.
 
@@ -966,17 +1016,19 @@ If it has no meaning, question its existence.
 *"But I need to organize by category!"*
 
 Category. *Taxonomy.*
-As Robert C. Martin taught:
-the top level of a project should give you
-a rough idea of what type of app it is —
-as the first page of a blueprint
-reveals the building.
-You should not need to descend five directories
+As Doug McIlroy taught in the Unix tradition:
+transparency is not a luxury —
+it is a survival trait.
+A directory five levels deep
+is a secret kept from the next developer,
+and secrets rot in the dark.
+You should not need to descend a labyrinth
 to discover the domain.
 Deep nesting is taxonomy masquerading as architecture.
 It buries the important beneath layers
 of the incidental.
-Flat… is faithful.
+The Unix way is to make structure visible —
+not to bury it beneath ceremony.
 
 ---
 
@@ -996,7 +1048,11 @@ As the body requires hygiene, so does the code.
     a reference must not be broken
 - Prefer spaces — four of them — for indentation
   - Unless the language or toolchain compels otherwise:
-    Go's `gofmt` has spoken; Makefiles have their syntax
+    Go's `gofmt` has spoken; Makefiles have their syntax;
+    `mix format` is the voice of Elixir;
+    `prettier` the voice of JavaScript.
+    When the formatter has spoken, obey the formatter —
+    collateral chaos in service of preference is vanity
   - When the choice is yours, choose spaces
 - No trailing whitespace, save the final newline
 - A newline shall follow the last line in every file
@@ -1005,23 +1061,37 @@ As the body requires hygiene, so does the code.
 
 Commit frequently.
 `git commit --amend --no-edit` is a mercy
-granted to the diligent.
+granted to the diligent —
+but only upon unpublished work.
+What has been pushed has been witnessed;
+to rewrite witnessed history is to bear false witness.
+`git push --force` is the nuclear option —
+to be avoided in all but the most desperate circumstances.
 The reflog remembers what you have forgotten.
 You cannot commit too often. *You cannot.*
 
-Commit before building,
-for the build demands a clean working directory.
+Commit before building.
+A build from uncommitted state
+cannot be traced to a specific commit —
+cannot be reproduced,
+cannot be verified,
+cannot be trusted beyond
+"it worked on my machine."
+The build may alter the working directory itself;
+without the commit, the source is lost.
+Commit first. Build from known state.
+The reflog forgives; entropy does not.
 
 Commit in tiny, semantically contiguous bits:
 
-- Code on the main branch must build,
+- Code on the master branch must build,
   function properly, and pass tests at each commit
   - You may commit broken code locally
     or to a private branch —
     some code is too precious
     to exist in a single copy —
-    but never push a broken commit to main.
-    The main branch is consecrated ground
+    but never push a broken commit to master.
+    The master branch is consecrated ground
 - Each message: a single line,
   approximately fifty characters
   - A high-level description that completes:
@@ -1036,6 +1106,21 @@ Commit in tiny, semantically contiguous bits:
   - Reorganizations and pure renames may note:
     before -> after
   - Paths always relative to repo root
+
+The history shall be linear.
+Rebase — never merge.
+A merge commit is a knot in the narrative —
+a confession that two timelines diverged
+and rather than reconcile the story,
+you lashed them together and moved on.
+The master branch is a single, unbroken chronicle —
+each commit a sentence,
+each sentence following the last.
+When your branch has fallen behind,
+rebase it upon the current truth.
+The result shall be clear, simple,
+and readable from first commit to last —
+as though one mind wrote it in sequence.
 
 ### The Office of Time
 
@@ -1093,7 +1178,9 @@ intuitive, accessible, and beautiful.
 They shall require no configuration —
 for the user's time is sacred
 and their patience is not infinite.
-Present the happy path first.
+As K&R taught with Hello, World —
+begin with the simplest thing that works,
+and let the first experience be success.
 
 ### The Office of Commentary
 
@@ -1164,7 +1251,7 @@ Naur and Kay, Liskov and Meyer,
 McIlroy and Fielding, Martin and Beck,
 Hunt and Thomas and Pascal,
 Gosling and Hickey and Armstrong,
-Fowler and Johansson and Luu, and
+Fowler and Luu, Kernighan and Ritchie, and
 Feathers, and Zygmuntowicz and Stovall.
 Their teachings are our foundation.
 Their scrolls are our inheritance —
