@@ -7,6 +7,8 @@ import (
 	"strings"
 )
 
+const responseSource = "response"
+
 func actualResponseTranslator(context *context) {
 	context.log("08 actual-response-translator")
 
@@ -24,7 +26,7 @@ func actualResponseTranslator(context *context) {
 	statusLineText := "< " + version + " " + statusCode + " " + reasonPhrase
 
 	statusLine, err :=
-		newLineFromText("response", responseLineNumber, statusLineText)
+		newLineFromText(responseSource, responseLineNumber, statusLineText)
 
 	if errorHandler(context, err) {
 		return
@@ -49,7 +51,7 @@ func actualResponseTranslator(context *context) {
 		headerText := "< " + name + ": " + context.HTTPResponse.Header.Get(name)
 
 		headerLine, err =
-			newLineFromText("response", responseLineNumber, headerText)
+			newLineFromText(responseSource, responseLineNumber, headerText)
 
 		if errorHandler(context, err) {
 			return
@@ -64,7 +66,7 @@ func actualResponseTranslator(context *context) {
 	message.HeaderLines = headerLines
 
 	message.BlankLine, err =
-		newLineFromText("response", responseLineNumber, "<")
+		newLineFromText(responseSource, responseLineNumber, "<")
 
 	if errorHandler(context, err) {
 		return
@@ -83,7 +85,7 @@ func actualResponseTranslator(context *context) {
 		}
 
 		bodyLine, err =
-			newLineFromText("response", responseLineNumber, "< "+scanner.Text())
+			newLineFromText(responseSource, responseLineNumber, "< "+scanner.Text())
 
 		if errorHandler(context, err) {
 			return
