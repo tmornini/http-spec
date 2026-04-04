@@ -57,10 +57,8 @@ func (response *response) String() string {
 
 	lineStrings = append(lineStrings, response.BlankLine.Content())
 
-	if response.BodyLines != nil {
-		for _, l := range response.BodyLines {
-			lineStrings = append(lineStrings, l.Content())
-		}
+	for _, l := range response.BodyLines {
+		lineStrings = append(lineStrings, l.Content())
 	}
 
 	return strings.Join(lineStrings, "\n")

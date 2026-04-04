@@ -78,10 +78,8 @@ func (request *request) String() string {
 
 	lineStrings = append(lineStrings, request.BlankLine.String())
 
-	if request.BodyLines != nil {
-		for _, l := range request.BodyLines {
-			lineStrings = append(lineStrings, l.String())
-		}
+	for _, l := range request.BodyLines {
+		lineStrings = append(lineStrings, l.String())
 	}
 
 	return strings.Join(lineStrings, "\n")
