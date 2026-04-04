@@ -32,7 +32,8 @@ func resultGatherer(context context) {
 					completedContext.SpecTriplet.Duration.String(),
 				)
 
-			if completedContext.ShowSubstitutions && len(completedContext.Substitutions) > 0 {
+			if completedContext.ShowSubstitutions &&
+				len(completedContext.Substitutions) > 0 {
 				outputs[completedContext.ID] +=
 					substitutionsTable(completedContext.Substitutions)
 			}
@@ -163,7 +164,13 @@ func substitutionsTable(substitutions map[string]string) string {
 			b.WriteString(divider)
 		}
 
-		b.WriteString(fmt.Sprintf("│ %-*s │ %-*s │\n", nameWidth, k, valueWidth, substitutions[k]))
+		b.WriteString(
+			fmt.Sprintf(
+				"│ %-*s │ %-*s │\n",
+				nameWidth, k,
+				valueWidth, substitutions[k],
+			),
+		)
 	}
 
 	b.WriteString("└")
