@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math/big"
 	"net/http"
 	"sync"
 	"time"
@@ -16,7 +15,7 @@ type context struct {
 	HTTPResponse          *http.Response
 	HTTPRetryDelay        time.Duration
 	HTTPTimeout           time.Duration
-	ID                    *big.Int
+	ID                    string
 	LogContext            bool
 	LogFunctions          bool
 	Matchers              map[string]string

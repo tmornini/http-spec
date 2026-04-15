@@ -2,8 +2,6 @@ package main
 
 import (
 	"bufio"
-	"crypto/rand"
-	"math/big"
 	"os"
 )
 
@@ -23,12 +21,7 @@ func specFileProcessor(context context) {
 		return
 	}
 
-	space := new(big.Int).Exp(
-		big.NewInt(idBase),
-		big.NewInt(idLength),
-		nil,
-	)
-	uuid, err := rand.Int(rand.Reader, space)
+	randomID, err := newRandom(&context)
 
 	if errorHandler(&context, err) {
 		context.ResultGathererChannel <- context
@@ -36,7 +29,7 @@ func specFileProcessor(context context) {
 		return
 	}
 
-	context.ID = uuid
+	context.ID = randomID
 
 	context.File = &file{
 		bufio.NewReader(osFile),
@@ -47,15 +40,6 @@ func specFileProcessor(context context) {
 
 	context.Substitutions = map[string]string{}
 	context.Substitutions["YYYY-MM-DD"] = context.StartedAt.Format("2006-01-02")
-
-	randomID, err := newRandom(&context)
-
-	if errorHandler(&context, err) {
-		context.ResultGathererChannel <- context
-
-		return
-	}
-
 	context.Substitutions["random-uuid"] = randomID
 
 	context.HTTPClient = newHTTPClient(

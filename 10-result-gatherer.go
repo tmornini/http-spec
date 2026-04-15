@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math/big"
 	"os"
 	"sort"
 	"strings"
@@ -17,7 +16,7 @@ func resultGatherer(context context) {
 	successCount := 0
 	failureCount := 0
 
-	outputs := map[*big.Int]string{}
+	outputs := map[string]string{}
 
 	for completedContext := range context.ResultGathererChannel {
 		if completedContext.Err == nil {
