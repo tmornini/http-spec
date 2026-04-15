@@ -15,6 +15,16 @@ type message struct {
 	Duration    time.Duration
 }
 
+func messagePrefixError(expected string, l *line) error {
+	return fmt.Errorf(
+		"expected %q prefix, got %q at line %d: %s",
+		expected,
+		l.IOPrefix,
+		l.LineNumber,
+		l.InputText,
+	)
+}
+
 func messageFromFile(
 	context *context,
 	expectedPrefix string,
@@ -35,13 +45,7 @@ func messageFromFile(
 	}
 
 	if firstLine.IOPrefix != expectedPrefix {
-		return nil, fmt.Errorf(
-			"expected %q prefix, got %q at line %d: %s",
-			expectedPrefix,
-			firstLine.IOPrefix,
-			firstLine.LineNumber,
-			firstLine.InputText,
-		)
+		return nil, messagePrefixError(expectedPrefix, firstLine)
 	}
 
 	var headerLine *line
@@ -62,13 +66,7 @@ func messageFromFile(
 		}
 
 		if headerLine.IOPrefix != expectedPrefix {
-			return nil, fmt.Errorf(
-				"expected %q prefix, got %q at line %d: %s",
-				expectedPrefix,
-				headerLine.IOPrefix,
-				headerLine.LineNumber,
-				headerLine.InputText,
-			)
+			return nil, messagePrefixError(expectedPrefix, headerLine)
 		}
 
 		headerLines = append(headerLines, headerLine)
@@ -101,13 +99,7 @@ func messageFromFile(
 		}
 
 		if bodyLine.IOPrefix != expectedPrefix {
-			return nil, fmt.Errorf(
-				"expected %q prefix, got %q at line %d: %s",
-				expectedPrefix,
-				bodyLine.IOPrefix,
-				bodyLine.LineNumber,
-				bodyLine.InputText,
-			)
+			return nil, messagePrefixError(expectedPrefix, bodyLine)
 		}
 
 		bodyLines = append(bodyLines, bodyLine)
