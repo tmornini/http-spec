@@ -9,25 +9,27 @@ func requestFromFile(context *context) (*request, error) {
 		return nil, err
 	}
 
+	parts := strings.Split(message.FirstLine.Text, " ")
+
 	return &request{
-		message,
-		context.Hostname,
-		context.Scheme,
-	}, err
+		message:  message,
+		Hostname: context.Hostname,
+		Scheme:   context.Scheme,
+		method:   parts[0],
+		uri:      parts[1],
+	}, nil
 }
 
 type request struct {
 	*message
 	Hostname string
 	Scheme   string
+	method   string
+	uri      string
 }
 
 func (request *request) Method() string {
-	return strings.Split(request.FirstLine.Text, " ")[0]
-}
-
-func (request *request) uri() string {
-	return strings.Split(request.FirstLine.Text, " ")[1]
+	return request.method
 }
 
 func (request *request) hostHeader() string {
@@ -50,14 +52,10 @@ func (request *request) URL() string {
 	}
 
 	if hostname == "" {
-		return request.uri()
+		return request.uri
 	}
 
-	return request.Scheme + "://" + hostname + request.uri()
-}
-
-func (request *request) Version() string {
-	return strings.Split(request.FirstLine.Text, " ")[2]
+	return request.Scheme + "://" + hostname + request.uri
 }
 
 func (request *request) String() string {
