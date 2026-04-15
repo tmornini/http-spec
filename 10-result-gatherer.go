@@ -44,22 +44,18 @@ func resultGatherer(context context) {
 			location := ""
 			response := ""
 
-			if completedContext.File == nil {
-				// file open failure
-				location += "[" + completedContext.Pathname + "]"
-			} else {
-				if completedContext.SpecTriplet == nil {
-					// request/response parsing failure
-					location += completedContext.File.String()
-				} else {
-					// request/response matching failure
-					location +=
-						completedContext.SpecTriplet.String() + " " +
-							completedContext.SpecTriplet.Duration.String()
+			switch {
+			case strings.HasPrefix(completedContext.Stage, "02"):
+				location = "[" + completedContext.Pathname + "]"
+			case strings.HasPrefix(completedContext.Stage, "03"):
+				location = completedContext.File.String()
+			default:
+				location =
+					completedContext.SpecTriplet.String() + " " +
+						completedContext.SpecTriplet.Duration.String()
 
-					if completedContext.SpecTriplet.ActualResponse != nil {
-						response = completedContext.SpecTriplet.ActualResponse.String() + "\n"
-					}
+				if completedContext.SpecTriplet.ActualResponse != nil {
+					response = completedContext.SpecTriplet.ActualResponse.String() + "\n"
 				}
 			}
 
