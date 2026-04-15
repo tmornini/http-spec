@@ -38,7 +38,7 @@ func newLineFromText(
 	lineNumber int,
 	inputText string,
 ) (*line, error) {
-	ioPrefix, text := split(inputText)
+	ioPrefix, text := splitIOPrefix(inputText)
 
 	line := &line{
 		PathName:   pathName,
@@ -58,7 +58,7 @@ func newLineFromText(
 
 }
 
-func split(inputText string) (string, string) {
+func splitIOPrefix(inputText string) (string, string) {
 	length := len(inputText)
 
 	switch length {
