@@ -3,9 +3,7 @@ package main
 import (
 	"bufio"
 	"crypto/rand"
-	"crypto/tls"
 	"math/big"
-	"net/http"
 	"os"
 )
 
@@ -60,24 +58,10 @@ func specFileProcessor(context context) {
 
 	context.Substitutions["random-uuid"] = randomID
 
-	if context.SkipTLSVerification {
-		context.HTTPClient = &http.Client{
-			Timeout: context.HTTPTimeout,
-			Transport: &http.Transport{
-				TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-			},
-			CheckRedirect: func(req *http.Request, via []*http.Request) error {
-				return http.ErrUseLastResponse
-			},
-		}
-	} else {
-		context.HTTPClient = &http.Client{
-			Timeout: context.HTTPTimeout,
-			CheckRedirect: func(req *http.Request, via []*http.Request) error {
-				return http.ErrUseLastResponse
-			},
-		}
-	}
+	context.HTTPClient = newHTTPClient(
+		context.SkipTLSVerification,
+		context.HTTPTimeout,
+	)
 
 	specTripletIterator(&context)
 
