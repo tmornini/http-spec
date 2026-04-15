@@ -9,35 +9,39 @@ func specTripletIterator(context *context) {
 	context.enterStage("03 spec-triplet-iterator")
 
 	for {
-		context.Err = nil
-
 		desiredRequest, err := requestFromFile(context)
 
-		if errorHandler(context, err) {
-			if err != io.EOF {
-				context.ResultGathererChannel <- *context
-			}
+		if err == io.EOF {
+			return
+		}
+
+		if err != nil {
+			context.Err = err
+			context.ResultGathererChannel <- *context
 
 			return
 		}
 
 		expectedResponse, err := responseFromFile(context)
 
-		if errorNotEOFHandler(context, err) {
+		if err != nil && err != io.EOF {
+			context.Err = err
 			context.ResultGathererChannel <- *context
 
 			return
 		}
 
-		context.SpecTriplet = &specTriplet{
+		tripletContext := *context
+		tripletContext.SpecTriplet = &specTriplet{
 			DesiredRequest:   desiredRequest,
 			ExpectedResponse: expectedResponse,
 			RequestOnly:      expectedResponse == nil,
 		}
 
-		desiredRequestSubstituter(context)
+		desiredRequestSubstituter(&tripletContext)
 
-		context.SpecTriplet.Duration = time.Since(context.SpecTriplet.StartedAt)
-		context.ResultGathererChannel <- *context
+		tripletContext.SpecTriplet.Duration =
+			time.Since(tripletContext.SpecTriplet.StartedAt)
+		context.ResultGathererChannel <- tripletContext
 	}
 }
