@@ -6,7 +6,7 @@ import (
 )
 
 func specTripletIterator(context *context) {
-	context.log("03 spec-triplet-iterator")
+	context.enterStage("03 spec-triplet-iterator")
 
 	for {
 		context.Err = nil

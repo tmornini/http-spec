@@ -1,7 +1,7 @@
 package main
 
 func specFileScatterer(context *context) {
-	context.log("01 spec-file-scatterer")
+	context.enterStage("01 spec-file-scatterer")
 
 	for _, pathname := range context.Pathnames {
 		context.Pathname = pathname

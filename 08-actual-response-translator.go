@@ -10,7 +10,7 @@ import (
 const responseSource = "response"
 
 func actualResponseTranslator(context *context) {
-	context.log("08 actual-response-translator")
+	context.enterStage("08 actual-response-translator")
 
 	message := &message{}
 

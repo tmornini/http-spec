@@ -136,7 +136,7 @@ func main() {
 		panic(err)
 	}
 
-	context.log("00 main")
+	context.enterStage("00 main")
 
 	go resultGatherer(*context)
 

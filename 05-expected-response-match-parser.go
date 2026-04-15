@@ -8,7 +8,7 @@ import (
 )
 
 func expectedResponseMatchParser(context *context) {
-	context.log("05 expected-response-match-parser")
+	context.enterStage("05 expected-response-match-parser")
 
 	expectedResponse := context.SpecTriplet.ExpectedResponse
 

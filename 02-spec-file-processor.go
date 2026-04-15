@@ -13,7 +13,7 @@ const idBase = 62
 const idLength = 22
 
 func specFileProcessor(context context) {
-	context.log("02 spec-file-processor")
+	context.enterStage("02 spec-file-processor")
 
 	defer context.WaitGroup.Done()
 

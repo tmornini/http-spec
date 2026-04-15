@@ -10,7 +10,7 @@ import (
 )
 
 func resultGatherer(context context) {
-	context.log("10 result-gatherer")
+	context.enterStage("10 result-gatherer")
 
 	success := true
 

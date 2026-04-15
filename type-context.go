@@ -46,7 +46,7 @@ func (context *context) isRetryStatusCode() bool {
 	return false
 }
 
-func (context *context) log(stage string) {
+func (context *context) enterStage(stage string) {
 	context.Stage = stage
 
 	if context.LogFunctions {

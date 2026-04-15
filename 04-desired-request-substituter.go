@@ -1,7 +1,7 @@
 package main
 
 func desiredRequestSubstituter(context *context) {
-	context.log("04 desired-request-substituter")
+	context.enterStage("04 desired-request-substituter")
 
 	context.SpecTriplet.DesiredRequest.substitute(context)
 
