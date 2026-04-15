@@ -32,6 +32,7 @@ func specTripletIterator(context *context) {
 		context.SpecTriplet = &specTriplet{
 			DesiredRequest:   desiredRequest,
 			ExpectedResponse: expectedResponse,
+			RequestOnly:      expectedResponse == nil,
 		}
 
 		desiredRequestSubstituter(context)

@@ -10,12 +10,13 @@ type specTriplet struct {
 	DesiredRequest   *request
 	ExpectedResponse *response
 	ActualResponse   *response
+	RequestOnly      bool
 	StartedAt        time.Time
 	Duration         time.Duration
 }
 
 func (specTriplet *specTriplet) isRequestOnly() bool {
-	return specTriplet.ExpectedResponse == nil
+	return specTriplet.RequestOnly
 }
 
 func (specTriplet *specTriplet) String() string {
