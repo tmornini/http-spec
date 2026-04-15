@@ -1,6 +1,9 @@
 package main
 
-import "strings"
+import (
+	"net/http"
+	"strings"
+)
 
 func requestFromFile(context *context) (*request, error) {
 	message, err := messageFromFile(context, ">")
@@ -30,6 +33,21 @@ type request struct {
 
 func (request *request) Method() string {
 	return request.method
+}
+
+func (request *request) HTTPHeaders() http.Header {
+	headers := http.Header{}
+
+	for _, headerLine := range request.HeaderLines {
+		parts := strings.SplitN(headerLine.Text, ":", 2)
+
+		key := strings.TrimSpace(parts[0])
+		value := strings.TrimSpace(parts[1])
+
+		headers.Add(key, value)
+	}
+
+	return headers
 }
 
 func (request *request) hostHeader() string {

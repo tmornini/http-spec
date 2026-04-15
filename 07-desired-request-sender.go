@@ -25,14 +25,7 @@ func desiredRequestSender(context *context) {
 		return
 	}
 
-	for _, headerLine := range context.SpecTriplet.DesiredRequest.HeaderLines {
-		parts := strings.Split(headerLine.Text, ":")
-
-		key := strings.TrimSpace(parts[0])
-		value := strings.TrimSpace(parts[1])
-
-		request.Header.Add(key, value)
-	}
+	request.Header = desiredRequest.HTTPHeaders()
 
 	context.SpecTriplet.StartedAt = time.Now()
 
