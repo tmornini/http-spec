@@ -73,7 +73,7 @@ func main() {
 	flag.StringVar(
 		&scheme,
 		"scheme",
-		"",
+		"http",
 		"scheme (http/https)",
 	)
 
