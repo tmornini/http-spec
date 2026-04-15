@@ -26,9 +26,9 @@ func resultGatherer(context context) {
 			outputs[completedContext.ID] +=
 				fmt.Sprintf(
 					"%s%s%s %s\n",
-					Green,
+					colorGreen,
 					completedContext.SpecTriplet.String(),
-					Reset,
+					colorReset,
 					completedContext.SpecTriplet.Duration.String(),
 				)
 
@@ -72,9 +72,9 @@ func resultGatherer(context context) {
 			outputs[completedContext.ID] +=
 				fmt.Sprintf(
 					"%s%s%s %s\n%s\n",
-					Red,
+					colorRed,
 					location,
-					Reset,
+					colorReset,
 					completedContext.Err.Error(),
 					response,
 				)
@@ -92,14 +92,14 @@ func resultGatherer(context context) {
 	if !success {
 		fmt.Printf(
 			"%sFAILURE:%s %s+%d%s %s-%d%s %s\n",
-			Red,
-			Reset,
-			Green,
+			colorRed,
+			colorReset,
+			colorGreen,
 			successCount,
-			Reset,
-			Red,
+			colorReset,
+			colorRed,
 			failureCount,
-			Reset,
+			colorReset,
 			duration.String(),
 		)
 
@@ -108,11 +108,11 @@ func resultGatherer(context context) {
 
 	fmt.Printf(
 		"\n%sSUCCESS:%s %s+%d%s %s\n",
-		Green,
-		Reset,
-		Green,
+		colorGreen,
+		colorReset,
+		colorGreen,
 		successCount,
-		Reset,
+		colorReset,
 		duration.String(),
 	)
 
@@ -143,7 +143,7 @@ func substitutionsTable(substitutions map[string]string) string {
 
 	var b strings.Builder
 
-	b.WriteString(Yellow)
+	b.WriteString(colorYellow)
 
 	b.WriteString("Substitutions\n")
 
@@ -179,7 +179,7 @@ func substitutionsTable(substitutions map[string]string) string {
 	b.WriteString(strings.Repeat("─", valueWidth+2))
 	b.WriteString("┘\n")
 
-	b.WriteString(Reset + "\n")
+	b.WriteString(colorReset + "\n")
 
 	return b.String()
 }
