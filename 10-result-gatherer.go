@@ -17,8 +17,11 @@ func resultGatherer(context context) {
 	failureCount := 0
 
 	outputs := map[string]string{}
+	pathnames := map[string]string{}
 
 	for completedContext := range context.ResultGathererChannel {
+		pathnames[completedContext.ID] = completedContext.Pathname
+
 		if completedContext.Err == nil {
 			// SUCCESS
 			successCount++
@@ -80,8 +83,22 @@ func resultGatherer(context context) {
 
 	fmt.Println()
 
-	for _, result := range outputs {
-		fmt.Print(result)
+	ids := make([]string, 0, len(outputs))
+
+	for id := range outputs {
+		ids = append(ids, id)
+	}
+
+	sort.Slice(ids, func(i, j int) bool {
+		if pathnames[ids[i]] != pathnames[ids[j]] {
+			return pathnames[ids[i]] < pathnames[ids[j]]
+		}
+
+		return ids[i] < ids[j]
+	})
+
+	for _, id := range ids {
+		fmt.Print(outputs[id])
 	}
 
 	if !success {
