@@ -39,7 +39,7 @@ func specFileProcessor(context context) {
 	}
 
 	context.Substitutions = map[string]string{}
-	context.Substitutions["YYYY-MM-DD"] = context.StartedAt.Format("2006-01-02")
+	context.Substitutions["YYYY-MM-DD"] = context.StartedAt.UTC().Format("2006-01-02")
 	context.Substitutions["random-uuid"] = randomID
 
 	context.HTTPClient = newHTTPClient(
