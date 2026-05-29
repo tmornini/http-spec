@@ -18,23 +18,6 @@ type response struct {
 	*message
 }
 
-func (response *response) Version() string {
-	return strings.Split(response.FirstLine.Text, " ")[0]
-}
-
-func (response *response) StatusCode() string {
-	return strings.Split(response.FirstLine.Text, " ")[1]
-}
-
-func (response *response) ReasonPhrase() string {
-	return strings.Join(
-		strings.Split(
-			response.FirstLine.Text, " ",
-		)[2:],
-		" ",
-	)
-}
-
 func (response *response) String() string {
 	lineStrings := []string{}
 
