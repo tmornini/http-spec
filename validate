@@ -2,8 +2,15 @@
 
 echo "validating http-spec..."
 
-docker ps -aq | xargs docker rm
-docker images | grep http-spec | awk '{print $3}' | xargs docker rmi -f
+http_spec_containers=$(docker ps -aq \
+  --filter ancestor=tmornini/http-spec \
+  --filter ancestor=tmornini/validate-http-spec)
+[ -n "$http_spec_containers" ] && docker rm $http_spec_containers
+
+for image in tmornini/http-spec tmornini/validate-http-spec; do
+  image_ids=$(docker images -q "$image")
+  [ -n "$image_ids" ] && docker rmi -f $image_ids
+done
 
 (
   go install .                                                        && \
