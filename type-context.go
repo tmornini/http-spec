@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"sync"
 	"time"
@@ -16,8 +15,6 @@ type context struct {
 	HTTPRetryDelay        time.Duration
 	HTTPTimeout           time.Duration
 	ID                    string
-	LogContext            bool
-	LogFunctions          bool
 	Matchers              map[string]string
 	MatchersPath          string
 	MaxHTTPAttempts       int
@@ -47,12 +44,4 @@ func (context *context) isRetryStatusCode() bool {
 
 func (context *context) enterStage(stage string) {
 	context.Stage = stage
-
-	if context.LogFunctions {
-		fmt.Println(stage)
-	}
-
-	if context.LogContext {
-		fmt.Printf("%#v\n", context)
-	}
 }

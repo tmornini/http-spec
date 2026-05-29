@@ -117,8 +117,6 @@ func main() {
 		Hostname:              hostname,
 		HTTPRetryDelay:        httpRetryDelay,
 		HTTPTimeout:           httpTimeout,
-		LogContext:            false,
-		LogFunctions:          false,
 		Matchers:              make(map[string]string),
 		MatchersPath:          matchersPath,
 		MaxHTTPAttempts:       maxHTTPAttempts,
