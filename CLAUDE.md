@@ -27,8 +27,8 @@ There are no unit tests (`_test.go`). Testing is done by running `.htsf` spec fi
 | 05 | `05-expected-response-match-parser.go` | Compile `⧆name⧆regexp⧆` matchers in response |
 | 06 | `06-expected-response-substituter.go` | Apply substitutions to expected response |
 | 07 | `07-desired-request-sender.go` | Send HTTP request with retry logic |
-| 08 | `08-actual-response-translater.go` | Parse HTTP response into internal format |
-| 09 | `09-comparitor.go` | Line-by-line comparison, capture regexp groups |
+| 08 | `08-actual-response-translator.go` | Parse HTTP response into internal format |
+| 09 | `09-response-comparator.go` | Line-by-line comparison, capture regexp groups |
 | 10 | `10-result-gatherer.go` | Collect results, print summary, set exit code |
 
 **Concurrency model**: files are processed concurrently (one goroutine each via stage 01); requests within a file are sequential. Results flow to stage 10 via an unbuffered `chan context`.
@@ -61,7 +61,7 @@ Spec files use HTSF (Hypertext Specification Format), modeled after `curl -v` ou
 See the Coding Philosophy section of README.md for the upstream scripture this codebase embodies — key examples:
 
 - **Context as single vessel** — `*context` carries all state through the pipeline; no scattered arguments
-- **Process-first naming** — pipeline stages use `-er` suffix (`scatterer`, `substituter`, `comparitor`, `gatherer`)
+- **Process-first naming** — pipeline stages use `-er` suffix (`scatterer`, `substituter`, `comparator`, `gatherer`)
 - **Platform primitives only** — zero external dependencies, stdlib only
 - **Communicating Sequential Processes** — goroutines communicate via channels, never shared mutable state
 - **Shallow structure** — all source files flat in root directory
