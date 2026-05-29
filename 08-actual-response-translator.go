@@ -80,10 +80,6 @@ func actualResponseTranslator(context *context) {
 	var bodyLines []*line
 
 	for scanner.Scan() {
-		if errorHandler(context, scanner.Err()) {
-			return
-		}
-
 		bodyLine, err =
 			newLineFromText(responseSource, responseLineNumber, "< "+scanner.Text())
 
@@ -98,6 +94,10 @@ func actualResponseTranslator(context *context) {
 	}
 
 	context.HTTPResponse.Body.Close()
+
+	if errorHandler(context, scanner.Err()) {
+		return
+	}
 
 	message.BodyLines = bodyLines
 
