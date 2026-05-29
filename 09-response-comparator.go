@@ -6,7 +6,7 @@ import (
 )
 
 func responseComparator(context *context) {
-	context.enterStage("09 comparator")
+	context.enterStage("09 response-comparator")
 
 	expectedResponse := context.SpecTriplet.ExpectedResponse
 	actualResponse := context.SpecTriplet.ActualResponse
