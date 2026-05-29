@@ -133,16 +133,6 @@ func (message *message) substitute(context *context) {
 	}
 }
 
-func (message *message) Header() string {
-	headerLineTexts := []string{}
-
-	for _, headerLine := range message.HeaderLines {
-		headerLineTexts = append(headerLineTexts, headerLine.Text)
-	}
-
-	return strings.Join(headerLineTexts, "\n")
-}
-
 func (message *message) Body() string {
 	bodyLineTexts := []string{}
 
