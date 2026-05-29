@@ -1,0 +1,7 @@
+# request header missing its colon — must fail validation, not panic
+> GET https://httpbin.org/get HTTP/1.1
+> NotAHeaderLine
+>
+
+< HTTP/1.1 200 OK
+<

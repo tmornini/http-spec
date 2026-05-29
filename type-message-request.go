@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 )
@@ -12,11 +13,41 @@ func requestFromFile(context *context) (*request, error) {
 		return nil, err
 	}
 
-	return &request{
+	request := &request{
 		message:  message,
 		Hostname: context.Hostname,
 		Scheme:   context.Scheme,
-	}, nil
+	}
+
+	err = request.validate()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return request, nil
+}
+
+func (request *request) validate() error {
+	if len(strings.Split(request.FirstLine.Text, " ")) < 2 {
+		return fmt.Errorf(
+			"%s request line must be \"METHOD URI\": %q",
+			request.FirstLine.Location(),
+			request.FirstLine.Text,
+		)
+	}
+
+	for _, headerLine := range request.HeaderLines {
+		if !strings.Contains(headerLine.Text, ":") {
+			return fmt.Errorf(
+				"%s request header must contain \":\": %q",
+				headerLine.Location(),
+				headerLine.Text,
+			)
+		}
+	}
+
+	return nil
 }
 
 type request struct {

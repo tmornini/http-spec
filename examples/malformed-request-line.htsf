@@ -1,0 +1,6 @@
+# request line missing its URI — must fail validation, not panic
+> GET
+>
+
+< HTTP/1.1 200 OK
+<

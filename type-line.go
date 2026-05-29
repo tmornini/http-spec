@@ -84,6 +84,15 @@ type line struct {
 }
 
 func (line *line) validate() error {
+	if len(line.InputText) >= 2 && line.InputText[1] != ' ' {
+		return fmt.Errorf(
+			"%s missing space after %q prefix: %q",
+			line.Location(),
+			line.InputText[0:1],
+			line.InputText,
+		)
+	}
+
 	if line.isBlank() ||
 		line.isComment() ||
 		line.isEmpty() ||

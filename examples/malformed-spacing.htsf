@@ -1,0 +1,6 @@
+# request line with no space after prefix — must fail, not drop a char
+>GET /get HTTP/1.1
+>
+
+< HTTP/1.1 200 OK
+<
