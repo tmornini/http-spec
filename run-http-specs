@@ -55,6 +55,9 @@ time (
 
   output=$(http-spec examples/not-found.htsf 2>&1)          || exit 1
   ! echo "$output" | grep -q 'Substitutions'                || exit 1
+  output=$(http-spec -retry-status-codes abc                 \
+                     examples/not-found.htsf 2>&1)          && exit 1
+  echo "$output" | grep -q 'invalid status code'             || exit 1
 ) || exit 1
 
 echo

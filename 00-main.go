@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -104,7 +105,8 @@ func main() {
 			code, err := strconv.Atoi(strings.TrimSpace(s))
 
 			if err != nil {
-				panic("invalid status code: " + s)
+				fmt.Fprintln(os.Stderr, "invalid status code: "+s)
+				os.Exit(1)
 			}
 
 			retryStatusCodes = append(retryStatusCodes, code)
@@ -133,7 +135,8 @@ func main() {
 	err := loadMatchers(context)
 
 	if err != nil {
-		panic(err)
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	}
 
 	context.enterStage("00 main")
