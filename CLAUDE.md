@@ -58,7 +58,7 @@ Spec files use HTSF (Hypertext Specification Format), modeled after `curl -v` ou
 
 ## Coding Philosophy
 
-See `CHURCH-OF-CODE.md` for the project's comprehensive coding principles. This codebase is a direct embodiment of those principles — key examples:
+See the Coding Philosophy section of README.md for the upstream scripture this codebase embodies — key examples:
 
 - **Context as single vessel** — `*context` carries all state through the pipeline; no scattered arguments
 - **Process-first naming** — pipeline stages use `-er` suffix (`scatterer`, `substituter`, `comparitor`, `gatherer`)

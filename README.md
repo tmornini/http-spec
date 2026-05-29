@@ -221,6 +221,29 @@ Substitutions are applied to requests and responses within the same file.
 
 * character is SQUARED SQUARE (U+29C8)
 
+## Coding Philosophy
+
+This project is crafted under
+[The Church of Code](https://github.com/The-Church-of-Code/church-of-code)
+— a scripture of software engineering principles authored by Tom Mornini,
+drawn from the foundational teachings of the field's most consequential
+thinkers. Its twelve commandments, articles of faith, book of abominations,
+and daily offices are binding doctrine for this codebase.
+
+### Claude Code plugin
+
+Claude Code users can install the scripture as a plugin skill that
+activates automatically on coding tasks in this repository:
+
+    /plugin marketplace add The-Church-of-Code/church-of-code
+    /plugin install church-of-code@church-of-code-marketplace
+
+Once installed, the `church-of-code:church-of-code` skill loads the
+scripture on any coding task — no per-project configuration required.
+
+Other AI agents can reference the scripture directly from the
+[upstream repository](https://github.com/The-Church-of-Code/church-of-code).
+
 ## TODO
 
 * improve testing dramatically :-(
